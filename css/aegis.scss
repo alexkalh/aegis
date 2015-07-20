@@ -1,0 +1,228 @@
+@import "aegis/variable";
+@import "aegis/mixin";
+@import "aegis/grid";
+
+
+#a_modal_grid{
+    margin: 20px auto 0px auto;
+    padding: 10px;
+    & > .a_row{
+        margin-bottom: 20px;
+    }    
+
+    .a_row_mockup{
+        @include transition(0.5s);
+        cursor: pointer;
+        &:hover{
+            border-color: $color_1;
+            .a_col_mockup{
+                background-color: $color_1;
+                color: $white;
+            }
+        }
+        border: 1px solid $border_1;
+        padding: 5px;
+        .a_row{
+            margin-left: -2.5px !important;
+            margin-right: -2.5px !important;
+        }
+        .a_col{
+            padding-left: 2.5px !important;
+            padding-right: 2.5px !important;
+        }        
+    }
+
+    .a_col_mockup{
+        @include transition_m(background-color, 0.5s);
+        background-color: $bg_1;
+        height: 48px;
+        line-height: 48px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+}
+
+#a_modal_widgets{
+    margin: 20px auto;
+    padding: 10px;    
+    
+    .a_item{
+        cursor: pointer;        
+        &:hover,
+        &.active{
+            border-color: $color_1;
+            .a_header{
+                border-bottom-color: $color_1;
+            }
+        }
+    }
+}
+
+.a_item{
+    border: 1px solid $border_1;
+    margin-bottom: 20px;
+    @include transition(0.5s);
+    .a_header{      
+        @include transition(0.5s);  
+        border-bottom: 1px solid $border_1;
+        background-color: $bg_1;
+        padding: 0px 10px;
+        span{            
+            height: 50px;
+            line-height: 50px;
+        }
+    }
+    .a_body{
+        padding: 10px;
+        font-size: 10px;  
+    }
+    .a_icon{                
+        font-size: 30px;
+        color: $color_1;        
+    }
+    .a_title{
+        font-weight: 700;            
+    }
+}
+
+#aegis_metabox{
+    .a_wrap{
+        margin-top: 12px;
+        & > .a_header{
+            margin-bottom: 12px;
+        }        
+    }
+}
+
+.a_block,
+.a_column_item,
+.a_grid_item{
+    border: 1px solid $border_1;
+    margin-bottom: 24px;
+    .a_header{
+        background-color: $bg_1;
+        border-bottom: 1px solid $border_1;
+    }
+
+
+    .a_action{
+        @include button();
+        cursor: pointer;
+        @include transition(0.5s);
+
+        &:hover{
+            color: $color_1;
+            &.a_close{
+                color: red;
+            }
+        }
+
+        &.a_hanle{
+            cursor: move;
+        } 
+
+        &.a_close{
+            color: $color_2;
+        }
+    }
+        
+    .a_body{
+        padding: 12px;
+    }    
+}
+
+.a_column_item{
+    .a_body{
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+}
+
+.a_block_helper{
+    display: block;
+    width: 100px !important;
+    height: 48px !important;
+    line-height: 48px !important;
+    border: 1px solid $color_1;
+    background-color: $color_1;
+    color: #fff;    
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.ui-widget-overlay.ui-front{
+    z-index: 9999;
+}
+
+.a_tab_item{
+    @include inline_block();    
+    span{
+        display: block;
+        height: 30px;
+        line-height: 30px;        
+        margin-left: 10px;
+        padding: 0px 15px;
+        cursor: pointer;
+        text-align: center;     
+        border: 1px solid $white;
+        @include border_radius(5px);
+        @include transition_m(background-color, 0.5s);
+        @include transition_m(border-color, 0.5s);
+    }
+
+    &.a_first{
+        span{
+            margin-left: 0px !important;
+        }
+    }
+
+    &.a_active span,
+    span:hover{        
+        background-color: $bg_1;
+        border: 1px solid $bg_1;
+    } 
+}
+
+.a_tab_content{
+    &.a_active{
+        display: block;
+    }
+    &.a_hide{
+        display: none;
+    }
+} 
+
+.a_control{
+    margin-top: 20px;    
+
+    .a_ui_help_text{
+        margin-top: 5px;
+        font-size: 10px;
+        font-style: italic;        
+    }
+
+}
+
+.a_size_10p { width: 10%; }
+.a_size_20p { width: 20%; }
+.a_size_30p { width: 30%; }
+.a_size_40p { width: 40%; }
+.a_size_50p { width: 50%; }
+.a_size_100p{ width: 100%; }
+
+#aegis_tab_widget{
+    p{
+        @include clearfix();
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+.wp-picker-container{
+    *{
+        @include box_sizing(content-box);
+    }
+}
