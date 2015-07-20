@@ -197,7 +197,6 @@
 
 .a_control{
     margin-top: 20px;    
-
     .a_ui_help_text{
         margin-top: 5px;
         font-size: 10px;
@@ -225,4 +224,64 @@
     *{
         @include box_sizing(content-box);
     }
+}
+
+.hide_all{
+    display: none;
+}
+
+
+
+.a_ui_spacing{    
+    width: 400px;    
+
+    .a_ui_margin,
+    .a_ui_padding{
+        position: relative;
+        padding: 50px 75px;
+        border: 3px double $border_1;
+    }    
+
+    .a_ui_element{
+        text-align: center;
+        color: $color_1;
+    }
+
+    code{
+        display: block;
+        position: absolute;
+        top: 12.5px;
+        left: 12.5px;
+    }
+
+    .a_ui_text{
+        position: absolute;
+        height: 25px;
+        width: 50px;
+
+        &.a_position_top{
+            top: 12.5px;
+            left: 50%;
+            margin-left: -25px;
+        }
+
+        &.a_position_bottom{
+            bottom: 12.5px;
+            left: 50%;
+            margin-left: -25px;
+        }
+
+        &.a_position_left{
+            left: 12.5px;
+            top: 50%;
+            margin-top: -12.5px;
+        }
+
+        &.a_position_right{
+            right: 12.5px;
+            top: 50%;
+            margin-top: -12.5px;
+        }
+    }
+
 }

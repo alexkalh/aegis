@@ -81,7 +81,7 @@ Aegis = {
     jQuery('#a_modal_grid').dialog({
       title: aegis_json.i18n.elements,
       width: 850,
-      height: 395,
+      height: 480,
       modal: true,
       autoOpen: false
     });
@@ -158,20 +158,23 @@ Aegis = {
           old_grid = aegis_json.layouts[old_grid_index];
           new_grid = aegis_json.layouts[new_grid_index];
           column_wrap = a_current_row.find('.a_column_wrap');
-          if (old_grid.length < new_grid.length) {
+          if (parseInt(old_grid.length) < parseInt(new_grid.length)) {
             i = 0;
             while (i < new_grid.length - old_grid.length) {
               column_wrap.append(Aegis.getColumnTemplate());
               i++;
             }
-          } else if (old_grid.length > new_grid.length) {
+          } else if (parseInt(old_grid.length) > parseInt(new_grid.length)) {
             blocks = column_wrap.find('.a_block');
+            temp_blocks = {};
             if (blocks.length) {
               temp_blocks = blocks.clone();
-              column_wrap.html('');
-              jQuery.each(new_grid, function(index_2, item_2) {
-                column_wrap.append(Aegis.getColumnTemplate());
-              });
+            }
+            column_wrap.html('');
+            jQuery.each(new_grid, function(index_2, item_2) {
+              column_wrap.append(Aegis.getColumnTemplate());
+            });
+            if (temp_blocks.length) {
               temp_blocks.appendTo(column_wrap.find('.a_column_item_outer .a_block_wrap').first());
             }
           }

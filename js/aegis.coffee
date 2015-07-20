@@ -83,7 +83,7 @@ Aegis =
     jQuery('#a_modal_grid').dialog
       title: aegis_json.i18n.elements    
       width: 850
-      height: 395
+      height: 480
       modal: true
       autoOpen: false
     return
@@ -153,7 +153,9 @@ Aegis =
 
   initDialogGridAction: ->
     jQuery("#a_modal_grid").on 'click', '.a_row_mockup', ()->
+      
       if(a_current_row != undefined)
+        
         old_grid_index = parseInt(a_current_row.attr 'data-index')
         new_grid_index = parseInt(jQuery(this).attr 'data-index')
         a_current_row.attr 'data-index', new_grid_index
@@ -164,27 +166,30 @@ Aegis =
           new_grid    = aegis_json.layouts[new_grid_index]
           column_wrap = a_current_row.find '.a_column_wrap'
 
-          if old_grid.length < new_grid.length
+          if parseInt(old_grid.length) < parseInt(new_grid.length)
             # add new cols
             i = 0
             while i < new_grid.length - (old_grid.length)
               column_wrap.append Aegis.getColumnTemplate()
               i++
 
-          else if old_grid.length > new_grid.length
+          else if parseInt(old_grid.length) > parseInt(new_grid.length)
+            
             # move all widget to first column
-            blocks = column_wrap.find('.a_block')
+            blocks      = column_wrap.find('.a_block')
+            temp_blocks = {}
 
             if blocks.length
               temp_blocks = blocks.clone()
 
-              # remove all column
-              column_wrap.html ''
-              jQuery.each new_grid, (index_2, item_2) ->
-                column_wrap.append Aegis.getColumnTemplate()
-                return
-              
-              # add widget to first column
+            # remove all column
+            column_wrap.html ''
+            jQuery.each new_grid, (index_2, item_2) ->
+              column_wrap.append Aegis.getColumnTemplate()
+              return
+            
+            # add widget to first column
+            if temp_blocks.length
               temp_blocks.appendTo column_wrap.find('.a_column_item_outer .a_block_wrap').first()
 
           cols = a_current_row.find('.a_column_item_outer')

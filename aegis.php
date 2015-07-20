@@ -161,7 +161,7 @@ class Aegis{
 
 				if($data):
 					
-					$rows = isset($data['rows']) && !empty($data['rows']) ? $data['rows'] : array();					
+					$rows = isset($data['rows']) && !empty($data['rows']) ? $data['rows'] : array();
 					if($rows):						
 						foreach ($rows as $row_index => $row):
 							$grid_index = (int)$row['index'];							
@@ -172,7 +172,14 @@ class Aegis{
 									<span class="a_action a_hanle a_row_hanle a_pull_left"><i class="ti-split-v"></i></span>
 									<span class="a_action a_row_style a_pull_left"><i class="ti-layout-column3"></i></span>       
 									<span class="a_action a_close a_row_close a_pull_right"><i class="ti-trash"></i></span>
-									<span class="a_action a_row_customize a_pull_right"><i class="ti-paint-roller"></i></span>
+
+									<?php
+									$row_customize_fields = apply_filters('aegis_get_row_customize_fields', array());
+									if($row_customize_fields):
+									?>
+										<span class="a_action a_row_customize a_pull_right"><i class="ti-paint-roller"></i></span>
+									<?php endif;?>
+
 								</div>
 								<div class="a_body a_clearfix">
 									<div class="a_column_wrap a_row a_clearfix">
@@ -189,7 +196,13 @@ class Aegis{
 														<div class="a_header a_clearfix">
 															<span class="a_action a_hanle a_column_hanle a_pull_left"><i class="ti-split-v"></i></span>
 															<span class="a_action a_column_add_widget a_pull_left"><i class="ti-package"></i></span>
-															<span class="a_action a_column_customize a_pull_right"><i class="ti-paint-roller"></i></span>
+															
+															<?php
+															$col_customize_fields = apply_filters('aegis_get_col_customize_fields', array());
+															if($col_customize_fields):
+															?>
+																<span class="a_action a_column_customize a_pull_right"><i class="ti-paint-roller"></i></span>
+															<?php endif;?>
 														</div>
 														<div class="a_block_wrap a_body a_clearfix">
 															
@@ -203,7 +216,7 @@ class Aegis{
 																		?>
 																			<div id="<?php echo esc_attr($widget_id); ?>" class="a_block a_clearfix">
 																				<div class="a_header a_clearfix">
-																					<span class="a_action a_hanle a_block_hanle a_pull_left"><i class="ti-split-v"></i></span>												
+																					<span class="a_action a_hanle a_block_hanle a_pull_left"><i class="ti-split-v"></i></span>
 																					<span class="a_action a_close a_block_close a_pull_right"><i class="ti-trash"></i></span>
 																					<span class="a_action a_block_edit a_pull_right"><i class="ti-pencil"></i></span>
 																				</div>
@@ -249,116 +262,120 @@ class Aegis{
 			if ('page' == $post->post_type){
 				global $wp_widget_factory;
 
-				$grid = $this->get_grid();
-				if($grid):
 				?>
-				<div id="a_modal_grid" class="a_wrap">
-					<div class="a_row a_clearfix">
-						<?php
-						$index = 0;						
-						foreach($grid as $grid_index => $cols):
-							?>
-							<div class="a_col_4">
-								<div class="a_row_mockup" data-index="<?php echo esc_attr($grid_index); ?>">
-									<div class="a_row a_clearfix">
-										<?php foreach($cols as $col): ?>
-											<div class="a_col <?php echo esc_attr("a_col_{$col}"); ?>">
-												<div class="a_col_mockup">
-													<?php echo esc_attr($col); ?>
+				<div class="hide_all">
+					<?php
+					$grid = $this->get_grid();
+					if($grid):
+					?>
+					<div id="a_modal_grid" class="a_wrap">
+						<div class="a_row a_clearfix">
+							<?php
+							$index = 0;						
+							foreach($grid as $grid_index => $cols):
+								?>
+								<div class="a_col_4">
+									<div class="a_row_mockup" data-index="<?php echo esc_attr($grid_index); ?>">
+										<div class="a_row a_clearfix">
+											<?php foreach($cols as $col): ?>
+												<div class="a_col <?php echo esc_attr("a_col_{$col}"); ?>">
+													<div class="a_col_mockup">
+														<?php echo esc_attr($col); ?>
+													</div>
 												</div>
-											</div>
-										<?php endforeach;?>
+											<?php endforeach;?>
+										</div>
 									</div>
 								</div>
-							</div>
-							<?php
+								<?php
+								$index++;
+		        		if(0 == $index % 3 && $index < count($grid)){
+		        			echo '</div>';
+		        			echo '<div class="a_row a_clearfix">';
+		            }
+							endforeach;
+							?>	
+						</div>
+					</div>
+					<?php endif;?>
+
+					<div id="a_modal_widgets" class="a_wrap a_clearfix">
+						<div class="a_row a_clearfix">
+						<?php
+							$widgets = $wp_widget_factory->widgets;
+							$index   = 0;
+	            foreach ($widgets as $class_name => $widget_info):                  	
+	              ?>
+	              <div class="a_col_4">
+	                <div class="a_item">
+	                	
+	                	<input type="hidden" name="a_widget_class_name" value="<?php echo esc_attr($class_name); ?>" autocomplete="off">
+	                	<input type="hidden" name="a_widget_title" value="<?php echo esc_attr($widget_info->name); ?>" autocomplete="off">
+
+		                <div class="a_header a_clearfix">                    
+											<?php
+		                    $icon = 'ti-wordpress';          
+		                    if(isset($widget_info->icon) && !empty($widget_info->icon)){
+		                        $icon = $widget_info->icon;
+		                    }                                                                                            
+	                    ?>
+	                    
+	                    <span class="a_title a_pull_left"><?php echo $widget_info->name; ?></span>
+
+	                    <span class="a_icon a_pull_right">
+	                    	<i class="<?php echo esc_attr($icon); ?>"></i>
+	                    </span>                    
+		                </div>
+
+		                <div class="a_body a_clearfix">	                    
+		                	<?php echo esc_attr($widget_info->widget_options['description']); ?>	                    
+		                </div>                              
+	                </div>
+	              </div>
+							<?php 
 							$index++;
-	        		if(0 == $index % 3 && $index < 12){
+	        		if(0 == $index % 3){              
 	        			echo '</div>';
 	        			echo '<div class="a_row a_clearfix">';
 	            }
-						endforeach;
-						?>	
+							endforeach;
+							?>
+						</div>
 					</div>
+
+					<?php $form_action = wp_nonce_url(admin_url('admin-ajax.php'), 'aegis_save_widget', 'security'); ?>
+					
+					<form id="a_modal_single_widget"
+						class="a_wrap a_clearfix"
+						name="a_form_single_widget"
+						method="POST"
+						autocomplete="off"
+						onsubmit="AegisAjax.saveWidget(event, jQuery(this));" 
+						action="<?php echo esc_url($form_action); ?>">									
+						<input type="hidden" name="action" value="aegis_save_widget" autocomplete="off">
+						<input type="hidden" name="a_widget_class_name" value="" autocomplete="off">
+						<input type="hidden" name="a_widget_title" value="" autocomplete="off">
+						<input type="hidden" name="a_widget_id" value="" autocomplete="off">					
+						<input type="hidden" name="a_post_id" value="<?php echo $post->ID;?>" autocomplete="off">					
+						<div class="a_widget_form a_tabs"></div>					
+					</form>
+					
+					<?php $form_action = wp_nonce_url(admin_url('admin-ajax.php'), 'aegis_save_row_customize_form', 'security'); ?>
+
+					<form id="a_modal_row_customize"
+						class="a_wrap a_clearfix"
+						name="a_form_single_widget"
+						method="POST"
+						autocomplete="off"
+						onsubmit="AegisAjax.saveRowCustomize(event, jQuery(this));"
+						action="<?php echo esc_url($form_action); ?>">
+						<input type="hidden" name="action" value="aegis_save_row_customize_form" autocomplete="off">
+						<input type="hidden" name="a_row_id" value="" autocomplete="off">
+						<input type="hidden" name="a_post_id" value="<?php echo $post->ID;?>" autocomplete="off">
+						<div class="a_row_customize_form a_tabs"></div>					
+					</form>
+
 				</div>
-				<?php endif;?>
-
-				<div id="a_modal_widgets" class="a_wrap a_clearfix">
-					<div class="a_row a_clearfix">
-					<?php
-						$widgets = $wp_widget_factory->widgets;
-						$index   = 0;
-            foreach ($widgets as $class_name => $widget_info):                  	
-              ?>
-              <div class="a_col_4">
-                <div class="a_item">
-                	
-                	<input type="hidden" name="a_widget_class_name" value="<?php echo esc_attr($class_name); ?>" autocomplete="off">
-                	<input type="hidden" name="a_widget_title" value="<?php echo esc_attr($widget_info->name); ?>" autocomplete="off">
-
-	                <div class="a_header a_clearfix">                    
-										<?php
-	                    $icon = 'ti-wordpress';          
-	                    if(isset($widget_info->icon) && !empty($widget_info->icon)){
-	                        $icon = $widget_info->icon;
-	                    }                                                                                            
-                    ?>
-                    
-                    <span class="a_title a_pull_left"><?php echo $widget_info->name; ?></span>
-
-                    <span class="a_icon a_pull_right">
-                    	<i class="<?php echo esc_attr($icon); ?>"></i>
-                    </span>                    
-	                </div>
-
-	                <div class="a_body a_clearfix">	                    
-	                	<?php echo esc_attr($widget_info->widget_options['description']); ?>	                    
-	                </div>                              
-                </div>
-              </div>
-						<?php 
-						$index++;
-        		if(0 == $index % 3){              
-        			echo '</div>';
-        			echo '<div class="a_row a_clearfix">';
-            }
-						endforeach;
-						?>
-					</div>
-				</div>
-
-				<?php $form_action = wp_nonce_url(admin_url('admin-ajax.php'), 'aegis_save_widget', 'security'); ?>
-				
-				<form id="a_modal_single_widget"
-					class="a_wrap a_clearfix"
-					name="a_form_single_widget"
-					method="POST"
-					autocomplete="off"
-					onsubmit="AegisAjax.saveWidget(event, jQuery(this));" 
-					action="<?php echo esc_url($form_action); ?>">									
-					<input type="hidden" name="action" value="aegis_save_widget" autocomplete="off">
-					<input type="hidden" name="a_widget_class_name" value="" autocomplete="off">
-					<input type="hidden" name="a_widget_title" value="" autocomplete="off">
-					<input type="hidden" name="a_widget_id" value="" autocomplete="off">					
-					<input type="hidden" name="a_post_id" value="<?php echo $post->ID;?>" autocomplete="off">					
-					<div class="a_widget_form a_tabs"></div>					
-				</form>
-				
-				<?php $form_action = wp_nonce_url(admin_url('admin-ajax.php'), 'aegis_save_row_customize_form', 'security'); ?>
-
-				<form id="a_modal_row_customize"
-					class="a_wrap a_clearfix"
-					name="a_form_single_widget"
-					method="POST"
-					autocomplete="off"
-					onsubmit="AegisAjax.saveRowCustomize(event, jQuery(this));"
-					action="<?php echo esc_url($form_action); ?>">
-					<input type="hidden" name="action" value="aegis_save_row_customize_form" autocomplete="off">
-					<input type="hidden" name="a_row_id" value="" autocomplete="off">
-					<input type="hidden" name="a_post_id" value="<?php echo $post->ID;?>" autocomplete="off">
-					<div class="a_row_customize_form a_tabs"></div>					
-				</form>
-
 				<?php
 			}
 		}
@@ -367,11 +384,14 @@ class Aegis{
 	public function get_grid(){
 		$grid = array(
 		    array(12),
+		    array(11, 1),
 		    array(10, 2),
 		    array(8, 4),
 		    array(7, 5),
 		    array(6, 6),
-		    array(4, 4, 4),              
+		    array(5, 4, 3),
+		    array(4, 4, 4), 
+		    array(4, 6, 2), 
 		    array(3, 9),
 		    array(3, 6, 3),
 		    array(3, 3, 3, 3),		    
@@ -421,7 +441,7 @@ class Aegis{
 		$post_id = isset($_POST['post_id']) ? (int)$_POST['post_id'] : false;
 
 		$customize_key    = self::get_meta_key_row();
-		$customize_fields = apply_filters('aegis_get_row_fields', array());
+		$customize_fields = apply_filters('aegis_get_row_customize_fields', array());
 
 		if($customize_fields):
 			$customize_data   = array();
@@ -476,7 +496,7 @@ class Aegis{
 
 		if (!empty($_POST)){			
 			$customize_key    = self::get_meta_key_row();
-			$customize_fields = apply_filters('aegis_get_row_fields', array());
+			$customize_fields = apply_filters('aegis_get_row_customize_fields', array());
 
 			if($customize_key){
 				$row_id   = isset($_POST['a_row_id']) ? $_POST['a_row_id'] : false;
@@ -529,7 +549,7 @@ class Aegis{
 				$widget->id_base  = rand(0, 9999);
 				$widget->number   = rand(0, 9999);
 				$customize_key    = self::get_meta_key_widget_customize();
-				$customize_fields = apply_filters('aegis_get_customize_fields', array());
+				$customize_fields = apply_filters('aegis_get_widget_customize_fields', array());
 				
 				?>
 				<nav class="a_nav">
@@ -614,7 +634,7 @@ class Aegis{
         } else if($customize_key == $key){
         	$data['customize'] = $value;        	
 					if($data){
-						$customize_fields = apply_filters('aegis_get_customize_fields', array());
+						$customize_fields = apply_filters('aegis_get_widget_customize_fields', array());
 						foreach ($customize_fields as $tab_slug => $tab) {
 							foreach ($tab['params'] as $param_key => $param_args){								
 								$new_value = isset($data['customize'][$tab_slug][$param_key]) ? $data['customize'][$tab_slug][$param_key] : null;
@@ -701,11 +721,19 @@ class Aegis{
 		?>
 		<div class="a_control a_wrap a_clearfix">
 			<div class="a_row a_clearfix">
-				<div class="a_col_3">
-					<?php echo esc_attr($param_args['title']);?>
-				</div>
-
-				<div class="a_col_9">
+				<?php				
+				$control_class = 'a_col_9';
+				if(!isset($param_args['title']) || empty($param_args['title'])):
+					$control_class = 'a_col_12';					
+				else:
+					?>
+					<div class="a_col_3">
+						<?php echo esc_attr($param_args['title']);?>
+					</div>					
+					<?php
+				endif;
+				?>			
+				<div class="<?php echo esc_attr($control_class); ?>">
 					<?php
 					switch ($param_args['type']) {	
 						case 'text':
@@ -731,7 +759,10 @@ class Aegis{
 							break;
 						case 'image':
 							$this->get_field_image($param_args);
-							break;							
+							break;						
+						case 'spacing':
+							$this->get_field_spacing($param_args);
+							break;
 					}
 					if(isset($param_args['help']) && !empty($param_args['help'])){
 						?>
@@ -862,6 +893,51 @@ class Aegis{
   		class="a_ui a_ui_textarea a_size_100p <?php echo esc_attr($class);?>"
   		rows="<?php echo esc_attr($rows); ?>"
   		autocomplete="off"><?php echo htmlspecialchars_decode(stripslashes($params['value'])); ?></textarea>
+  	<?php
+  }
+
+  public function get_field_spacing($params){
+		$params['value'] = isset($params['value']) ? $params['value'] : isset($params['default']) ? $params['default'] : array();
+
+		$params['value'] = wp_parse_args($params['value'], array(
+			'margin'  => array( 'top' => '', 'bottom' => '', 'left' => '', 'right' => ''),
+			'padding' => array( 'top' => '', 'bottom' => '', 'left' => '', 'right' => '')
+		));
+
+  	$positions = array('top', 'bottom', 'left', 'right');  	
+  	?>
+  	<div class="a_ui_spacing">
+  		<div class="a_ui_margin">
+  			<code><?php _e('Margin', 'aegis'); ?></code>
+  			<?php 
+  			foreach($positions as $position):
+					$_name  = sprintf('%s[margin][%s]', $params['name'], $position);
+					$_value = $params['value']['margin'][$position];
+  				?>
+  			  	<input
+	  			  	name="<?php echo esc_attr($_name); ?>" 
+	  			  	value="<?php echo esc_attr($_value); ?>" 
+	  			  	type="text" class="a_ui a_ui_text <?php echo esc_attr("a_position_{$position}"); ?>" autocomplete="off">
+  			<?php endforeach; ?>
+				  <div class="a_ui_padding">
+					  <code><?php _e('Padding', 'aegis'); ?></code>
+		  			<?php
+		  			foreach($positions as $position):
+							$_name  = sprintf('%s[padding][%s]', $params['name'], $position);
+							$_value = $params['value']['padding'][$position];
+		  				?>
+		  			 	<input 
+								name="<?php echo esc_attr($_name); ?>" 
+								value="<?php echo esc_attr($_value); ?>" 
+		  			 		type="text" class="a_ui a_ui_text <?php echo esc_attr("a_position_{$position}"); ?>" autocomplete="off">
+		  			<?php endforeach; ?>	
+
+		  			<div class="a_ui_element">
+		  				<i class="ti ti-package"></i>
+		  			</div>
+  			</div>		
+  		</div>
+  	</div>
   	<?php
   }
 
