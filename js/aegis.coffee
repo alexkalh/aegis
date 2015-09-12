@@ -8,6 +8,8 @@ a_media           = undefined
 
 
 jQuery(document).ready ->
+  jQuery('.tooltip').tooltipster();
+
   AegisUI.initColorPicker()
   AegisUI.initMediaCenter()
 
@@ -36,7 +38,8 @@ jQuery(window).load ->
 
 jQuery(document).ajaxSuccess ($) ->
   AegisUI.initColorPicker()
-  AegisUI.initMediaCenter()  
+  AegisUI.initMediaCenter()
+  jQuery('.tooltip').tooltipster();
   return  
 
 Aegis =
@@ -81,29 +84,44 @@ Aegis =
 
   initDialogGrid: ->
     jQuery('#a_modal_grid').dialog
-      title: aegis_json.i18n.elements    
-      width: 850
-      height: 480
+      title: aegis_json.i18n.layouts
+      dialogClass: 'a_fixed_dialog'
+      width: 900
+      height: 500
       modal: true
       autoOpen: false
+      create: (event, ui)->
+        widget = jQuery(this).dialog("widget")
+        jQuery(".ui-dialog-titlebar-close", widget).html '<i class="ti ti-close"></i>'
+        return      
     return
   
   initDialogWidgets: ->
     jQuery('#a_modal_widgets').dialog
-      title: aegis_json.i18n.elements    
-      width: 850
+      title: aegis_json.i18n.elements
+      dialogClass: 'a_fixed_dialog'
+      width: 900
       height: 500
       modal: true
       autoOpen: false
+      create: (event, ui)->
+        widget = jQuery(this).dialog("widget")
+        jQuery(".ui-dialog-titlebar-close", widget).html '<i class="ti ti-close"></i>'
+        return      
     return
 
   initDialogRowCustomize: ->
     jQuery('#a_modal_row_customize').dialog
-      title: aegis_json.i18n.row_customize    
-      width: 850
+      title: aegis_json.i18n.row_customize
+      dialogClass: 'a_fixed_dialog'
+      width: 900
       height: 500
       modal: true
       autoOpen: false
+      create: (event, ui)->
+        widget = jQuery(this).dialog("widget")
+        jQuery(".ui-dialog-titlebar-close", widget).html '<i class="ti ti-close"></i>'
+        return
       buttons:[
         {
           text: 'Save & Exit'
@@ -126,11 +144,16 @@ Aegis =
 
   initDialogSingleWidget: ->
     jQuery('#a_modal_single_widget').dialog
-      title: ''    
-      width: 850
+      title: ''
+      dialogClass: 'a_fixed_dialog'
+      width: 900
       height: 500
       modal: true
       autoOpen: false
+      create: (event, ui)->
+        widget = jQuery(this).dialog("widget")
+        jQuery(".ui-dialog-titlebar-close", widget).html '<i class="ti ti-close"></i>'
+        return      
       buttons:[
         {
           text: 'Save & Exit'
@@ -186,6 +209,7 @@ Aegis =
             column_wrap.html ''
             jQuery.each new_grid, (index_2, item_2) ->
               column_wrap.append Aegis.getColumnTemplate()
+              jQuery('.tooltip').tooltipster();
               return
             
             # add widget to first column
@@ -237,6 +261,7 @@ Aegis =
       Aegis.initSortableWidget()
       Aegis.initSortableColumn()
       Aegis.initSortableRow();
+      jQuery('.tooltip').tooltipster();
       return
 
     jQuery('#aegis_metabox').on 'click', '.a_row_close', (event)->
@@ -252,6 +277,7 @@ Aegis =
       a_current_row = jQuery(this).parents('.a_grid_item')
       row_id        = a_current_row.attr 'id'
       AegisAjax.getRowCustomizeForm(row_id)
+      jQuery('.tooltip').tooltipster();
       return
 
     return
@@ -285,10 +311,10 @@ Aegis =
   getRowTemplate: ->
     template = '<div id="' + Aegis.getRandomId(aegis_json.key.row + '_') + '" class="a_grid_item" data-index="0">'
     template += '<div class="a_header a_clearfix">'
-    template += '<span class="a_action a_hanle a_row_hanle a_pull_left"><i class="ti-split-v"></i></span>'
-    template += '<span class="a_action a_row_style a_pull_left"><i class="ti-layout-column3"></i></span>'         
-    template += '<span class="a_action a_close a_row_close a_pull_right"><i class="ti-trash"></i></span>'
-    template += '<span class="a_action a_row_customize a_pull_right"><i class="ti-paint-roller"></i></span>'
+    template += '<span class="a_action a_hanle a_row_hanle a_pull_left tooltip" title="' + aegis_json.i18n.drag_row_to_reorder + '"><i class="ti-split-v"></i></span>'
+    template += '<span class="a_action a_row_style a_pull_left tooltip" title="' + aegis_json.i18n.split_row_to_multi_columns + '"><i class="ti-layout-column3"></i></span>'         
+    template += '<span class="a_action a_row_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_row + '"><i class="ti-paint-roller"></i></span>'
+    template += '<span class="a_action a_close a_row_close a_pull_right tooltip" title="' + aegis_json.i18n.delete_this_row + '"><i class="ti-trash"></i></span>'    
     template += '</div>'
     template += '<div class="a_body a_clearfix">'
     template += '<div class="a_column_wrap a_row a_clearfix">'
@@ -302,9 +328,9 @@ Aegis =
     template = '<div id="' + Aegis.getRandomId(aegis_json.key.col + '_') + '" class="a_column_item_outer a_col_12" data-index="12">'
     template += '<div class="a_column_item">'
     template += '<div class="a_header a_clearfix">'
-    template += '<span class="a_action a_hanle a_column_hanle a_pull_left"><i class="ti-split-v"></i></span>'
-    template += '<span class="a_action a_column_add_widget a_pull_left"><i class="ti-package"></i></span>'
-    template += '<span class="a_action a_column_customize a_pull_right"><i class="ti-paint-roller"></i></span>'
+    template += '<span class="a_action a_hanle a_column_hanle a_pull_left tooltip" title="' + aegis_json.i18n.drag_column_to_reorder + '"><i class="ti-split-v"></i></span>'
+    template += '<span class="a_action a_column_add_widget a_pull_left tooltip" title="' + aegis_json.i18n.insert_new_widget_to_this_column + '"><i class="ti-package"></i></span>'
+    template += '<span class="a_action a_column_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_column + '"><i class="ti-paint-roller"></i></span>'
     template += '</div>'
     template += '<div class="a_block_wrap a_body a_clearfix">'
     template += '</div>'
@@ -341,13 +367,13 @@ AegisUI =
     jQuery('.a_ui_image').on 'click', '.a_image_add', (event)->
       event.preventDefault()
 
-      enliven_button_upload = jQuery this
+      a_button_upload = jQuery this
           
-      if (enliven_media)
-        enliven_media.open()
+      if (a_media)
+        a_media.open()
         return      
 
-      enliven_media = wp.media.frames.enliven_media = wp.media
+      a_media = wp.media.frames.a_media = wp.media
         title:  aegis_json.i18n.media_center
         button:
           text: aegis_json.i18n.use 
@@ -355,12 +381,12 @@ AegisUI =
           type: 'image'
         multiple: false               
 
-      enliven_media.on 'select', () ->
-        attachment = enliven_media.state().get('selection').first().toJSON()
-        enliven_button_upload.parents('.a_ui_image').find('.a_image_url').val attachment.url        
+      a_media.on 'select', () ->
+        attachment = a_media.state().get('selection').first().toJSON()
+        a_button_upload.parents('.a_ui_image').find('.a_image_url').val attachment.url        
         return        
 
-      enliven_media.open()
+      a_media.open()
 
       return  
 
