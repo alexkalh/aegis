@@ -1,6 +1,7 @@
 "use strict"
 
 a_current_row     = undefined
+a_current_col     = undefined
 a_current_sidebar = undefined
 a_current_widget  = undefined
 a_button_upload   = undefined
@@ -8,7 +9,7 @@ a_media           = undefined
 
 
 jQuery(document).ready ->
-  jQuery('.tooltip').tooltipster();
+  jQuery('.tooltip').tooltipster({multiple: true})
 
   AegisUI.initColorPicker()
   AegisUI.initMediaCenter()
@@ -21,6 +22,7 @@ jQuery(document).ready ->
   Aegis.initDialogWidgets()
   Aegis.initDialogSingleWidget()
   Aegis.initDialogRowCustomize()
+  Aegis.initDialogColCustomize()
 
   Aegis.initDialogGridAction()
   Aegis.initDialogSingleWidgetAction()
@@ -39,7 +41,7 @@ jQuery(window).load ->
 jQuery(document).ajaxSuccess ($) ->
   AegisUI.initColorPicker()
   AegisUI.initMediaCenter()
-  jQuery('.tooltip').tooltipster();
+  jQuery('.tooltip').tooltipster({multiple: true})
   return  
 
 Aegis =
@@ -142,6 +144,38 @@ Aegis =
     
     return
 
+  initDialogColCustomize: ->
+    jQuery('#a_modal_col_customize').dialog
+      title: aegis_json.i18n.col_customize
+      dialogClass: 'a_fixed_dialog'
+      width: 900
+      height: 500
+      modal: true
+      autoOpen: false
+      create: (event, ui)->
+        widget = jQuery(this).dialog("widget")
+        jQuery(".ui-dialog-titlebar-close", widget).html '<i class="ti ti-close"></i>'
+        return
+      buttons:[
+        {
+          text: aegis_json.i18n.save_and_exit
+          'class': 'a_button_save_and_exit button button-secondary'
+          click: ->
+            jQuery('#a_modal_col_customize').submit()
+            jQuery('#a_modal_col_customize').dialog 'close'
+            return
+        }
+        {
+          text: aegis_json.i18n.save
+          'class': 'a_button_save button button-secondary'
+          click: ->
+            jQuery('#a_modal_col_customize').submit()            
+            return
+        }
+      ]    
+    
+    return
+
   initDialogSingleWidget: ->
     jQuery('#a_modal_single_widget').dialog
       title: ''
@@ -209,7 +243,7 @@ Aegis =
             column_wrap.html ''
             jQuery.each new_grid, (index_2, item_2) ->
               column_wrap.append Aegis.getColumnTemplate()
-              jQuery('.tooltip').tooltipster();
+              jQuery('.tooltip').tooltipster({multiple: true})
               return
             
             # add widget to first column
@@ -261,7 +295,7 @@ Aegis =
       Aegis.initSortableWidget()
       Aegis.initSortableColumn()
       Aegis.initSortableRow();
-      jQuery('.tooltip').tooltipster();
+      jQuery('.tooltip').tooltipster({multiple: true})
       return
 
     jQuery('#aegis_metabox').on 'click', '.a_row_close', (event)->
@@ -277,7 +311,6 @@ Aegis =
       a_current_row = jQuery(this).parents('.a_grid_item')
       row_id        = a_current_row.attr 'id'
       AegisAjax.getRowCustomizeForm(row_id)
-      jQuery('.tooltip').tooltipster();
       return
 
     return
@@ -287,6 +320,14 @@ Aegis =
       a_current_sidebar = jQuery(this).parents('.a_column_item').find('.a_block_wrap')
       jQuery('#a_modal_widgets').dialog 'open'
       return
+
+    jQuery('#aegis_metabox').on 'click', '.a_col_customize', (event)->
+      event.preventDefault()      
+      a_current_col = jQuery(this).parents('.a_column_item_outer')
+      col_id        = a_current_col.attr 'id'
+      AegisAjax.getColCustomizeForm(col_id)
+      return
+
     return
 
   initWidgetAction: ->
@@ -313,7 +354,7 @@ Aegis =
     template += '<div class="a_header a_clearfix">'
     template += '<span class="a_action a_hanle a_row_hanle a_pull_left tooltip" title="' + aegis_json.i18n.drag_row_to_reorder + '"><i class="ti-split-v"></i></span>'
     template += '<span class="a_action a_row_style a_pull_left tooltip" title="' + aegis_json.i18n.split_row_to_multi_columns + '"><i class="ti-layout-column3"></i></span>'         
-    template += '<span class="a_action a_row_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_row + '"><i class="ti-paint-roller"></i></span>'
+    template += '<span class="a_action a_row_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_row + '"><i class="ti-pencil"></i></span>'
     template += '<span class="a_action a_close a_row_close a_pull_right tooltip" title="' + aegis_json.i18n.delete_this_row + '"><i class="ti-trash"></i></span>'    
     template += '</div>'
     template += '<div class="a_body a_clearfix">'
@@ -330,7 +371,7 @@ Aegis =
     template += '<div class="a_header a_clearfix">'
     template += '<span class="a_action a_hanle a_column_hanle a_pull_left tooltip" title="' + aegis_json.i18n.drag_column_to_reorder + '"><i class="ti-split-v"></i></span>'
     template += '<span class="a_action a_column_add_widget a_pull_left tooltip" title="' + aegis_json.i18n.insert_new_widget_to_this_column + '"><i class="ti-package"></i></span>'
-    template += '<span class="a_action a_column_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_column + '"><i class="ti-paint-roller"></i></span>'
+    template += '<span class="a_action a_column_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_column + '"><i class="ti-pencil"></i></span>'
     template += '</div>'
     template += '<div class="a_block_wrap a_body a_clearfix">'
     template += '</div>'
@@ -356,7 +397,14 @@ Aegis =
         return
     return
 
-AegisUI = 
+AegisUI =
+  alert: (message) ->
+    jQuery.amaran
+      message: message
+      position: 'bottom right'
+      inEffect: 'slideRight'
+    return
+
   initColorPicker: () ->
     color_pickers = jQuery('input.a_ui_color')
     if(color_pickers.length)
@@ -448,14 +496,9 @@ AegisAjax =
         action: 'aegis_save_all'
         security: jQuery('#aegis_save_all_security').val()
         post_id: parseInt(jQuery('#post_ID').val())
-      success: (data, textStatus, jqXHR) ->    
-        noty
-          text: data
-          theme: 'relax'
-          layout: 'bottomRight'          
-          type: 'success'
-          timeout: 1000          
-        return    
+      success: (responseText, textStatus, jqXHR) ->    
+        #NOTY        
+        AegisUI.alert(responseText)
 
     return
 
@@ -484,14 +527,41 @@ AegisAjax =
     form.ajaxSubmit
       success: (responseText, statusText, xhr, $form) ->
         if responseText
-          noty
-            text: responseText
-            theme: 'relax'
-            layout: 'bottomRight'          
-            type: 'success'
-            timeout: 1000            
+          #NOTY          
+          AegisUI.alert(responseText)       
         return    
     return
+
+  getColCustomizeForm: (col_id)->
+    if(a_current_col)
+      jQuery.ajax
+        url: aegis_json.ajax
+        dataType: "html"
+        type: 'POST'
+        async: true
+        data:                
+          action: 'aegis_get_col_customize_form'
+          security: jQuery('#aegis_get_col_customize_form_security').val()
+          post_id: parseInt(jQuery('#post_ID').val())
+          col_id: col_id
+        success: (data, textStatus, jqXHR) ->
+          jQuery('#a_modal_col_customize .a_col_customize_form').html data
+          jQuery('#a_modal_col_customize input[name=a_col_id]').val col_id
+          jQuery('#a_modal_col_customize').dialog 'open'
+          return
+
+    return
+
+  saveColCustomize: (event, form) ->
+    event.preventDefault()
+    form.ajaxSubmit
+      success: (responseText, statusText, xhr, $form) ->
+        if responseText
+          #NOTY
+          AegisUI.alert(responseText)
+        return    
+    return
+
 
   getWidgetForm: (widget_id, widget_title, widget_class_name) ->
     if(a_current_sidebar)

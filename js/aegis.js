@@ -1,7 +1,9 @@
 "use strict";
-var Aegis, AegisAjax, AegisUI, a_button_upload, a_current_row, a_current_sidebar, a_current_widget, a_media;
+var Aegis, AegisAjax, AegisUI, a_button_upload, a_current_col, a_current_row, a_current_sidebar, a_current_widget, a_media;
 
 a_current_row = void 0;
+
+a_current_col = void 0;
 
 a_current_sidebar = void 0;
 
@@ -12,7 +14,9 @@ a_button_upload = void 0;
 a_media = void 0;
 
 jQuery(document).ready(function() {
-  jQuery('.tooltip').tooltipster();
+  jQuery('.tooltip').tooltipster({
+    multiple: true
+  });
   AegisUI.initColorPicker();
   AegisUI.initMediaCenter();
   Aegis.initSortableWidget();
@@ -22,6 +26,7 @@ jQuery(document).ready(function() {
   Aegis.initDialogWidgets();
   Aegis.initDialogSingleWidget();
   Aegis.initDialogRowCustomize();
+  Aegis.initDialogColCustomize();
   Aegis.initDialogGridAction();
   Aegis.initDialogSingleWidgetAction();
   Aegis.initGridAction();
@@ -36,7 +41,9 @@ jQuery(window).load(function() {});
 jQuery(document).ajaxSuccess(function($) {
   AegisUI.initColorPicker();
   AegisUI.initMediaCenter();
-  jQuery('.tooltip').tooltipster();
+  jQuery('.tooltip').tooltipster({
+    multiple: true
+  });
 });
 
 Aegis = {
@@ -140,6 +147,37 @@ Aegis = {
       ]
     });
   },
+  initDialogColCustomize: function() {
+    jQuery('#a_modal_col_customize').dialog({
+      title: aegis_json.i18n.col_customize,
+      dialogClass: 'a_fixed_dialog',
+      width: 900,
+      height: 500,
+      modal: true,
+      autoOpen: false,
+      create: function(event, ui) {
+        var widget;
+        widget = jQuery(this).dialog("widget");
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>');
+      },
+      buttons: [
+        {
+          text: aegis_json.i18n.save_and_exit,
+          'class': 'a_button_save_and_exit button button-secondary',
+          click: function() {
+            jQuery('#a_modal_col_customize').submit();
+            jQuery('#a_modal_col_customize').dialog('close');
+          }
+        }, {
+          text: aegis_json.i18n.save,
+          'class': 'a_button_save button button-secondary',
+          click: function() {
+            jQuery('#a_modal_col_customize').submit();
+          }
+        }
+      ]
+    });
+  },
   initDialogSingleWidget: function() {
     jQuery('#a_modal_single_widget').dialog({
       title: '',
@@ -199,7 +237,9 @@ Aegis = {
             column_wrap.html('');
             jQuery.each(new_grid, function(index_2, item_2) {
               column_wrap.append(Aegis.getColumnTemplate());
-              jQuery('.tooltip').tooltipster();
+              jQuery('.tooltip').tooltipster({
+                multiple: true
+              });
             });
             if (temp_blocks.length) {
               temp_blocks.appendTo(column_wrap.find('.a_column_item_outer .a_block_wrap').first());
@@ -247,7 +287,9 @@ Aegis = {
       Aegis.initSortableWidget();
       Aegis.initSortableColumn();
       Aegis.initSortableRow();
-      jQuery('.tooltip').tooltipster();
+      jQuery('.tooltip').tooltipster({
+        multiple: true
+      });
     });
     jQuery('#aegis_metabox').on('click', '.a_row_close', function(event) {
       var answer;
@@ -264,13 +306,19 @@ Aegis = {
       a_current_row = jQuery(this).parents('.a_grid_item');
       row_id = a_current_row.attr('id');
       AegisAjax.getRowCustomizeForm(row_id);
-      jQuery('.tooltip').tooltipster();
     });
   },
   initColumnAction: function() {
     jQuery('#aegis_metabox').on('click', '.a_column_add_widget', function() {
       a_current_sidebar = jQuery(this).parents('.a_column_item').find('.a_block_wrap');
       jQuery('#a_modal_widgets').dialog('open');
+    });
+    jQuery('#aegis_metabox').on('click', '.a_col_customize', function(event) {
+      var col_id;
+      event.preventDefault();
+      a_current_col = jQuery(this).parents('.a_column_item_outer');
+      col_id = a_current_col.attr('id');
+      AegisAjax.getColCustomizeForm(col_id);
     });
   },
   initWidgetAction: function() {
@@ -299,7 +347,7 @@ Aegis = {
     template += '<div class="a_header a_clearfix">';
     template += '<span class="a_action a_hanle a_row_hanle a_pull_left tooltip" title="' + aegis_json.i18n.drag_row_to_reorder + '"><i class="ti-split-v"></i></span>';
     template += '<span class="a_action a_row_style a_pull_left tooltip" title="' + aegis_json.i18n.split_row_to_multi_columns + '"><i class="ti-layout-column3"></i></span>';
-    template += '<span class="a_action a_row_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_row + '"><i class="ti-paint-roller"></i></span>';
+    template += '<span class="a_action a_row_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_row + '"><i class="ti-pencil"></i></span>';
     template += '<span class="a_action a_close a_row_close a_pull_right tooltip" title="' + aegis_json.i18n.delete_this_row + '"><i class="ti-trash"></i></span>';
     template += '</div>';
     template += '<div class="a_body a_clearfix">';
@@ -317,7 +365,7 @@ Aegis = {
     template += '<div class="a_header a_clearfix">';
     template += '<span class="a_action a_hanle a_column_hanle a_pull_left tooltip" title="' + aegis_json.i18n.drag_column_to_reorder + '"><i class="ti-split-v"></i></span>';
     template += '<span class="a_action a_column_add_widget a_pull_left tooltip" title="' + aegis_json.i18n.insert_new_widget_to_this_column + '"><i class="ti-package"></i></span>';
-    template += '<span class="a_action a_column_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_column + '"><i class="ti-paint-roller"></i></span>';
+    template += '<span class="a_action a_column_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_column + '"><i class="ti-pencil"></i></span>';
     template += '</div>';
     template += '<div class="a_block_wrap a_body a_clearfix">';
     template += '</div>';
@@ -348,6 +396,13 @@ Aegis = {
 };
 
 AegisUI = {
+  alert: function(message) {
+    jQuery.amaran({
+      message: message,
+      position: 'bottom right',
+      inEffect: 'slideRight'
+    });
+  },
   initColorPicker: function() {
     var color_pickers;
     color_pickers = jQuery('input.a_ui_color');
@@ -442,14 +497,8 @@ AegisAjax = {
         security: jQuery('#aegis_save_all_security').val(),
         post_id: parseInt(jQuery('#post_ID').val())
       },
-      success: function(data, textStatus, jqXHR) {
-        noty({
-          text: data,
-          theme: 'relax',
-          layout: 'bottomRight',
-          type: 'success',
-          timeout: 1000
-        });
+      success: function(responseText, textStatus, jqXHR) {
+        return AegisUI.alert(responseText);
       }
     });
   },
@@ -479,13 +528,38 @@ AegisAjax = {
     form.ajaxSubmit({
       success: function(responseText, statusText, xhr, $form) {
         if (responseText) {
-          noty({
-            text: responseText,
-            theme: 'relax',
-            layout: 'bottomRight',
-            type: 'success',
-            timeout: 1000
-          });
+          AegisUI.alert(responseText);
+        }
+      }
+    });
+  },
+  getColCustomizeForm: function(col_id) {
+    if (a_current_col) {
+      jQuery.ajax({
+        url: aegis_json.ajax,
+        dataType: "html",
+        type: 'POST',
+        async: true,
+        data: {
+          action: 'aegis_get_col_customize_form',
+          security: jQuery('#aegis_get_col_customize_form_security').val(),
+          post_id: parseInt(jQuery('#post_ID').val()),
+          col_id: col_id
+        },
+        success: function(data, textStatus, jqXHR) {
+          jQuery('#a_modal_col_customize .a_col_customize_form').html(data);
+          jQuery('#a_modal_col_customize input[name=a_col_id]').val(col_id);
+          jQuery('#a_modal_col_customize').dialog('open');
+        }
+      });
+    }
+  },
+  saveColCustomize: function(event, form) {
+    event.preventDefault();
+    form.ajaxSubmit({
+      success: function(responseText, statusText, xhr, $form) {
+        if (responseText) {
+          AegisUI.alert(responseText);
         }
       }
     });

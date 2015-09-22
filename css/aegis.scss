@@ -66,7 +66,7 @@
 }
 
 #a_modal_widgets{
-    margin: 20px auto;
+    margin: 0px auto;
     padding: 10px;    
     
     .a_item{
@@ -74,8 +74,8 @@
         &:hover,
         &.active{
             border-color: $color_1;
-            .a_header{
-                border-bottom-color: $color_1;
+            .a_header{                
+                border-bottom-color: $color_1;     
             }
         }
     }
@@ -100,7 +100,7 @@
         font-size: 10px;  
     }
     .a_icon{                
-        font-size: 30px;
+        font-size: 18px;
         color: $color_1;        
     }
     .a_title{
@@ -346,14 +346,7 @@
 }
 
 .a_block{
-    border-left: 1px solid #fbc02d;
-    border-right: 1px solid #fbc02d;
-    border-bottom: 1px solid #fbc02d;
-    .a_header{
-        margin-left: -1px;
-        margin-right: -1px;
-    }
     .a_body{
-        background-color: #ffeb3b;
+        background-color: #f0f0f0;
     }
 }

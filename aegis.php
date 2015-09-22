@@ -41,6 +41,8 @@ class Aegis {
             add_action('wp_ajax_aegis_save_all', array($this, 'save_all'));
             add_action('wp_ajax_aegis_get_row_customize_form', array($this, 'get_row_customize_form'));
             add_action('wp_ajax_aegis_save_row_customize_form', array($this, 'save_row_customize_form'));
+            add_action('wp_ajax_aegis_get_col_customize_form', array($this, 'get_col_customize_form'));
+            add_action('wp_ajax_aegis_save_col_customize_form', array($this, 'save_col_customize_form'));
         }
 
         add_shortcode('aegis_site_url', array($this, 'get_site_url'));
@@ -70,7 +72,7 @@ class Aegis {
     }
 
     public static function get_meta_key_col() {
-        return apply_filters('aegis_get_meta_key_row_customize', 'aegis_col');
+        return apply_filters('aegis_get_meta_key_col_customize', 'aegis_col');
     }
 
     public static function get_meta_key_row() {
@@ -101,10 +103,10 @@ class Aegis {
             wp_enqueue_script('jquery-ui-draggable');
             wp_enqueue_script('jquery-ui-droppable');
             wp_enqueue_script('thickbox');
-            wp_enqueue_script('wp-color-picker');
-            wp_enqueue_script('jquery-noty', plugins_url('js/jquery.noty.js', __FILE__), array('jquery'), NULL, true);
+            wp_enqueue_script('wp-color-picker');            
             wp_enqueue_script('jquery-tooltipster', plugins_url('js/jquery.tooltipster.js', __FILE__), array('jquery'), NULL, true);
-            wp_enqueue_script('aegis', plugins_url('js/aegis.js', __FILE__), array('jquery', 'jquery-noty'), NULL, true);
+            wp_enqueue_script('jquery-amaran', plugins_url('js/jquery.amaran.js', __FILE__), array('jquery'), NULL, true);
+            wp_enqueue_script('aegis', plugins_url('js/aegis.js', __FILE__), array('jquery'), NULL, true);
             wp_localize_script('aegis', 'aegis_json', array(
                 'directory_uri' => AEGIS_DIR_URL,
                 'ajax' => admin_url('admin-ajax.php'),
@@ -112,6 +114,7 @@ class Aegis {
                     'layouts'                          => __('Layouts', 'aegis'),
                     'elements'                         => __('Elements', 'aegis'),
                     'row_customize'                    => __('Row customize', 'aegis'),
+                    'col_customize'                    => __('Column customize', 'aegis'),
                     'media_center'                     => __('Media center', 'aegis'),
                     'use'                              => __('Use', 'aegis'),
                     'drag_row_to_reorder'              => __('Drag row to reorder', 'aegis'),
@@ -123,7 +126,9 @@ class Aegis {
                     'edit_this_column'                 => __('Edit this column', 'aegis'),
                     'drag_widget_to_reorder'           => __('Drag widget to reorder', 'aegis'),
                     'delete_this_widget'               => __('Delete this widget', 'aegis'),
-                    'edit_this_widget'                 => __('Edit this widget', 'aegis')
+                    'edit_this_widget'                 => __('Edit this widget', 'aegis'),
+                    'save_and_exit'                    => __('Save & Exit', 'aegis'),
+                    'save'                             => __('Save', 'aegis'),
                 ),
                 'layouts' => $this->get_grid(),
                 'key' => array(
@@ -139,13 +144,16 @@ class Aegis {
             wp_enqueue_style('themify-icons', plugins_url('css/themify-icons.css', __FILE__), array(), NULL);
             wp_enqueue_style('jquery-ui-structure', plugins_url('css/jquery-ui/jquery-ui.structure.css', __FILE__), array(), NULL);
             wp_enqueue_style('jquery-ui-theme', plugins_url('css/jquery-ui/jquery-ui.theme.css', __FILE__), array(), NULL);
-            wp_enqueue_style('jquery-tooltipster', plugins_url('css/tooltipster.css', __FILE__), array(), NULL);
+            wp_enqueue_style('jquery-tooltipster', plugins_url('css/jquery.tooltipster.css', __FILE__), array(), NULL);
+            wp_enqueue_style('animate', plugins_url('css/animate.css', __FILE__), array(), NULL);
+            wp_enqueue_style('jquery-amaran', plugins_url('css/jquery.amaran.css', __FILE__), array(), NULL);
             wp_enqueue_style('aegis', plugins_url('css/aegis.css', __FILE__), array(), NULL);
         }
     }
 
     public function admin_footer() {
         wp_nonce_field('aegis_get_row_customize_form', 'aegis_get_row_customize_form_security', false);
+        wp_nonce_field('aegis_get_col_customize_form', 'aegis_get_col_customize_form_security', false);
         wp_nonce_field('aegis_get_widget_form', 'aegis_get_widget_form_security', false);
         wp_nonce_field('aegis_remove_widget', 'aegis_remove_widget_security', false);
         wp_nonce_field('aegis_save_all', 'aegis_save_all_security', false);
@@ -162,8 +170,6 @@ class Aegis {
         wp_nonce_field('aegis_nonce', 'aegis_nonce');
         ?>
         <div class="a_wrap a_clearfix">
-
-
 
             <div class="a_row_wrap a_body a_clearfix">
                 <?php
@@ -188,7 +194,7 @@ class Aegis {
                                     $row_customize_fields = apply_filters('aegis_get_row_customize_fields', array());
                                     if ($row_customize_fields):
                                         ?>
-                                        <span class="a_action a_row_customize a_pull_left tooltip" title="<?php _e('Edit this row', 'aegis'); ?>"><i class="ti-paint-roller"></i></span>
+                                        <span class="a_action a_row_customize a_pull_left tooltip" title="<?php _e('Edit this row', 'aegis'); ?>"><i class="ti-pencil"></i></span>
                                     <?php endif; ?>
                                     <span class="a_action a_close a_row_close a_pull_right tooltip"  title="<?php _e('Delete this row', 'aegis'); ?>"><i class="ti-trash"></i></span>
 
@@ -213,7 +219,7 @@ class Aegis {
                                                             $col_customize_fields = apply_filters('aegis_get_col_customize_fields', array());
                                                             if ($col_customize_fields):
                                                                 ?>
-                                                                <span class="a_action a_column_customize a_pull_left tooltip" title="<?php _e('Edit this column', 'aegis'); ?>"><i class="ti-paint-roller"></i></span>
+                                                                <span class="a_action a_col_customize a_pull_left tooltip" title="<?php _e('Edit this column', 'aegis'); ?>"><i class="ti-pencil"></i></span>
                                                             <?php endif; ?>
                                                         </div>
                                                         <div class="a_block_wrap a_body a_clearfix">
@@ -325,44 +331,110 @@ class Aegis {
                     <?php endif; ?>
 
                     <div id="a_modal_widgets" class="a_wrap a_clearfix">
-                        <div class="a_row a_clearfix">
+                        
+                        <?php
+                        $widgets = $wp_widget_factory->widgets;                    
+                        $widgets = apply_filters('aegis_get_list_of_widgets', $widgets);
+
+                        $blocks = array();
+
+                        foreach ($widgets as $class_name => $widget_info){
+
+                            if (isset($widget_info->aegis_tab) && !empty($widget_info->aegis_tab)){
+                                $tab_slug = $widget_info->aegis_tab;
+                            }else{
+                                if(strpos(strtolower($widget_info->name), 'bbpress')){
+                                    $tab_slug = 'bbpress';
+                                }else if (strpos(strtolower($widget_info->name), 'commerce')){
+                                    $tab_slug = 'product';
+                                }else{
+                                    $tab_slug = 'widgets';
+                                }                               
+                            }
+                                                             
+                            if(!isset($blocks[$tab_slug])){
+                                $blocks[$tab_slug]['title'] = $this->str_beautify($tab_slug);                           
+                            }
+
+                            $blocks[$tab_slug]['items'][$class_name] = $widget_info;
+                        }
+
+                        ksort($blocks);
+
+                        ?>
+                        <div class="a_tabs">
+                            <nav class="a_nav">
+                                <ul class="a_clearfix">
+                                    <?php
+                                    $is_first = true;
+                                    foreach ($blocks as $tab_slug => $tab):
+                                        $tab_id    = "#aegis_tab_block_{$tab_slug}";
+                                        $tab_class = $is_first ? 'a_tab_item a_first a_active' : 'a_tab_item';
+                                        ?>
+                                        <li class="<?php echo esc_attr($tab_class); ?>">
+                                            <span data-tab-id="<?php echo esc_attr($tab_id); ?>"><?php echo esc_attr($tab['title']); ?></span>
+                                        </li>
+                                        <?php
+                                        $is_first = false;
+                                    endforeach;
+                                    ?>
+                                </ul>
+                            </nav>
+
                             <?php
-                            $widgets = $wp_widget_factory->widgets;
-                            $index = 0;
-                            foreach ($widgets as $class_name => $widget_info):
+
+                            $is_first = true;
+                            foreach ($blocks as $tab_slug => $tab):
+                                $index     = 0;
+                                $tab_id    = "aegis_tab_block_{$tab_slug}";
+                                $tab_class = $is_first ? 'a_tab_content a_first a_active' : 'a_tab_content a_hide';
                                 ?>
-                                <div class="a_col_4">
-                                    <div class="a_item">
+                                <div id="<?php echo esc_attr($tab_id); ?>" class="<?php echo esc_attr($tab_class); ?>">                               
+                                    <div class="a_row a_clearfix">
+                                        <?php
+                                        $widgets = $tab['items'];
 
-                                        <input type="hidden" name="a_widget_class_name" value="<?php echo esc_attr($class_name); ?>" autocomplete="off">
-                                        <input type="hidden" name="a_widget_title" value="<?php echo esc_attr($widget_info->name); ?>" autocomplete="off">
-
-                                        <div class="a_header a_clearfix">                    
-                                            <?php
-                                            $icon = 'ti-wordpress';
-                                            if (isset($widget_info->icon) && !empty($widget_info->icon)) {
-                                                $icon = $widget_info->icon;
-                                            }
+                                        foreach ($widgets as $class_name => $widget_info):
                                             ?>
+                                            <div class="a_col_4">
+                                                <div class="a_item">
 
-                                            <span class="a_title a_pull_left"><?php echo $widget_info->name; ?></span>
+                                                    <input type="hidden" name="a_widget_class_name" value="<?php echo esc_attr($class_name); ?>" autocomplete="off">
+                                                    <input type="hidden" name="a_widget_title" value="<?php echo esc_attr($widget_info->name); ?>" autocomplete="off">
 
-                                            <span class="a_icon a_pull_right">
-                                                <i class="<?php echo esc_attr($icon); ?>"></i>
-                                            </span>                    
-                                        </div>
+                                                    <div class="a_header a_clearfix">                    
+                                                        <?php
+                                                        $icon = 'ti-wordpress';
+                                                        if (isset($widget_info->icon) && !empty($widget_info->icon)) {
+                                                            $icon = $widget_info->icon;
+                                                        }
+                                                        ?>
 
-                                        <div class="a_body a_clearfix">	                    
-                                            <?php echo esc_attr($widget_info->widget_options['description']); ?>	                    
-                                        </div>                              
+                                                        <span class="a_title a_pull_left"><?php echo $widget_info->name; ?></span>
+
+                                                        <span class="a_icon a_pull_right">
+                                                            <i class="<?php echo esc_attr($icon); ?>"></i>
+                                                        </span>                    
+                                                    </div>
+
+                                                    <div class="a_body a_clearfix">                     
+                                                        <?php echo esc_attr($widget_info->widget_options['description']); ?>                        
+                                                    </div>                              
+                                                </div>
+                                            </div>
+                                            <?php
+                                            $index++;
+                                            if (0 == $index % 3) {
+                                                echo '</div>';
+                                                echo '<div class="a_row a_clearfix">';
+                                            }
+                                        endforeach;
+
+                                        ?>
                                     </div>
                                 </div>
                                 <?php
-                                $index++;
-                                if (0 == $index % 3) {
-                                    echo '</div>';
-                                    echo '<div class="a_row a_clearfix">';
-                                }
+                                $is_first = false;
                             endforeach;
                             ?>
                         </div>
@@ -389,7 +461,7 @@ class Aegis {
 
                     <form id="a_modal_row_customize"
                           class="a_wrap a_clearfix"
-                          name="a_form_single_widget"
+                          name="a_form_single_row"
                           method="POST"
                           autocomplete="off"
                           onsubmit="AegisAjax.saveRowCustomize(event, jQuery(this));"
@@ -398,6 +470,21 @@ class Aegis {
                         <input type="hidden" name="a_row_id" value="" autocomplete="off">
                         <input type="hidden" name="a_post_id" value="<?php echo $post->ID; ?>" autocomplete="off">
                         <div class="a_row_customize_form a_tabs"></div>					
+                    </form>
+
+                    <?php $form_action = wp_nonce_url(admin_url('admin-ajax.php'), 'aegis_save_col_customize_form', 'security'); ?>
+
+                    <form id="a_modal_col_customize"
+                          class="a_wrap a_clearfix"
+                          name="a_form_single_col"
+                          method="POST"
+                          autocomplete="off"
+                          onsubmit="AegisAjax.saveColCustomize(event, jQuery(this));"
+                          action="<?php echo esc_url($form_action); ?>">
+                        <input type="hidden" name="action" value="aegis_save_col_customize_form" autocomplete="off">
+                        <input type="hidden" name="a_col_id" value="" autocomplete="off">
+                        <input type="hidden" name="a_post_id" value="<?php echo $post->ID; ?>" autocomplete="off">
+                        <div class="a_col_customize_form a_tabs"></div>                 
                     </form>
 
                 </div>
@@ -538,6 +625,96 @@ class Aegis {
 
                     update_post_meta($post_id, $row_id, $data);
                 }
+                $return = __('All data has been saved !', 'aegis');
+            }
+        }
+
+        echo $return;
+        exit();
+    }
+
+    public function get_col_customize_form(){
+        check_ajax_referer('aegis_get_col_customize_form', 'security');
+
+        $col_id  = isset($_POST['col_id']) ? $_POST['col_id'] : false;
+        $post_id = isset($_POST['post_id']) ? (int) $_POST['post_id'] : false;
+
+        $customize_key = self::get_meta_key_col();
+        $customize_fields = apply_filters('aegis_get_col_customize_fields', array());
+
+        if ($customize_fields):
+            $customize_data = array();
+            if ($col_id) {
+                $customize_data = get_post_meta($post_id, $col_id, true);
+            }
+            ?>
+            <nav class="a_nav">
+                <ul class="a_clearfix">
+                    <?php
+                    $is_first = true;
+                    foreach ($customize_fields as $tab_slug => $tab):
+                        $tab_id = "#aegis_tab_col_{$tab_slug}";
+                        $tab_class = $is_first ? 'a_tab_item a_first a_active' : 'a_tab_item';
+                        ?>
+                        <li class="<?php echo esc_attr($tab_class); ?>">
+                            <span data-tab-id="<?php echo esc_attr($tab_id); ?>"><?php echo esc_attr($tab['title']); ?></span>
+                        </li>
+                        <?php
+                        $is_first = false;
+                    endforeach;
+                    ?>
+                </ul>
+            </nav>
+
+            <?php
+            $is_first = true;
+            foreach ($customize_fields as $tab_slug => $tab):
+                $tab_id = "aegis_tab_col_{$tab_slug}";
+                $tab_class = $is_first ? 'a_tab_content a_first a_active' : 'a_tab_content a_hide';
+                ?>
+                <div id="<?php echo esc_attr($tab_id); ?>" class="<?php echo esc_attr($tab_class); ?>">
+                    <?php
+                    foreach ($tab['params'] as $param_key => $param_args):
+                        $param_args['name'] = sprintf('%s[%s][%s]', $customize_key, $tab_slug, $param_key);
+                        $param_args['value'] = isset($customize_data[$tab_slug][$param_key]) ? $customize_data[$tab_slug][$param_key] : (isset($param_args['default']) ? $param_args['default'] : null);
+                        $this->get_control($param_args);
+                    endforeach;
+                    ?>
+                </div>
+                <?php
+                $is_first = false;
+            endforeach;
+        endif;
+
+        exit();
+    }
+
+    public function save_col_customize_form(){
+        check_ajax_referer('aegis_save_col_customize_form', 'security');
+        $return = '';
+
+        if (!empty($_POST)) {
+            $customize_key    = self::get_meta_key_col();
+            $customize_fields = apply_filters('aegis_get_col_customize_fields', array());
+
+            
+            if ($customize_key) {
+
+                $col_id = isset($_POST['a_col_id']) ? $_POST['a_col_id'] : false;
+                $post_id = isset($_POST['a_post_id']) ? (int) $_POST['a_post_id'] : false;
+                $data = isset($_POST[$customize_key]) ? $_POST[$customize_key] : array();
+
+                if ($data) {
+                    foreach ($customize_fields as $tab_slug => $tab) {
+                        foreach ($tab['params'] as $param_key => $param_args) {
+                            $new_value = isset($data[$tab_slug][$param_key]) ? $data[$tab_slug][$param_key] : null;
+                            $data[$tab_slug][$param_key] = $this->esc_data($param_args, $new_value);
+                        }
+                    }                    
+
+                    update_post_meta($post_id, $col_id, $data);
+                }
+
                 $return = __('All data has been saved !', 'aegis');
             }
         }
@@ -801,12 +978,16 @@ class Aegis {
     }
 
     public function get_field_text($params) {
+        $class = 'a_size_50p';
+        if(isset($params['class'])){
+            $class = $params['class'];
+        }
         ?>
         <input
             name="<?php echo esc_attr($params['name']); ?>"
             value="<?php echo esc_attr($params['value']); ?>"
             type="text"
-            class="a_ui a_ui_text a_size_50p"
+            class="a_ui a_ui_text <?php echo esc_attr($class); ?>"
             autocomplete="off">
             <?php
         }
