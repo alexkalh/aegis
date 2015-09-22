@@ -2,7 +2,7 @@
 /*
 Plugin Name: Aegis
 Plugin URI: http://colourstheme.com/plugins/aegis-page-builder
-Description: With "Aegis" you can build your site quickly and smarty.
+Description: Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder. Your content will accurately adapt to all mobile devices, ensuring your site is mobile-ready.
 Version: 1.0.0
 Author: Colours Theme
 Author URI: http://colourstheme.com
