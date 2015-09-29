@@ -83,9 +83,11 @@ class Aegis {
         return apply_filters('aegis_get_meta_key_widget', 'aegis_widget');
     }
 
-    public function admin_init() {
-        
+    public static function get_meta_key_is_cache() {
+        return apply_filters('aegis_get_meta_key_is_cache', 'aegis_is_cache');
     }
+
+    public function admin_init() {}
 
     public function admin_enqueue_scripts($hook) {
 
@@ -188,15 +190,15 @@ class Aegis {
                             <div id="<?php echo esc_attr($row['id']); ?>" class="a_grid_item" data-index="<?php echo esc_attr($grid_index); ?>">
                                 <div class="a_header a_clearfix">
                                     
-                                    <span class="a_action a_hanle a_row_hanle a_pull_left tooltip" title="<?php _e('Drag row to reorder', 'aegis'); ?>"><i class="ti-split-v"></i></span>
-                                    <span class="a_action a_row_style a_pull_left tooltip" title="<?php _e('Split row to multi columns', 'aegis'); ?>"><i class="ti-layout-column3"></i></span>                                           
+                                    <span class="a_action a_hanle a_row_hanle a_pull_left tooltip" title="<?php esc_attr_e('Drag row to reorder', 'aegis'); ?>"><i class="ti-split-v"></i></span>
+                                    <span class="a_action a_row_style a_pull_left tooltip" title="<?php esc_attr_e('Split row to multi columns', 'aegis'); ?>"><i class="ti-layout-column3"></i></span>                                           
                                     <?php
                                     $row_customize_fields = apply_filters('aegis_get_row_customize_fields', array());
                                     if ($row_customize_fields):
                                         ?>
-                                        <span class="a_action a_row_customize a_pull_left tooltip" title="<?php _e('Edit this row', 'aegis'); ?>"><i class="ti-pencil"></i></span>
+                                        <span class="a_action a_row_customize a_pull_left tooltip" title="<?php esc_attr_e('Edit this row', 'aegis'); ?>"><i class="ti-pencil"></i></span>
                                     <?php endif; ?>
-                                    <span class="a_action a_close a_row_close a_pull_right tooltip"  title="<?php _e('Delete this row', 'aegis'); ?>"><i class="ti-trash"></i></span>
+                                    <span class="a_action a_close a_row_close a_pull_right tooltip"  title="<?php esc_attr_e('Delete this row', 'aegis'); ?>"><i class="ti-trash"></i></span>
 
                                 </div>
                                 <div class="a_body a_clearfix">
@@ -212,14 +214,14 @@ class Aegis {
                                                 <div id="<?php echo esc_attr($col['id']); ?>" class="a_column_item_outer <?php echo esc_attr("a_col_{$col_index}"); ?>" data-index="<?php echo esc_attr($col_index); ?>">
                                                     <div class="a_column_item">
                                                         <div class="a_header a_clearfix">
-                                                            <span class="a_action a_hanle a_column_hanle a_pull_left tooltip" title="<?php _e('Drag column to reorder', 'aegis'); ?>"><i class="ti-split-v"></i></span>
-                                                            <span class="a_action a_column_add_widget a_pull_left tooltip" title="<?php _e('Insert new widget to this column', 'aegis'); ?>"><i class="ti-package"></i></span>
+                                                            <span class="a_action a_hanle a_column_hanle a_pull_left tooltip" title="<?php esc_attr_e('Drag column to reorder', 'aegis'); ?>"><i class="ti-split-v"></i></span>
+                                                            <span class="a_action a_column_add_widget a_pull_left tooltip" title="<?php esc_attr_e('Insert new widget to this column', 'aegis'); ?>"><i class="ti-package"></i></span>
 
                                                             <?php
                                                             $col_customize_fields = apply_filters('aegis_get_col_customize_fields', array());
                                                             if ($col_customize_fields):
                                                                 ?>
-                                                                <span class="a_action a_col_customize a_pull_left tooltip" title="<?php _e('Edit this column', 'aegis'); ?>"><i class="ti-pencil"></i></span>
+                                                                <span class="a_action a_col_customize a_pull_left tooltip" title="<?php esc_attr_e('Edit this column', 'aegis'); ?>"><i class="ti-pencil"></i></span>
                                                             <?php endif; ?>
                                                         </div>
                                                         <div class="a_block_wrap a_body a_clearfix">
@@ -234,9 +236,9 @@ class Aegis {
                                                                         ?>
                                                                         <div id="<?php echo esc_attr($widget_id); ?>" class="a_block a_clearfix">
                                                                             <div class="a_header a_clearfix">
-                                                                                <span class="a_action a_hanle a_block_hanle a_pull_left tooltip" title="<?php _e('Drag widget to reorder', 'aegis'); ?>"><i class="ti-split-v"></i></span>
-                                                                                <span class="a_action a_block_edit a_pull_left tooltip" title="<?php _e('Edit this widget', 'aegis'); ?>"><i class="ti-pencil"></i></span>
-                                                                                <span class="a_action a_close a_block_close a_pull_right tooltip" title="<?php _e('Delete this widget', 'aegis'); ?>"><i class="ti-trash"></i></span>                                                                                
+                                                                                <span class="a_action a_hanle a_block_hanle a_pull_left tooltip" title="<?php esc_attr_e('Drag widget to reorder', 'aegis'); ?>"><i class="ti-split-v"></i></span>
+                                                                                <span class="a_action a_block_edit a_pull_left tooltip" title="<?php esc_attr_e('Edit this widget', 'aegis'); ?>"><i class="ti-pencil"></i></span>
+                                                                                <span class="a_action a_close a_block_close a_pull_right tooltip" title="<?php esc_attr_e('Delete this widget', 'aegis'); ?>"><i class="ti-trash"></i></span>                                                                                
                                                                             </div>
 
                                                                             <div class="a_body a_clearfix"><?php echo esc_attr($widget_name); ?></div>
@@ -272,12 +274,12 @@ class Aegis {
 
                 <span class="a_button a_left a_add_row">
                     <i class="a_icon ti-plus"></i>
-                    <span class="a_text"><?php _e('Add new row', 'aegis'); ?></span>
+                    <span class="a_text"><?php esc_attr_e('Add new row', 'aegis'); ?></span>
                 </span>
 
                 <span class="a_button a_right a_pull_right a_save_all">
                     <i class="a_icon ti-save"></i>
-                    <span class="a_text"><?php _e('Save all', 'aegis'); ?></span>
+                    <span class="a_text"><?php esc_attr_e('Save all', 'aegis'); ?></span>
                 </span>
 
             </div>
@@ -527,6 +529,7 @@ class Aegis {
 
             if ($data) {
                 update_post_meta($post_id, $meta_key, $data);
+                do_action('aegis_save_all_success', $post_id, $data);
                 $return = __('All data has been saved !', 'aegis');
             } else {
                 delete_post_meta($post_id, $meta_key);
@@ -540,6 +543,8 @@ class Aegis {
 
                 wp_reset_query();
             }
+
+            update_post_meta($post_id, self::get_meta_key_is_cache(), 0);
         }
 
         echo $return;
@@ -626,6 +631,8 @@ class Aegis {
                     update_post_meta($post_id, $row_id, $data);
                 }
                 $return = __('All data has been saved !', 'aegis');
+
+                update_post_meta($post_id, self::get_meta_key_is_cache(), 0);
             }
         }
 
@@ -716,6 +723,8 @@ class Aegis {
                 }
 
                 $return = __('All data has been saved !', 'aegis');
+
+                update_post_meta($post_id, self::get_meta_key_is_cache(), 0);
             }
         }
 
@@ -755,7 +764,7 @@ class Aegis {
                 <nav class="a_nav">
                     <ul class="a_clearfix">
                         <li class="a_tab_item a_first a_active">
-                            <span data-tab-id="#aegis_tab_widget"><?php _e('Widget', 'aegis'); ?></span>
+                            <span data-tab-id="#aegis_tab_widget"><?php esc_attr_e('Widget', 'aegis'); ?></span>
                         </li>
                         <?php
                         if ($customize_fields):
@@ -852,7 +861,6 @@ class Aegis {
                 $data['class_name'] = isset($old_data['class_name']) ? $old_data['class_name'] : false;
             }
 
-
             if ($data['class_name']):
 
                 $obj = new $data['class_name'];
@@ -864,9 +872,9 @@ class Aegis {
                     ?>
                     <div id="<?php echo esc_attr($widget_id); ?>" class="a_block a_clearfix">
                         <div class="a_header a_clearfix">
-                            <span class="a_action a_hanle a_block_hanle a_pull_left tooltip" title="<?php _e('Drag widget to reorder', 'aegis'); ?>"><i class="ti-split-v"></i></span>												
-                            <span class="a_action a_block_edit a_pull_left tooltip" title="<?php _e('Edit this widget', 'aegis'); ?>"><i class="ti-pencil"></i></span>
-                            <span class="a_action a_close a_block_close a_pull_right tooltip" title="<?php _e('Delete this widget', 'aegis'); ?>"><i class="ti-trash"></i></span>                            
+                            <span class="a_action a_hanle a_block_hanle a_pull_left tooltip" title="<?php esc_attr_e('Drag widget to reorder', 'aegis'); ?>"><i class="ti-split-v"></i></span>												
+                            <span class="a_action a_block_edit a_pull_left tooltip" title="<?php esc_attr_e('Edit this widget', 'aegis'); ?>"><i class="ti-pencil"></i></span>
+                            <span class="a_action a_close a_block_close a_pull_right tooltip" title="<?php esc_attr_e('Delete this widget', 'aegis'); ?>"><i class="ti-trash"></i></span>                            
                         </div>
 
                         <div class="a_body a_clearfix">
@@ -879,6 +887,8 @@ class Aegis {
                 endif;
 
             endif;
+
+            update_post_meta($post_id, self::get_meta_key_is_cache(), 0);
 
         endif;
 
@@ -1078,11 +1088,11 @@ class Aegis {
             </div>
 
             <div class="a_col_1">
-                <span class="a_size_100p a_image_add button button-secondary"><?php _e('+', 'enliven'); ?></span>
+                <span class="a_size_100p a_image_add button button-secondary"><?php esc_attr_e('+', 'enliven'); ?></span>
             </div>
 
             <div class="a_col_1">
-                <span class="a_size_100p a_image_remove button button-secondary"><?php _e('-', 'enliven'); ?></span>
+                <span class="a_size_100p a_image_remove button button-secondary"><?php esc_attr_e('-', 'enliven'); ?></span>
             </div>
         </div>
         <?php
@@ -1113,7 +1123,7 @@ class Aegis {
             <div class="a_ui_spacing">
                 <div class="a_first a_row a_clearfix">
                     <div class="a_col_2">
-                        <i><?php _e('Margin', 'aegis'); ?></i>
+                        <i><?php esc_attr_e('Margin', 'aegis'); ?></i>
                     </div>
                     <div class="a_col_10">
                         <div class="a_row a_clearfix">                            
@@ -1138,7 +1148,7 @@ class Aegis {
 
                 <div class="a_row a_clearfix">
                     <div class="a_col_2">
-                        <i><?php _e('Padding', 'aegis'); ?></i>
+                        <i><?php esc_attr_e('Padding', 'aegis'); ?></i>
                     </div>
                     <div class="a_col_10">
                         <div class="a_row a_clearfix">                           
@@ -1197,5 +1207,22 @@ class Aegis {
     public function get_site_url() {
         return get_site_url();
     }
+
+    public static function save_custom_css($css='', $post_id=0){
+        if($css && $post_id){
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+            
+            global $wp_filesystem;
+            $upload_dir = wp_upload_dir();         
+            $dir        = trailingslashit( $upload_dir['basedir'] ) . 'aegis/';
+            $file_name  = "page_{$post_id}.css";
+
+            WP_Filesystem();
+            $wp_filesystem->mkdir($dir);
+            $wp_filesystem->put_contents($dir . $file_name, $css, 0644);
+
+            update_post_meta($post_id, self::get_meta_key_is_cache(), 1);
+        }
+    }    
 
 }

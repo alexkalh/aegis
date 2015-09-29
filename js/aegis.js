@@ -309,7 +309,8 @@ Aegis = {
     });
   },
   initColumnAction: function() {
-    jQuery('#aegis_metabox').on('click', '.a_column_add_widget', function() {
+    jQuery('#aegis_metabox').on('click', '.a_column_add_widget', function(event) {
+      event.preventDefault();
       a_current_sidebar = jQuery(this).parents('.a_column_item').find('.a_block_wrap');
       jQuery('#a_modal_widgets').dialog('open');
     });
@@ -365,7 +366,7 @@ Aegis = {
     template += '<div class="a_header a_clearfix">';
     template += '<span class="a_action a_hanle a_column_hanle a_pull_left tooltip" title="' + aegis_json.i18n.drag_column_to_reorder + '"><i class="ti-split-v"></i></span>';
     template += '<span class="a_action a_column_add_widget a_pull_left tooltip" title="' + aegis_json.i18n.insert_new_widget_to_this_column + '"><i class="ti-package"></i></span>';
-    template += '<span class="a_action a_column_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_column + '"><i class="ti-pencil"></i></span>';
+    template += '<span class="a_action a_col_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_column + '"><i class="ti-pencil"></i></span>';
     template += '</div>';
     template += '<div class="a_block_wrap a_body a_clearfix">';
     template += '</div>';
