@@ -479,3 +479,16 @@
 .a_block .a_body {
   background-color: #f0f0f0;
 }
+
+.a_checkboxes_wrap {
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+.a_checkboxes_wrap.a_first {
+  margin-top: 0px;
+}
+
+.a_image_add,
+.a_image_remove {
+  text-align: center;
+}

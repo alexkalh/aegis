@@ -313,6 +313,12 @@ Aegis = {
       event.preventDefault();
       a_current_sidebar = jQuery(this).parents('.a_column_item').find('.a_block_wrap');
       jQuery('#a_modal_widgets').dialog('open');
+      jQuery('.tooltip').tooltipster({
+        multiple: true,
+        contentAsHTML: true,
+        theme: 'tooltipster-punk',
+        position: 'top-right'
+      });
     });
     jQuery('#aegis_metabox').on('click', '.a_col_customize', function(event) {
       var col_id;
@@ -339,6 +345,7 @@ Aegis = {
       widget_title = jQuery.trim(widget.find('.a_body').html());
       widget_class_name = '';
       a_current_sidebar = widget.parents('.a_block_wrap');
+      a_current_widget = widget;
       AegisAjax.getWidgetForm(widget_id, widget_title, widget_class_name);
     });
   },
@@ -520,6 +527,12 @@ AegisAjax = {
           jQuery('#a_modal_row_customize .a_row_customize_form').html(data);
           jQuery('#a_modal_row_customize input[name=a_row_id]').val(row_id);
           jQuery('#a_modal_row_customize').dialog('open');
+          jQuery('.tooltip').tooltipster({
+            multiple: true,
+            contentAsHTML: true,
+            theme: 'tooltipster-punk',
+            position: 'top-right'
+          });
         }
       });
     }
@@ -551,6 +564,12 @@ AegisAjax = {
           jQuery('#a_modal_col_customize .a_col_customize_form').html(data);
           jQuery('#a_modal_col_customize input[name=a_col_id]').val(col_id);
           jQuery('#a_modal_col_customize').dialog('open');
+          jQuery('.tooltip').tooltipster({
+            multiple: true,
+            contentAsHTML: true,
+            theme: 'tooltipster-punk',
+            position: 'top-right'
+          });
         }
       });
     }
@@ -587,6 +606,12 @@ AegisAjax = {
           jQuery('#a_modal_single_widget input[name=a_widget_id]').val(widget_id);
           jQuery('#a_modal_single_widget').dialog('option', 'title', widget_title);
           jQuery('#a_modal_single_widget').dialog('open');
+          jQuery('.tooltip').tooltipster({
+            multiple: true,
+            contentAsHTML: true,
+            theme: 'tooltipster-punk',
+            position: 'top-right'
+          });
         }
       });
     }
@@ -594,12 +619,16 @@ AegisAjax = {
   saveWidget: function(event, form) {
     event.preventDefault();
     form.ajaxSubmit({
+      dataType: 'json',
       success: function(responseText, statusText, xhr, $form) {
-        if (responseText) {
-          a_current_sidebar.append(responseText);
+        if (1 === responseText.is_first) {
+          a_current_sidebar.append(responseText.html);
           Aegis.initSortableWidget();
           Aegis.initSortableColumn();
           Aegis.initSortableRow();
+        } else {
+          a_current_widget.find('.a_body').html(responseText.html);
+          a_current_widget = void 0;
         }
         AegisAjax.saveAll();
       }

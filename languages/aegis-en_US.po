@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Aegis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-29 14:15+0700\n"
-"PO-Revision-Date: 2015-09-29 14:15+0700\n"
+"POT-Creation-Date: 2015-10-09 10:24+0700\n"
+"PO-Revision-Date: 2015-10-09 10:24+0700\n"
 "Last-Translator: Colours Theme <colourstheme@gmail.com>\n"
 "Language-Team: Colours Theme <colourstheme@gmail.com>\n"
 "Language: en_US\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
@@ -44,43 +44,43 @@ msgstr ""
 msgid "Use"
 msgstr ""
 
-#: ../aegis.php:122 ../aegis.php:193
+#: ../aegis.php:122 ../aegis.php:194
 msgid "Drag row to reorder"
 msgstr ""
 
-#: ../aegis.php:123 ../aegis.php:194
+#: ../aegis.php:123 ../aegis.php:195
 msgid "Split row to multi columns"
 msgstr ""
 
-#: ../aegis.php:124 ../aegis.php:199
+#: ../aegis.php:124 ../aegis.php:200
 msgid "Edit this row"
 msgstr ""
 
-#: ../aegis.php:125 ../aegis.php:201
+#: ../aegis.php:125 ../aegis.php:202
 msgid "Delete this row"
 msgstr ""
 
-#: ../aegis.php:126 ../aegis.php:217
+#: ../aegis.php:126 ../aegis.php:218
 msgid "Drag column to reorder"
 msgstr ""
 
-#: ../aegis.php:127 ../aegis.php:218
+#: ../aegis.php:127 ../aegis.php:219
 msgid "Insert new widget to this column"
 msgstr ""
 
-#: ../aegis.php:128 ../aegis.php:224
+#: ../aegis.php:128 ../aegis.php:225
 msgid "Edit this column"
 msgstr ""
 
-#: ../aegis.php:129 ../aegis.php:239 ../aegis.php:875
+#: ../aegis.php:129 ../aegis.php:240 ../aegis.php:883
 msgid "Drag widget to reorder"
 msgstr ""
 
-#: ../aegis.php:130 ../aegis.php:241 ../aegis.php:877
+#: ../aegis.php:130 ../aegis.php:242 ../aegis.php:885
 msgid "Delete this widget"
 msgstr ""
 
-#: ../aegis.php:131 ../aegis.php:240 ../aegis.php:876
+#: ../aegis.php:131 ../aegis.php:241 ../aegis.php:884
 msgid "Edit this widget"
 msgstr ""
 
@@ -92,42 +92,42 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: ../aegis.php:168
+#: ../aegis.php:169
 msgid "Aegis"
 msgstr ""
 
-#: ../aegis.php:277
+#: ../aegis.php:278
 msgid "Add new row"
 msgstr ""
 
-#: ../aegis.php:282
+#: ../aegis.php:283
 msgid "Save all"
 msgstr ""
 
-#: ../aegis.php:533 ../aegis.php:633 ../aegis.php:725
+#: ../aegis.php:534 ../aegis.php:634 ../aegis.php:726
 msgid "All data has been saved !"
 msgstr ""
 
-#: ../aegis.php:542
+#: ../aegis.php:543
 msgid "All data has been cleaned."
 msgstr ""
 
-#: ../aegis.php:767
+#: ../aegis.php:768
 msgid "Widget"
 msgstr ""
 
-#: ../aegis.php:1091
+#: ../aegis.php:1104
 msgid "+"
 msgstr ""
 
-#: ../aegis.php:1095
+#: ../aegis.php:1108
 msgid "-"
 msgstr ""
 
-#: ../aegis.php:1126
+#: ../aegis.php:1139
 msgid "Margin"
 msgstr ""
 
-#: ../aegis.php:1151
+#: ../aegis.php:1164
 msgid "Padding"
 msgstr ""

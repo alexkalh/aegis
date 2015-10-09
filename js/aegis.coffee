@@ -320,6 +320,7 @@ Aegis =
       event.preventDefault()
       a_current_sidebar = jQuery(this).parents('.a_column_item').find('.a_block_wrap')
       jQuery('#a_modal_widgets').dialog 'open'
+      jQuery('.tooltip').tooltipster({multiple: true, contentAsHTML: true, theme: 'tooltipster-punk', position: 'top-right'})
       return
 
     jQuery('#aegis_metabox').on 'click', '.a_col_customize', (event)->
@@ -346,6 +347,7 @@ Aegis =
       widget_title      = jQuery.trim(widget.find('.a_body').html())
       widget_class_name = ''
       a_current_sidebar = widget.parents '.a_block_wrap'
+      a_current_widget  = widget
       AegisAjax.getWidgetForm(widget_id, widget_title, widget_class_name)
       return    
     return
@@ -519,6 +521,7 @@ AegisAjax =
           jQuery('#a_modal_row_customize .a_row_customize_form').html data
           jQuery('#a_modal_row_customize input[name=a_row_id]').val row_id
           jQuery('#a_modal_row_customize').dialog 'open'
+          jQuery('.tooltip').tooltipster({multiple: true, contentAsHTML: true, theme: 'tooltipster-punk', position: 'top-right'})
           return
 
     return
@@ -549,6 +552,7 @@ AegisAjax =
           jQuery('#a_modal_col_customize .a_col_customize_form').html data
           jQuery('#a_modal_col_customize input[name=a_col_id]').val col_id
           jQuery('#a_modal_col_customize').dialog 'open'
+          jQuery('.tooltip').tooltipster({multiple: true, contentAsHTML: true, theme: 'tooltipster-punk', position: 'top-right'})
           return
 
     return
@@ -585,6 +589,7 @@ AegisAjax =
           jQuery('#a_modal_single_widget input[name=a_widget_id]').val widget_id
           jQuery('#a_modal_single_widget').dialog 'option', 'title', widget_title
           jQuery('#a_modal_single_widget').dialog 'open'
+          jQuery('.tooltip').tooltipster({multiple: true, contentAsHTML: true, theme: 'tooltipster-punk', position: 'top-right'})
           return
       
     return
@@ -592,13 +597,16 @@ AegisAjax =
   saveWidget: (event, form) ->
     event.preventDefault()
     form.ajaxSubmit
-      success: (responseText, statusText, xhr, $form) ->
-        if responseText
-          a_current_sidebar.append responseText
+      dataType: 'json'
+      success: (responseText, statusText, xhr, $form) ->        
+        if (1 == responseText.is_first)
+          a_current_sidebar.append(responseText.html)
           Aegis.initSortableWidget()
           Aegis.initSortableColumn()
-          Aegis.initSortableRow()                  
-
+          Aegis.initSortableRow()        
+        else
+          a_current_widget.find('.a_body').html(responseText.html)          
+          a_current_widget = undefined
         AegisAjax.saveAll()
         return
     return
