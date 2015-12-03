@@ -36,7 +36,9 @@ jQuery(document).ready(function() {
   Aegis.initTabs();
 });
 
-jQuery(window).load(function() {});
+jQuery(window).load(function() {
+  AegisUI.openHelp();
+});
 
 jQuery(document).ajaxSuccess(function($) {
   AegisUI.initColorPicker();
@@ -131,14 +133,14 @@ Aegis = {
       },
       buttons: [
         {
-          text: 'Save & Exit',
+          text: aegis_json.i18n.save_and_exit,
           'class': 'a_button_save_and_exit button button-secondary',
           click: function() {
             jQuery('#a_modal_row_customize').submit();
             jQuery('#a_modal_row_customize').dialog('close');
           }
         }, {
-          text: 'Save',
+          text: aegis_json.i18n.save,
           'class': 'a_button_save button button-secondary',
           click: function() {
             jQuery('#a_modal_row_customize').submit();
@@ -193,7 +195,7 @@ Aegis = {
       },
       buttons: [
         {
-          text: 'Save & Exit',
+          text: aegis_json.i18n.save_and_exit,
           'class': 'a_button_save_and_exit button button-secondary',
           click: function() {
             jQuery('#a_modal_single_widget').submit();
@@ -201,7 +203,7 @@ Aegis = {
             jQuery('#a_modal_single_widget').dialog('option', 'title', '');
           }
         }, {
-          text: 'Save',
+          text: aegis_json.i18n.save,
           'class': 'a_button_save button button-secondary',
           click: function() {
             jQuery('#a_modal_single_widget').submit();
@@ -314,10 +316,7 @@ Aegis = {
       a_current_sidebar = jQuery(this).parents('.a_column_item').find('.a_block_wrap');
       jQuery('#a_modal_widgets').dialog('open');
       jQuery('.tooltip').tooltipster({
-        multiple: true,
-        contentAsHTML: true,
-        theme: 'tooltipster-punk',
-        position: 'top-right'
+        multiple: true
       });
     });
     jQuery('#aegis_metabox').on('click', '.a_col_customize', function(event) {
@@ -446,6 +445,18 @@ AegisUI = {
     jQuery('.a_ui_image').on('click', '.a_image_remove', function(event) {
       event.preventDefault();
       jQuery(this).parents('.a_ui_image').find('.a_image_url').val('');
+    });
+  },
+  openHelp: function() {
+    jQuery('body').on('click', '.a_desc_handler', function(event) {
+      var $desc;
+      event.preventDefault();
+      $desc = jQuery(this).next();
+      if ($desc.hasClass('a_hide')) {
+        $desc.removeClass('a_hide').addClass('a_active');
+      } else {
+        $desc.removeClass('a_active').addClass('a_hide');
+      }
     });
   }
 };
@@ -655,3 +666,4 @@ AegisAjax = {
     });
   }
 };
+

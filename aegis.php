@@ -45,7 +45,8 @@ class Aegis {
             add_action('wp_ajax_aegis_save_col_customize_form', array($this, 'save_col_customize_form'));
         }
 
-        add_shortcode('aegis_site_url', array($this, 'get_site_url'));
+        add_shortcode('a_site_url', array($this, 'get_site_url'));
+        add_shortcode('a_media', array($this, 'get_responsive_media'));
     }
 
     public static function get_instance() {
@@ -129,7 +130,7 @@ class Aegis {
                     'drag_widget_to_reorder'           => esc_attr__('Drag widget to reorder', 'aegis'),
                     'delete_this_widget'               => esc_attr__('Delete this widget', 'aegis'),
                     'edit_this_widget'                 => esc_attr__('Edit this widget', 'aegis'),
-                    'save_and_exit'                    => esc_attr__('Save & Exit', 'aegis'),
+                    'save_and_exit'                    => esc_attr__('Save and Exit', 'aegis'),
                     'save'                             => esc_attr__('Save', 'aegis'),
                     ),
                     'layouts' => $this->get_grid(),
@@ -166,7 +167,6 @@ class Aegis {
     }
 
     public function add_meta_boxes() {
-
         add_meta_box('aegis_metabox', esc_attr__('Aegis', 'aegis'), array($this, 'get_metabox_form'), 'page');
     }
 
@@ -679,7 +679,7 @@ class Aegis {
         $is_first = true;
         foreach ($customize_fields as $tab_slug => $tab):
             $tab_id = "aegis_tab_col_{$tab_slug}";
-        $tab_class = $is_first ? 'a_tab_content a_first a_active' : 'a_tab_content a_hide';
+            $tab_class = $is_first ? 'a_tab_content a_first a_active' : 'a_tab_content a_hide';
         ?>
         <div id="<?php echo esc_attr($tab_id); ?>" class="<?php echo esc_attr($tab_class); ?>">
             <?php
@@ -1085,8 +1085,8 @@ class Aegis {
                     $classes  = $is_first ? 'a_first' : 'a_other';
                     $is_first = false;
                     ?>
-                    <p class="a_clearfix a_checkboxes_wrap <?php echo esc_attr($classes); ?>">
-                        <label class="tooltip" title="<?php echo htmlspecialchars_decode(esc_html($title['tooltip'])); ?>" for="<?php echo esc_attr($checkbox_id); ?>">                        
+                    <div class="a_clearfix a_checkboxes_wrap <?php echo esc_attr($classes); ?>">
+                        <label title="" for="<?php echo esc_attr($checkbox_id); ?>">
                             <input
                             <?php echo esc_attr($checked); ?>
                             id="<?php echo esc_attr($checkbox_id); ?>" 
@@ -1095,9 +1095,11 @@ class Aegis {
                             type="checkbox"
                             class="a_ui_checbox"
                             autocomplete="off">
-                            <span><?php echo htmlspecialchars_decode(esc_html($title['title'])); ?></span> 
+                            <span><?php echo htmlspecialchars_decode(esc_html($title['title'])); ?></span>                            
                         </label>
-                    </p>         
+                        <span class="a_desc_handler"><?php esc_attr_e('[?]', 'aegis'); ?></span>
+                        <span class="a_clearfix a_desc a_hide"><?php echo htmlspecialchars_decode(esc_html($title['desc'])); ?></span>
+                    </div>                    
                     <?php
                 endforeach;
             }            
@@ -1116,9 +1118,15 @@ class Aegis {
                     type="radio"
                     class="a_ui_radio"
                     autocomplete="off">    	
-                </label>			
+                </label>                
                 <?php
                 endforeach;
+
+                if(isset($params['desc']) && !empty($params['desc'])):
+                    ?>
+                    <p class="a_clearfix a_desc"><?php echo htmlspecialchars_decode(esc_html($params['desc'])); ?></p>
+                    <?php
+                endif;
             }
 
             public function get_field_select($params) {
@@ -1245,7 +1253,7 @@ class Aegis {
 
                 case 'image':
                     if (!empty($value)) {
-                        $value = str_replace(get_site_url(), '[aegis_site_url]', $value);
+                        $value = do_shortcode($value);
                     }
                     break;
 
@@ -1277,6 +1285,52 @@ class Aegis {
 
     public function get_site_url() { return get_site_url(); }
 
+    public function get_responsive_media($atts = array(), $content = ''){
+        $output = '';
+
+        if(!empty($content)){
+
+            $default = array('min' => '', 'max' => '');
+            $atts    = shortcode_atts($default, $atts);    
+            $atts    = wp_parse_args((array) $atts, $default);
+            extract($atts);            
+
+            $start = '';
+            $end   = '';
+
+            if($min || $max){
+                $end = '}';
+                $start = '@media only screen and ';
+
+                if($min){
+                    $min = sprintf('(min-width: %dpx)', $min);
+                }
+
+                if($max){
+                    $max = sprintf('(max-width: %dpx)', $max);   
+                }
+                
+                if($min & $max){
+                    $start .= "{$min} and {$max}";
+                }else{
+                    if($min){
+                        $start .= $min;
+                    }elseif($max){
+                        $start .= $max;
+                    }
+                }
+
+                $start .= '{';
+            }
+
+            $output = esc_attr($start);
+            $output .= htmlspecialchars_decode(esc_html( $content ));
+            $output .= esc_attr($end);
+        }
+
+        return $output;
+    }
+
     public static function save_custom_css($css='', $post_id=0){
         if($css && $post_id){
             require_once(ABSPATH . 'wp-admin/includes/file.php');
@@ -1292,5 +1346,40 @@ class Aegis {
 
             update_post_meta($post_id, self::get_meta_key_is_cache(), 1);
         }
+    }
+
+    public static function extract_shortcode($content, $is_multi = false, $allow_shortcodes = array()){
+
+        $media         = array();
+        $regex_matches = '';
+        $regex_pattern = get_shortcode_regex();
+
+        preg_match_all('/' . $regex_pattern . '/s', $content, $regex_matches);
+
+        foreach ($regex_matches[0] as $shortcode) {
+            
+            $regex_matches_new = '';
+
+            preg_match('/' . $regex_pattern . '/s', $shortcode, $regex_matches_new);
+
+
+
+            if (in_array($regex_matches_new[2], $allow_shortcodes)) :
+                
+                $media[] = array(
+                    'shortcode' => $regex_matches_new[0],
+                    'type'      => $regex_matches_new[2],
+                    'content'   => $regex_matches_new[5],
+                    'atts'      => shortcode_parse_atts($regex_matches_new[3])
+                );                    
+
+                if (false == $is_multi){
+                    break;
+                }
+            endif;
+
+        }
+                    
+        return $media;
     }    
 }

@@ -36,7 +36,8 @@ jQuery(document).ready ->
   return
 
 jQuery(window).load ->
-	return
+  AegisUI.openHelp()
+  return
 
 jQuery(document).ajaxSuccess ($) ->
   AegisUI.initColorPicker()
@@ -320,7 +321,7 @@ Aegis =
       event.preventDefault()
       a_current_sidebar = jQuery(this).parents('.a_column_item').find('.a_block_wrap')
       jQuery('#a_modal_widgets').dialog 'open'
-      jQuery('.tooltip').tooltipster({multiple: true, contentAsHTML: true, theme: 'tooltipster-punk', position: 'top-right'})
+      jQuery('.tooltip').tooltipster({multiple: true})
       return
 
     jQuery('#aegis_metabox').on 'click', '.a_col_customize', (event)->
@@ -349,7 +350,7 @@ Aegis =
       a_current_sidebar = widget.parents '.a_block_wrap'
       a_current_widget  = widget
       AegisAjax.getWidgetForm(widget_id, widget_title, widget_class_name)
-      return    
+      return
     return
 
   getRowTemplate: ->
@@ -447,6 +448,18 @@ AegisUI =
       return
 
     return  
+
+  openHelp: ()->
+    jQuery('body').on 'click', '.a_desc_handler', (event)->
+      event.preventDefault()
+      $desc = jQuery(this).next()
+      if $desc.hasClass('a_hide')
+        $desc.removeClass('a_hide').addClass('a_active')
+      else
+        $desc.removeClass('a_active').addClass('a_hide')
+      return
+    
+    return
 
 AegisAjax =
 
@@ -566,7 +579,6 @@ AegisAjax =
           AegisUI.alert(responseText)
         return    
     return
-
 
   getWidgetForm: (widget_id, widget_title, widget_class_name) ->
     if(a_current_sidebar)
