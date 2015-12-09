@@ -1326,6 +1326,7 @@ class Aegis {
             $output = esc_attr($start);
             $output .= htmlspecialchars_decode(esc_html( $content ));
             $output .= esc_attr($end);
+
         }
 
         return $output;
