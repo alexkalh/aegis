@@ -935,7 +935,6 @@ class Aegis {
 	}
 
 	public function str_beautify( $string ) {
-
 		return ucwords( str_replace( '_', ' ', $string ) );
 	}
 
