@@ -139,6 +139,7 @@
 .a_block{
     background-color: $white;    
     @include border-radius(5px);
+    @include box-shadow(4px 4px 5px 0px rgba(50, 50, 50, 0.5));
 }
 
 .a_grid_item{
@@ -146,8 +147,6 @@
     background-color: transparent !important;
 
     & > .a_header{        
-        border-bottom:  2px dashed $border_1 !important;
-        background-color: transparent !important;
     }
     & > .a_body{
         padding-top: 12px;
@@ -202,6 +201,7 @@
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 3px;
+    @include box-shadow(4px 4px 5px 0px rgba(50, 50, 50, 0.5));
 }
 
 .a_tabs{

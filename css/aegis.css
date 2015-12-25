@@ -78,12 +78,10 @@
   width: 8.33333333%;
 }
 
-.a_clearfix:before,
-.a_clearfix:after {
+.a_clearfix:before, .a_clearfix:after {
   content: "";
   display: table;
 }
-
 .a_clearfix:after {
   clear: both;
 }
@@ -130,46 +128,39 @@
   margin: 20px auto 0px auto;
   padding: 10px;
 }
-
 #a_modal_grid > .a_row {
   margin-bottom: 20px;
 }
-
 #a_modal_grid .a_row_mockup {
   transition: all 0.5s;
   -ms-transition: all 0.5s;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   cursor: pointer;
-  border: 1px solid #eee;
+  border: 1px solid #eeeeee;
   padding: 5px;
 }
-
 #a_modal_grid .a_row_mockup:hover {
   border-color: #5cb85c;
 }
-
 #a_modal_grid .a_row_mockup:hover .a_col_mockup {
   background-color: #5cb85c;
-  color: #fff;
+  color: white;
 }
-
 #a_modal_grid .a_row_mockup .a_row {
   margin-left: -2.5px !important;
   margin-right: -2.5px !important;
 }
-
 #a_modal_grid .a_row_mockup .a_col {
   padding-left: 2.5px !important;
   padding-right: 2.5px !important;
 }
-
 #a_modal_grid .a_col_mockup {
   transition: background-color 0.5s;
   -ms-transition: background-color 0.5s;
   -webkit-transition: background-color 0.5s;
   -moz-transition: background-color 0.5s;
-  background-color: #f5f5f5;
+  background-color: whitesmoke;
   height: 48px;
   line-height: 48px;
   text-align: center;
@@ -180,14 +171,13 @@
   margin: 0px auto;
   padding: 10px;
 }
-
 #a_modal_widgets .a_item {
   cursor: pointer;
 }
 
 .a_item {
   display: block;
-  border: 1px solid #eee;
+  border: 1px solid #eeeeee;
   margin-bottom: 20px;
   padding: 10px;
   transition: all 0.5s;
@@ -197,7 +187,6 @@
   position: relative;
   overflow: hidden;
 }
-
 .a_item:hover .a_icon,
 .a_item:hover .a_title {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -206,7 +195,6 @@
   -khtml-opacity: 0;
   opacity: 0;
 }
-
 .a_item:hover .a_desc {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   filter: alpha(opacity=100);
@@ -214,7 +202,6 @@
   -khtml-opacity: 1;
   opacity: 1;
 }
-
 .a_item .a_icon {
   transition: all 0.5s;
   -ms-transition: all 0.5s;
@@ -224,7 +211,6 @@
   margin: 0px;
   text-align: center;
 }
-
 .a_item .a_title {
   transition: all 0.5s;
   -ms-transition: all 0.5s;
@@ -235,7 +221,6 @@
   margin-top: 10px;
   text-align: center;
 }
-
 .a_item .a_desc {
   transition: all 0.5s;
   -ms-transition: all 0.5s;
@@ -252,7 +237,7 @@
   padding: 10px;
   width: 100%;
   height: 100%;
-  background-color: #eee;
+  background-color: #eeeeee;
   color: #000;
   font-size: 12px;
   text-align: center;
@@ -261,29 +246,25 @@
 #aegis_metabox .a_wrap {
   margin-top: 12px;
 }
-
 #aegis_metabox .a_wrap > .a_header {
   margin-bottom: 12px;
 }
 
 .a_block {
-  background-color: #fff;
+  background-color: white;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   border-radius: 5px;
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
+  box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
 }
 
 .a_grid_item {
-  border: 2px dashed #eee !important;
+  border: 2px dashed #eeeeee !important;
   background-color: transparent !important;
 }
-
-.a_grid_item > .a_header {
-  border-bottom: 2px dashed #eee !important;
-  background-color: transparent !important;
-}
-
 .a_grid_item > .a_body {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -295,7 +276,6 @@
   margin-bottom: 12px;
   margin-top: 12px;
 }
-
 .a_block .a_action,
 .a_column_item .a_action,
 .a_grid_item .a_action {
@@ -310,13 +290,11 @@
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
 }
-
 .a_block .a_action.a_hanle,
 .a_column_item .a_action.a_hanle,
 .a_grid_item .a_action.a_hanle {
   cursor: move;
 }
-
 .a_block .a_body,
 .a_column_item .a_body,
 .a_grid_item .a_body {
@@ -324,14 +302,13 @@
 }
 
 .a_column_item {
-  border: 1px solid #eee !important;
-  background-color: #eee !important;
+  border: 1px solid #eeeeee !important;
+  background-color: #eeeeee !important;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   border-radius: 5px;
 }
-
 .a_column_item .a_body {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -354,12 +331,14 @@
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 3px;
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
+  box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
 }
 
 .a_tabs .a_nav ul {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eeeeee;
 }
-
 .a_tabs .a_nav ul li {
   margin-bottom: 0px !important;
 }
@@ -368,7 +347,6 @@
   display: block;
   float: left;
 }
-
 .a_tab_item span {
   display: block;
   height: 40px;
@@ -377,9 +355,9 @@
   padding: 0px 20px;
   cursor: pointer;
   text-align: center;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  border-right: 1px solid #eee;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
   font-weight: 700;
   transition: background-color 0.5s;
   -ms-transition: background-color 0.5s;
@@ -390,22 +368,19 @@
   -webkit-transition: border-color 0.5s;
   -moz-transition: border-color 0.5s;
 }
-
 .a_tab_item.a_first {
   margin-left: 40px;
-  border-left: 1px solid #eee;
+  border-left: 1px solid #eeeeee;
 }
-
 .a_tab_item.a_active span,
 .a_tab_item span:hover {
-  border-bottom-color: #fff;
+  border-bottom-color: white;
   color: #5cb85c;
 }
 
 .a_tab_content.a_active {
   display: block;
 }
-
 .a_tab_content.a_hide {
   display: none;
 }
@@ -413,7 +388,6 @@
 .a_control {
   margin-top: 20px;
 }
-
 .a_control .a_ui_help_text {
   margin-top: 5px;
   font-size: 10px;
@@ -448,13 +422,10 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
-#aegis_tab_widget p:before,
-#aegis_tab_widget p:after {
+#aegis_tab_widget p:before, #aegis_tab_widget p:after {
   content: "";
   display: table;
 }
-
 #aegis_tab_widget p:after {
   clear: both;
 }
@@ -463,17 +434,14 @@
   width: 100% !important;
   text-align: right;
 }
-
 .a_ui_spacing .a_first {
   margin-bottom: 20px;
 }
-
 .a_ui_spacing .a_sub_control {
   position: relative;
   margin-top: 0px;
   margin-bottom: 0px;
 }
-
 .a_ui_spacing .a_sub_control code {
   display: inline-block;
   *display: inline;
@@ -491,13 +459,11 @@
   position: relative;
   cursor: pointer;
 }
-
 .a_button:hover .a_text,
 .a_button:hover .a_icon {
   color: #5cb85c;
   border-color: #5cb85c;
 }
-
 .a_button .a_icon {
   display: block;
   position: absolute;
@@ -506,14 +472,13 @@
   height: 25px;
   line-height: 23px;
   text-align: center;
-  border: 1px solid #555;
+  border: 1px solid #555555;
   font-size: 10px;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   border-radius: 50%;
 }
-
 .a_button .a_text {
   text-transform: uppercase;
   font-style: italic;
@@ -522,20 +487,16 @@
   height: 25px;
   line-height: 25px;
 }
-
 .a_button.a_left .a_icon {
   left: 0;
 }
-
 .a_button.a_left .a_text {
   padding-left: 35px;
   padding-right: 0px;
 }
-
 .a_button.a_right .a_icon {
   right: 0;
 }
-
 .a_button.a_right .a_text {
   padding-left: 0px;
   padding-right: 35px;
@@ -546,7 +507,6 @@
   top: 50px;
   left: 50px;
 }
-
 .a_fixed_dialog .ui-dialog-titlebar-close {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -555,13 +515,12 @@
   height: 20px;
   line-height: 18px;
   width: 20px;
-  background-color: #fff;
-  color: #222;
-  border: 1px solid #eee;
+  background-color: white;
+  color: #222222;
+  border: 1px solid #eeeeee;
   right: 12px;
   padding: 0px;
 }
-
 .a_fixed_dialog .ui-dialog-titlebar-close > i {
   font-size: 9px !important;
 }
@@ -570,7 +529,6 @@
   margin-bottom: 0px;
   margin-top: 10px;
 }
-
 .a_checkboxes_wrap.a_first {
   margin-top: 0px;
 }
@@ -587,7 +545,6 @@
   position: relative;
   cursor: help;
 }
-
 .a_desc_handler:hover {
   color: #5cb85c;
 }
@@ -606,7 +563,7 @@ span.a_desc {
   display: block;
   width: 100%;
   background-color: #f5f5f5;
-  background-image: linear-gradient(#f5f5f5 50%, #e6e6e6 50%);
+  background-image: linear-gradient(whitesmoke 50%, #e6e6e6 50%);
   background-size: 38px 38px;
   border: 1px solid #d4d4d4;
   line-height: 19px;
@@ -615,18 +572,16 @@ span.a_desc {
   padding: 0 0 0 4px;
   font-size: 11px;
 }
-
 span.a_desc.a_active {
   display: block;
 }
-
 span.a_desc.a_hide {
   display: none;
 }
 
 textarea.aegis_guide_line {
   background-color: #f5f5f5;
-  background-image: linear-gradient(#f5f5f5 50%, #e6e6e6 50%);
+  background-image: linear-gradient(whitesmoke 50%, #e6e6e6 50%);
   background-size: 38px 38px;
   line-height: 19px;
   overflow-x: visible;
