@@ -118,36 +118,32 @@
 }
 
 .a_block{
-    & > .a_header{
-        border-top: 3px solid #689f38;
-        background-color: #8bc34a;
-    }    
-}
-.a_column_item{
-    & > .a_header{
-        border-top: 3px solid #388e3c;
-        background-color: #4caf50;
-    }    
+    background-color: $white;    
+    @include border-radius(5px);
 }
 
 .a_grid_item{
-    & > .a_header{
-        border-top: 3px solid #00796b;
-        background-color: #009688;
+    border: 2px dashed $border_1 !important;
+    background-color: transparent !important;
+
+    & > .a_header{        
+        border-bottom:  2px dashed $border_1 !important;
+        background-color: transparent !important;
+        .a_action{
+            color: #000;
+        }
+    }
+    & > .a_body{
+        padding-top: 12px;
+        padding-bottom: 12px;
     }
 }
 
 .a_block,
 .a_column_item,
-.a_grid_item{
-    border: 1px solid $border_1;
+.a_grid_item{    
     margin-bottom: 12px;
     margin-top: 12px;
-    .a_header{
-        color: $white;
-        border-bottom: 1px solid $border_1;
-    }
-
 
     .a_action{
         @include button();
@@ -165,6 +161,17 @@
 }
 
 .a_column_item{
+
+    border: 1px solid $border_1 !important;
+    background-color: $border_1 !important;
+    @include border-radius(5px);
+
+    & > .a_header{        
+        .a_action{
+            color: #000;
+        }
+    }
+
     .a_body{
         padding-top: 12px;
         padding-bottom: 12px;
@@ -173,7 +180,8 @@
 
 .a_block_helper{
     display: block;
-    width: 100px !important;
+    @include border-radius(5px);
+    width: 120px !important;
     height: 48px !important;
     line-height: 48px !important;
     border: 1px solid $color_1;
@@ -181,6 +189,7 @@
     color: #fff;    
     text-align: center;
     font-weight: 700;
+    font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 3px;
 }
@@ -343,12 +352,6 @@
         font-size: 9px !important;
     }    
   }
-}
-
-.a_block{
-    .a_body{
-        background-color: #f0f0f0;
-    }
 }
 
 .a_checkboxes_wrap{

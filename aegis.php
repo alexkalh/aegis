@@ -529,9 +529,9 @@ class Aegis {
 	public function save_all() {
 		check_ajax_referer( 'aegis_save_all', 'security' );
 
-		$data = isset( $_POST['data'] ) ? $_POST['data'] : false;
+		$data    = isset( $_POST['data'] ) ? $_POST['data'] : false;
 		$post_id = isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : false;
-		$return = '';
+		$return  = '';
 
 		if ( $post_id ) {
 			$meta_key = self::get_meta_key_page();

@@ -61,6 +61,7 @@ Aegis =
 
   initSortableColumn: ->
     jQuery('.a_column_wrap').sortable(
+      containment: 'parent'
       connectWith: '.a_column_wrap'
       handle: '.a_column_hanle'
       start: (e, ui) ->

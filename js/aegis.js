@@ -64,6 +64,7 @@ Aegis = {
   },
   initSortableColumn: function() {
     jQuery('.a_column_wrap').sortable({
+      containment: 'parent',
       connectWith: '.a_column_wrap',
       handle: '.a_column_hanle',
       start: function(e, ui) {
@@ -133,14 +134,14 @@ Aegis = {
       },
       buttons: [
         {
-          text: aegis_json.i18n.save_and_exit,
+          text: 'Save & Exit',
           'class': 'a_button_save_and_exit button button-secondary',
           click: function() {
             jQuery('#a_modal_row_customize').submit();
             jQuery('#a_modal_row_customize').dialog('close');
           }
         }, {
-          text: aegis_json.i18n.save,
+          text: 'Save',
           'class': 'a_button_save button button-secondary',
           click: function() {
             jQuery('#a_modal_row_customize').submit();
@@ -195,7 +196,7 @@ Aegis = {
       },
       buttons: [
         {
-          text: aegis_json.i18n.save_and_exit,
+          text: 'Save & Exit',
           'class': 'a_button_save_and_exit button button-secondary',
           click: function() {
             jQuery('#a_modal_single_widget').submit();
@@ -203,7 +204,7 @@ Aegis = {
             jQuery('#a_modal_single_widget').dialog('option', 'title', '');
           }
         }, {
-          text: aegis_json.i18n.save,
+          text: 'Save',
           'class': 'a_button_save button button-secondary',
           click: function() {
             jQuery('#a_modal_single_widget').submit();
@@ -666,4 +667,3 @@ AegisAjax = {
     });
   }
 };
-
