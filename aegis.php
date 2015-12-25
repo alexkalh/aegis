@@ -1096,7 +1096,7 @@ class Aegis {
 					type="checkbox"
 					class="a_ui_checbox"
 					autocomplete="off">
-					<span><?php echo wp_kses( $title['title'], self::get_allowed_tags() ); ?></span>                            
+					<span><?php echo wp_kses( htmlspecialchars_decode( $title['title'] ), self::get_allowed_tags() ); ?></span>                            
 				</label>
 				<span class="a_desc_handler"><?php esc_attr_e( '[?]', 'aegis' ); ?></span>
 				<span class="a_clearfix a_desc a_hide"><?php echo wp_kses( $title['desc'], self::get_allowed_tags() ); ?></span>
