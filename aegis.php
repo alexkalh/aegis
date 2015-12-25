@@ -407,7 +407,8 @@ class Aegis {
 
 									foreach ( $widgets as $class_name => $widget_info ) :
 										?>
-                                    <div class="a_col_4">
+                                    <div class="a_col_3">
+                                    	<?php /*
                                         <div class="a_item">
 
                                             <input type="hidden" name="a_widget_class_name" value="<?php echo esc_attr( $class_name ); ?>" autocomplete="off">
@@ -432,10 +433,32 @@ class Aegis {
                                                 <?php echo esc_attr( $widget_info->widget_options['description'] ); ?>                        
                                             </div>                              
                                         </div>
+
+                                        */ ?>
+
+										<div class="a_item">
+											<?php
+											$icon = 'ti-wordpress';
+											if ( isset( $widget_info->icon ) && ! empty( $widget_info->icon ) ) {
+												$icon = $widget_info->icon;
+											}
+											?>
+                                            <input type="hidden" name="a_widget_class_name" value="<?php echo esc_attr( $class_name ); ?>" autocomplete="off">
+                                            <input type="hidden" name="a_widget_title" value="<?php echo esc_attr( $widget_info->name ); ?>" autocomplete="off">
+
+											<p class="a_icon">
+                                                <i class="<?php echo esc_attr( $icon ); ?>"></i>
+                                            </p>                                                                                        
+
+                                            <p class="a_title"><?php echo esc_attr( $widget_info->name ); ?></p>
+
+                                            <div class="a_desc"><?php echo esc_attr( $widget_info->widget_options['description'] ); ?></div>
+                                        </div>
+
                                     </div>
                                     <?php
 									$index++;
-									if ( 0 == $index % 3 ) {
+									if ( 0 == $index % 4 ) {
 										echo '</div>';
 										echo '<div class="a_row a_clearfix">';
 									}
@@ -816,9 +839,9 @@ class Aegis {
 
 				endif;
 
-				endif;
+			endif;
 
-				exit();
+		exit();
 	}
 
 	public function save_widget() {
@@ -935,7 +958,7 @@ class Aegis {
 	}
 
 	public function str_beautify( $string ) {
-		return ucwords( str_replace( '_', ' ', $string ) );
+		return ucwords( str_replace( '_', ' ', str_replace( '-', ' ', $string ) ) );
 	}
 
 	public function str_uglify( $string ) {
