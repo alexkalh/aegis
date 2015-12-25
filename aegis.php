@@ -407,34 +407,7 @@ class Aegis {
 
 									foreach ( $widgets as $class_name => $widget_info ) :
 										?>
-                                    <div class="a_col_3">
-                                    	<?php /*
-                                        <div class="a_item">
-
-                                            <input type="hidden" name="a_widget_class_name" value="<?php echo esc_attr( $class_name ); ?>" autocomplete="off">
-                                            <input type="hidden" name="a_widget_title" value="<?php echo esc_attr( $widget_info->name ); ?>" autocomplete="off">
-
-                                            <div class="a_header a_clearfix">                    
-                                                <?php
-												$icon = 'ti-wordpress';
-												if ( isset( $widget_info->icon ) && ! empty( $widget_info->icon ) ) {
-													$icon = $widget_info->icon;
-												}
-												?>
-
-                                                <span class="a_title a_pull_left"><?php echo esc_attr( $widget_info->name ); ?></span>
-
-                                                <span class="a_icon a_pull_right">
-                                                    <i class="<?php echo esc_attr( $icon ); ?>"></i>
-                                                </span>                    
-                                            </div>
-
-                                            <div class="a_body a_clearfix">                     
-                                                <?php echo esc_attr( $widget_info->widget_options['description'] ); ?>                        
-                                            </div>                              
-                                        </div>
-
-                                        */ ?>
+                                    <div class="a_col_3">                                    	
 
 										<div class="a_item">
 											<?php
@@ -916,7 +889,7 @@ class Aegis {
 			</div>
 
 			<div class="a_body a_clearfix">
-				<?php echo htmlspecialchars_decode( esc_html( $caption ) ); ?>
+				<?php echo wp_kses( $caption, self::get_allowed_tags() ); ?>
 			</div>
                 </div>          
                 <?php
@@ -1033,7 +1006,7 @@ class Aegis {
 						if ( isset( $param_args['help'] ) && ! empty( $param_args['help'] ) ) {
 							?>
 							<div class="a_ui_help_text">
-								<?php echo htmlspecialchars_decode( stripcslashes( $param_args['help'] ) ); ?>
+								<?php echo wp_kses( $param_args['help'], self::get_allowed_tags() ); ?>
                                     </div>
                                     <?php
 						}
@@ -1123,10 +1096,10 @@ class Aegis {
 					type="checkbox"
 					class="a_ui_checbox"
 					autocomplete="off">
-					<span><?php echo htmlspecialchars_decode( esc_html( $title['title'] ) ); ?></span>                            
+					<span><?php echo wp_kses( $title['title'], self::get_allowed_tags() ); ?></span>                            
 				</label>
 				<span class="a_desc_handler"><?php esc_attr_e( '[?]', 'aegis' ); ?></span>
-				<span class="a_clearfix a_desc a_hide"><?php echo htmlspecialchars_decode( esc_html( $title['desc'] ) ); ?></span>
+				<span class="a_clearfix a_desc a_hide"><?php echo wp_kses( $title['desc'], self::get_allowed_tags() ); ?></span>
                     </div>                    
                     <?php
 				endforeach;
@@ -1137,7 +1110,7 @@ class Aegis {
 			$radio_id = sprintf( '%s_%s', $params['name'], $value );
 		?>
 		<label for="<?php echo esc_attr( $radio_id ); ?>">
-			<span><?php echo htmlspecialchars_decode( esc_html( $title ) ); ?></span>
+			<span><?php echo wp_kses( $title, self::get_allowed_tags() ); ?></span>
 			<input
 			<?php checked( $params['value'], $value, true ); ?>
 			id="<?php echo esc_attr( $radio_id ); ?>" 
@@ -1152,7 +1125,7 @@ class Aegis {
 
 		if ( isset( $params['desc'] ) && ! empty( $params['desc'] ) ) :
 			?>
-			<p class="a_clearfix a_desc"><?php echo htmlspecialchars_decode( esc_html( $params['desc'] ) ); ?></p>
+			<p class="a_clearfix a_desc"><?php echo wp_kses( $params['desc'], self::get_allowed_tags() ); ?></p>
                     <?php
 				endif;
 	}
@@ -1202,7 +1175,7 @@ class Aegis {
         name="<?php echo esc_attr( $params['name'] ); ?>"
         class="a_ui a_ui_textarea a_size_100p <?php echo esc_attr( $class ); ?>"
         rows="<?php echo esc_attr( $rows ); ?>"
-        autocomplete="off"><?php echo htmlspecialchars_decode( stripslashes( $params['value'] ) ); ?></textarea>
+        autocomplete="off"><?php echo wp_kses( $params['value'], self::get_allowed_tags() ); ?></textarea>
         <?php
 	}
 
@@ -1304,7 +1277,7 @@ class Aegis {
 					break;
 
 				case 'textarea':
-					$value = htmlspecialchars_decode( stripslashes( $value ) );
+					$value = wp_kses( $value, self::get_allowed_tags() );
 					break;
 			}
 		}
@@ -1353,7 +1326,7 @@ class Aegis {
 			}
 
 			$output = esc_attr( $start );
-			$output .= htmlspecialchars_decode( esc_html( $content ) );
+			$output .= wp_kses( $content, self::get_allowed_tags() );
 			$output .= esc_attr( $end );
 
 		}
@@ -1409,5 +1382,50 @@ class Aegis {
 		}
 
 		return $media;
+	}
+
+
+	public static function get_allowed_tags() {
+		$allowed_tag = wp_kses_allowed_html( 'post' );
+				
+		$allowed_tag['div']['data-index']           = array();
+		$allowed_tag['div']['data-tab-id']          = array();
+		
+		$allowed_tag['span']['data-tab-id']         = array();
+		
+		$allowed_tag['iframe']['src']               = array();
+		$allowed_tag['iframe']['height']            = array();
+		$allowed_tag['iframe']['width']             = array();
+		$allowed_tag['iframe']['frameborder']       = array();
+		$allowed_tag['iframe']['allowfullscreen']   = array();
+		
+		$allowed_tag['input']['class']              = array();
+		$allowed_tag['input']['id']                 = array();
+		$allowed_tag['input']['name']               = array();
+		$allowed_tag['input']['value']              = array();
+		$allowed_tag['input']['type']               = array();
+		$allowed_tag['input']['checked']            = array();
+		$allowed_tag['input']['data-default-color'] = array();
+		
+
+		$allowed_tag['select']['class']             = array();
+		$allowed_tag['select']['id']                = array();
+		$allowed_tag['select']['name']              = array();
+		$allowed_tag['select']['value']             = array();
+		$allowed_tag['select']['type']              = array();
+		
+		$allowed_tag['option']['selected']          = array();
+		
+		$allowed_tag['style']['type']               = array();
+		
+		$microdata_tags = array( 'div', 'section', 'article', 'a', 'span', 'img', 'time', 'figure' );
+
+		foreach ( $microdata_tags as $tag ) {
+			$allowed_tag[ $tag ]['itemscope'] = array();
+			$allowed_tag[ $tag ]['itemtype'] = array();
+			$allowed_tag[ $tag ]['itemprop'] = array();
+		}
+
+		return apply_filters( 'aegis_get_allowed_tags', $allowed_tag );
 	}
 }
