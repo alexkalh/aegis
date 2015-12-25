@@ -17,7 +17,7 @@
 }
 
 .ui-widget-header{
-    background-color: $color_1;
+    background-color: #999;
     color: #FFF;
     height: 30px;
     line-height: 30px;
@@ -129,9 +129,6 @@
     & > .a_header{        
         border-bottom:  2px dashed $border_1 !important;
         background-color: transparent !important;
-        .a_action{
-            color: #000;
-        }
     }
     & > .a_body{
         padding-top: 12px;
@@ -149,7 +146,6 @@
         @include button();
         cursor: pointer;
         @include transition(0.5s);
-
         &.a_hanle{
             cursor: move;
         } 
@@ -160,17 +156,12 @@
     }    
 }
 
-.a_column_item{
 
+
+.a_column_item{
     border: 1px solid $border_1 !important;
     background-color: $border_1 !important;
     @include border-radius(5px);
-
-    & > .a_header{        
-        .a_action{
-            color: #000;
-        }
-    }
 
     .a_body{
         padding-top: 12px;
@@ -194,32 +185,46 @@
     letter-spacing: 3px;
 }
 
+.a_tabs{
+    .a_nav{
+        ul{
+            border-bottom: 1px solid $border_1;
+            li{
+                margin-bottom: 0px !important;
+            }
+        }
+    }
+}
+
 .a_tab_item{
-    @include inline_block();    
+    display: block;
+    float: left;
+
     span{
         display: block;
-        height: 30px;
-        line-height: 30px;        
-        margin-left: 10px;
-        padding: 0px 15px;
+        height: 40px;
+        line-height: 40px;        
+        margin-bottom: -1px;
+        padding: 0px 20px;
         cursor: pointer;
         text-align: center;     
-        border: 1px solid $white;
-        @include border_radius(5px);
+        border-top: 1px solid $border_1;
+        border-bottom: 1px solid $border_1;
+        border-right: 1px solid $border_1;
+        font-weight: 700;        
         @include transition_m(background-color, 0.5s);
         @include transition_m(border-color, 0.5s);
     }
 
     &.a_first{
-        span{
-            margin-left: 0px !important;
-        }
+        margin-left: 40px;
+        border-left: 1px solid $border_1;        
     }
 
     &.a_active span,
     span:hover{        
-        background-color: $bg_1;
-        border: 1px solid $bg_1;
+        border-bottom-color: $white;
+        color: $color_1;
     } 
 }
 
@@ -272,9 +277,9 @@
         code{
             @include inline_block();
             position: absolute;
-            top: 0px;
-            left: 0px;
-            height: 100%;
+            top: 1px;
+            left: 1px;
+            bottom: 1px;            
         }
     }
 }
