@@ -39,7 +39,7 @@ class Aegis {
 
 		if ( is_admin() ) {
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 99 );
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 			add_action( 'admin_footer', array( $this, 'admin_footer' ) );
 			add_action( 'wp_ajax_aegis_get_widget_form', array( $this, 'get_widget_form' ) );
@@ -199,15 +199,15 @@ class Aegis {
 						<div id="<?php echo esc_attr( $row['id'] ); ?>" class="a_grid_item" data-index="<?php echo esc_attr( $grid_index ); ?>">
                         <div class="a_header a_clearfix">
 
-                            <span class="a_action a_hanle a_row_hanle a_pull_left tooltip" title="<?php esc_attr_e( 'Drag row to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>
-                            <span class="a_action a_row_style a_pull_left tooltip" title="<?php esc_attr_e( 'Split row to multi columns', 'aegis' ); ?>"><i class="ti-layout-column3"></i></span>                                           
+                            <span class="a_action a_hanle a_row_hanle a_pull_left a_tooltip" title="<?php esc_attr_e( 'Drag row to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>
+                            <span class="a_action a_row_style a_pull_left a_tooltip" title="<?php esc_attr_e( 'Split row to multi columns', 'aegis' ); ?>"><i class="ti-layout-column3"></i></span>                                           
                             <?php
 							$row_customize_fields = apply_filters( 'aegis_get_row_customize_fields', array() );
 							if ( $row_customize_fields ) :
 								?>
-                            <span class="a_action a_row_customize a_pull_left tooltip" title="<?php esc_attr_e( 'Edit this row', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
+                            <span class="a_action a_row_customize a_pull_left a_tooltip" title="<?php esc_attr_e( 'Edit this row', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
                         <?php endif; ?>
-							<span class="a_action a_close a_row_close a_pull_right tooltip"  title="<?php esc_attr_e( 'Delete this row', 'aegis' ); ?>"><i class="ti-trash"></i></span>
+							<span class="a_action a_close a_row_close a_pull_right a_tooltip"  title="<?php esc_attr_e( 'Delete this row', 'aegis' ); ?>"><i class="ti-trash"></i></span>
 
 						</div>
 						<div class="a_body a_clearfix">
@@ -223,14 +223,14 @@ class Aegis {
 									<div id="<?php echo esc_attr( $col['id'] ); ?>" class="a_column_item_outer <?php echo esc_attr( "a_col_{$col_index}" ); ?>" data-index="<?php echo esc_attr( $col_index ); ?>">
                                     <div class="a_column_item">
                                         <div class="a_header a_clearfix">
-                                            <span class="a_action a_hanle a_column_hanle a_pull_left tooltip" title="<?php esc_attr_e( 'Drag column to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>
-                                            <span class="a_action a_column_add_widget a_pull_left tooltip" title="<?php esc_attr_e( 'Insert new widget to this column', 'aegis' ); ?>"><i class="ti-package"></i></span>
+                                            <span class="a_action a_hanle a_column_hanle a_pull_left a_tooltip" title="<?php esc_attr_e( 'Drag column to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>
+                                            <span class="a_action a_column_add_widget a_pull_left a_tooltip" title="<?php esc_attr_e( 'Insert new widget to this column', 'aegis' ); ?>"><i class="ti-package"></i></span>
 
                                             <?php
 											$col_customize_fields = apply_filters( 'aegis_get_col_customize_fields', array() );
 											if ( $col_customize_fields ) :
 												?>
-                                            <span class="a_action a_col_customize a_pull_left tooltip" title="<?php esc_attr_e( 'Edit this column', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
+                                            <span class="a_action a_col_customize a_pull_left a_tooltip" title="<?php esc_attr_e( 'Edit this column', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
                                         <?php endif; ?>
 										</div>
 										<div class="a_block_wrap a_body a_clearfix">
@@ -245,9 +245,9 @@ class Aegis {
 														?>
 													<div id="<?php echo esc_attr( $widget_id ); ?>" class="a_block a_clearfix">
 													<div class="a_header a_clearfix">
-                                                    <span class="a_action a_hanle a_block_hanle a_pull_left tooltip" title="<?php esc_attr_e( 'Drag widget to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>
-                                                    <span class="a_action a_block_edit a_pull_left tooltip" title="<?php esc_attr_e( 'Edit this widget', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
-                                                    <span class="a_action a_close a_block_close a_pull_right tooltip" title="<?php esc_attr_e( 'Delete this widget', 'aegis' ); ?>"><i class="ti-trash"></i></span>                                                                                
+                                                    <span class="a_action a_hanle a_block_hanle a_pull_left a_tooltip" title="<?php esc_attr_e( 'Drag widget to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>
+                                                    <span class="a_action a_block_edit a_pull_left a_tooltip" title="<?php esc_attr_e( 'Edit this widget', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
+                                                    <span class="a_action a_close a_block_close a_pull_right a_tooltip" title="<?php esc_attr_e( 'Delete this widget', 'aegis' ); ?>"><i class="ti-trash"></i></span>                                                                                
 													</div>
 
 													<div class="a_body a_clearfix"><?php echo esc_attr( $widget_name ); ?></div>
@@ -883,9 +883,9 @@ class Aegis {
 			?>
 			<div id="<?php echo esc_attr( $widget_id ); ?>" class="a_block a_clearfix">
 			<div class="a_header a_clearfix">
-				<span class="a_action a_hanle a_block_hanle a_pull_left tooltip" title="<?php esc_attr_e( 'Drag widget to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>                                              
-				<span class="a_action a_block_edit a_pull_left tooltip" title="<?php esc_attr_e( 'Edit this widget', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
-				<span class="a_action a_close a_block_close a_pull_right tooltip" title="<?php esc_attr_e( 'Delete this widget', 'aegis' ); ?>"><i class="ti-trash"></i></span>                            
+				<span class="a_action a_hanle a_block_hanle a_pull_left a_tooltip" title="<?php esc_attr_e( 'Drag widget to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>                                              
+				<span class="a_action a_block_edit a_pull_left a_tooltip" title="<?php esc_attr_e( 'Edit this widget', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
+				<span class="a_action a_close a_block_close a_pull_right a_tooltip" title="<?php esc_attr_e( 'Delete this widget', 'aegis' ); ?>"><i class="ti-trash"></i></span>                            
 			</div>
 
 			<div class="a_body a_clearfix">

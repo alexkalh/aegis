@@ -14,7 +14,7 @@ a_button_upload = void 0;
 a_media = void 0;
 
 jQuery(document).ready(function() {
-  jQuery('.tooltip').tooltipster({
+  jQuery('.a_tooltip').tooltipster({
     multiple: true
   });
   AegisUI.initColorPicker();
@@ -43,7 +43,7 @@ jQuery(window).load(function() {
 jQuery(document).ajaxSuccess(function($) {
   AegisUI.initColorPicker();
   AegisUI.initMediaCenter();
-  jQuery('.tooltip').tooltipster({
+  jQuery('.a_tooltip').tooltipster({
     multiple: true
   });
 });
@@ -240,7 +240,7 @@ Aegis = {
             column_wrap.html('');
             jQuery.each(new_grid, function(index_2, item_2) {
               column_wrap.append(Aegis.getColumnTemplate());
-              jQuery('.tooltip').tooltipster({
+              jQuery('.a_tooltip').tooltipster({
                 multiple: true
               });
             });
@@ -290,7 +290,7 @@ Aegis = {
       Aegis.initSortableWidget();
       Aegis.initSortableColumn();
       Aegis.initSortableRow();
-      jQuery('.tooltip').tooltipster({
+      jQuery('.a_tooltip').tooltipster({
         multiple: true
       });
     });
@@ -316,7 +316,7 @@ Aegis = {
       event.preventDefault();
       a_current_sidebar = jQuery(this).parents('.a_column_item').find('.a_block_wrap');
       jQuery('#a_modal_widgets').dialog('open');
-      jQuery('.tooltip').tooltipster({
+      jQuery('.a_tooltip').tooltipster({
         multiple: true
       });
     });
@@ -353,10 +353,10 @@ Aegis = {
     var template;
     template = '<div id="' + Aegis.getRandomId(aegis_json.key.row + '_') + '" class="a_grid_item" data-index="0">';
     template += '<div class="a_header a_clearfix">';
-    template += '<span class="a_action a_hanle a_row_hanle a_pull_left tooltip" title="' + aegis_json.i18n.drag_row_to_reorder + '"><i class="ti-split-v"></i></span>';
-    template += '<span class="a_action a_row_style a_pull_left tooltip" title="' + aegis_json.i18n.split_row_to_multi_columns + '"><i class="ti-layout-column3"></i></span>';
-    template += '<span class="a_action a_row_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_row + '"><i class="ti-pencil"></i></span>';
-    template += '<span class="a_action a_close a_row_close a_pull_right tooltip" title="' + aegis_json.i18n.delete_this_row + '"><i class="ti-trash"></i></span>';
+    template += '<span class="a_action a_hanle a_row_hanle a_pull_left a_tooltip" title="' + aegis_json.i18n.drag_row_to_reorder + '"><i class="ti-split-v"></i></span>';
+    template += '<span class="a_action a_row_style a_pull_left a_tooltip" title="' + aegis_json.i18n.split_row_to_multi_columns + '"><i class="ti-layout-column3"></i></span>';
+    template += '<span class="a_action a_row_customize a_pull_left a_tooltip" title="' + aegis_json.i18n.edit_this_row + '"><i class="ti-pencil"></i></span>';
+    template += '<span class="a_action a_close a_row_close a_pull_right a_tooltip" title="' + aegis_json.i18n.delete_this_row + '"><i class="ti-trash"></i></span>';
     template += '</div>';
     template += '<div class="a_body a_clearfix">';
     template += '<div class="a_column_wrap a_row a_clearfix">';
@@ -371,9 +371,9 @@ Aegis = {
     template = '<div id="' + Aegis.getRandomId(aegis_json.key.col + '_') + '" class="a_column_item_outer a_col_12" data-index="12">';
     template += '<div class="a_column_item">';
     template += '<div class="a_header a_clearfix">';
-    template += '<span class="a_action a_hanle a_column_hanle a_pull_left tooltip" title="' + aegis_json.i18n.drag_column_to_reorder + '"><i class="ti-split-v"></i></span>';
-    template += '<span class="a_action a_column_add_widget a_pull_left tooltip" title="' + aegis_json.i18n.insert_new_widget_to_this_column + '"><i class="ti-package"></i></span>';
-    template += '<span class="a_action a_col_customize a_pull_left tooltip" title="' + aegis_json.i18n.edit_this_column + '"><i class="ti-pencil"></i></span>';
+    template += '<span class="a_action a_hanle a_column_hanle a_pull_left a_tooltip" title="' + aegis_json.i18n.drag_column_to_reorder + '"><i class="ti-split-v"></i></span>';
+    template += '<span class="a_action a_column_add_widget a_pull_left a_tooltip" title="' + aegis_json.i18n.insert_new_widget_to_this_column + '"><i class="ti-package"></i></span>';
+    template += '<span class="a_action a_col_customize a_pull_left a_tooltip" title="' + aegis_json.i18n.edit_this_column + '"><i class="ti-pencil"></i></span>';
     template += '</div>';
     template += '<div class="a_block_wrap a_body a_clearfix">';
     template += '</div>';
@@ -539,7 +539,7 @@ AegisAjax = {
           jQuery('#a_modal_row_customize .a_row_customize_form').html(data);
           jQuery('#a_modal_row_customize input[name=a_row_id]').val(row_id);
           jQuery('#a_modal_row_customize').dialog('open');
-          jQuery('.tooltip').tooltipster({
+          jQuery('.a_tooltip').tooltipster({
             multiple: true,
             contentAsHTML: true,
             theme: 'tooltipster-punk',
@@ -576,7 +576,7 @@ AegisAjax = {
           jQuery('#a_modal_col_customize .a_col_customize_form').html(data);
           jQuery('#a_modal_col_customize input[name=a_col_id]').val(col_id);
           jQuery('#a_modal_col_customize').dialog('open');
-          jQuery('.tooltip').tooltipster({
+          jQuery('.a_tooltip').tooltipster({
             multiple: true,
             contentAsHTML: true,
             theme: 'tooltipster-punk',
@@ -618,7 +618,7 @@ AegisAjax = {
           jQuery('#a_modal_single_widget input[name=a_widget_id]').val(widget_id);
           jQuery('#a_modal_single_widget').dialog('option', 'title', widget_title);
           jQuery('#a_modal_single_widget').dialog('open');
-          jQuery('.tooltip').tooltipster({
+          jQuery('.a_tooltip').tooltipster({
             multiple: true,
             contentAsHTML: true,
             theme: 'tooltipster-punk',
