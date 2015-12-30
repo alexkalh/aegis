@@ -63,8 +63,8 @@ class Aegis {
 		return self::$instance;
 	}
 
-	public static function plugins_loaded() {
-		load_plugin_textdomain( 'aegis', false, AEGIS_DIR_PATH . '/languages/' );
+	public static function plugins_loaded() {		
+		load_plugin_textdomain( 'aegis', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 	}
 
 	public static function get_meta_key_widget_customize() {
@@ -113,7 +113,7 @@ class Aegis {
 			wp_enqueue_script( 'jquery-ui-draggable' );
 			wp_enqueue_script( 'jquery-ui-droppable' );
 			wp_enqueue_script( 'thickbox' );
-			wp_enqueue_script( 'wp-color-picker' );
+			wp_enqueue_script( 'wp-color-picker' );			
 			wp_enqueue_script( 'jquery-tooltipster', plugins_url( 'js/jquery.tooltipster.js', __FILE__ ), array( 'jquery' ), null, true );
 			wp_enqueue_script( 'jquery-amaran', plugins_url( 'js/jquery.amaran.js', __FILE__ ), array( 'jquery' ), null, true );
 			wp_enqueue_script( 'aegis', plugins_url( 'js/aegis.js', __FILE__ ), array( 'jquery' ), null, true );

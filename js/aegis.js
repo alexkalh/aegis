@@ -100,7 +100,7 @@ Aegis = {
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
-        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>');
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close');
       }
     });
   },
@@ -115,7 +115,7 @@ Aegis = {
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
-        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>');
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close');
       }
     });
   },
@@ -130,7 +130,7 @@ Aegis = {
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
-        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>');
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close');
       },
       buttons: [
         {
@@ -161,7 +161,7 @@ Aegis = {
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
-        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>');
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close');
       },
       buttons: [
         {
@@ -192,7 +192,7 @@ Aegis = {
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
-        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>');
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close');
       },
       buttons: [
         {

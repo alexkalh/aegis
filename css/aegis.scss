@@ -10,6 +10,20 @@
 
 .hide_all{ display: none; }
 
+.a_dialog_close{
+    &:before,
+    &:after{
+        display: none !important;
+    }
+    i{
+        display: block;
+        height: 22px;
+        width: 18px;
+        line-height: 22px;
+        text-align: center;
+    }
+}
+
 .ui-widget-overlay.ui-front{
     z-index: 9999;
     background-color: #000;

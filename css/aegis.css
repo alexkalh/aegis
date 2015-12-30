@@ -104,6 +104,17 @@
   display: none;
 }
 
+.a_dialog_close:before, .a_dialog_close:after {
+  display: none !important;
+}
+.a_dialog_close i {
+  display: block;
+  height: 22px;
+  width: 18px;
+  line-height: 22px;
+  text-align: center;
+}
+
 .ui-widget-overlay.ui-front {
   z-index: 9999;
   background-color: #000;

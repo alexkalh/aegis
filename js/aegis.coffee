@@ -96,7 +96,7 @@ Aegis =
       autoOpen: false
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
-        jQuery(".ui-dialog-titlebar-close", widget).html '<i class="ti ti-close"></i>'
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
         return      
     return
   
@@ -110,7 +110,7 @@ Aegis =
       autoOpen: false
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
-        jQuery(".ui-dialog-titlebar-close", widget).html '<i class="ti ti-close"></i>'
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
         return      
     return
 
@@ -124,7 +124,7 @@ Aegis =
       autoOpen: false
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
-        jQuery(".ui-dialog-titlebar-close", widget).html '<i class="ti ti-close"></i>'
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
         return
       buttons:[
         {
@@ -156,7 +156,7 @@ Aegis =
       autoOpen: false
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
-        jQuery(".ui-dialog-titlebar-close", widget).html '<i class="ti ti-close"></i>'
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
         return
       buttons:[
         {
@@ -188,7 +188,7 @@ Aegis =
       autoOpen: false
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
-        jQuery(".ui-dialog-titlebar-close", widget).html '<i class="ti ti-close"></i>'
+        jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
         return      
       buttons:[
         {
