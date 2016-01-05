@@ -3,7 +3,7 @@
  * Plugin Name: Aegis
  * Plugin URI: http://colourstheme.com/plugins/aegis-page-builder
  * Description: Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder. Your content will accurately adapt to all mobile devices, ensuring your site is mobile-ready.
- * Version: 1.0.0
+ * Version: 1.0
  * Author: Colours Theme
  * Author URI: http://colourstheme.com
  * License: GNU General Public License v3 or later
@@ -63,7 +63,7 @@ class Aegis {
 		return self::$instance;
 	}
 
-	public static function plugins_loaded() {		
+	public static function plugins_loaded() {
 		load_plugin_textdomain( 'aegis', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 	}
 
@@ -113,7 +113,7 @@ class Aegis {
 			wp_enqueue_script( 'jquery-ui-draggable' );
 			wp_enqueue_script( 'jquery-ui-droppable' );
 			wp_enqueue_script( 'thickbox' );
-			wp_enqueue_script( 'wp-color-picker' );			
+			wp_enqueue_script( 'wp-color-picker' );
 			wp_enqueue_script( 'jquery-tooltipster', plugins_url( 'js/jquery.tooltipster.js', __FILE__ ), array( 'jquery' ), null, true );
 			wp_enqueue_script( 'jquery-amaran', plugins_url( 'js/jquery.amaran.js', __FILE__ ), array( 'jquery' ), null, true );
 			wp_enqueue_script( 'aegis', plugins_url( 'js/aegis.js', __FILE__ ), array( 'jquery' ), null, true );
@@ -200,7 +200,7 @@ class Aegis {
                         <div class="a_header a_clearfix">
 
                             <span class="a_action a_hanle a_row_hanle a_pull_left a_tooltip" title="<?php esc_attr_e( 'Drag row to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>
-                            <span class="a_action a_row_style a_pull_left a_tooltip" title="<?php esc_attr_e( 'Split row to multi columns', 'aegis' ); ?>"><i class="ti-layout-column3"></i></span>                                           
+                            <span class="a_action a_row_style a_pull_left a_tooltip" title="<?php esc_attr_e( 'Split row to multi columns', 'aegis' ); ?>"><i class="ti-layout-column3"></i></span>
                             <?php
 							$row_customize_fields = apply_filters( 'aegis_get_row_customize_fields', array() );
 							if ( $row_customize_fields ) :
@@ -247,7 +247,7 @@ class Aegis {
 													<div class="a_header a_clearfix">
                                                     <span class="a_action a_hanle a_block_hanle a_pull_left a_tooltip" title="<?php esc_attr_e( 'Drag widget to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>
                                                     <span class="a_action a_block_edit a_pull_left a_tooltip" title="<?php esc_attr_e( 'Edit this widget', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
-                                                    <span class="a_action a_close a_block_close a_pull_right a_tooltip" title="<?php esc_attr_e( 'Delete this widget', 'aegis' ); ?>"><i class="ti-trash"></i></span>                                                                                
+                                                    <span class="a_action a_close a_block_close a_pull_right a_tooltip" title="<?php esc_attr_e( 'Delete this widget', 'aegis' ); ?>"><i class="ti-trash"></i></span>
 													</div>
 
 													<div class="a_body a_clearfix"><?php echo esc_attr( $widget_name ); ?></div>
@@ -336,7 +336,7 @@ class Aegis {
 								echo '<div class="a_row a_clearfix">';
 							}
 							endforeach;
-							?>  
+							?>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -400,14 +400,14 @@ class Aegis {
 								$tab_id    = "aegis_tab_block_{$tab_slug}";
 								$tab_class = $is_first ? 'a_tab_content a_first a_active' : 'a_tab_content a_hide';
 							?>
-                            <div id="<?php echo esc_attr( $tab_id ); ?>" class="<?php echo esc_attr( $tab_class ); ?>">                               
+                            <div id="<?php echo esc_attr( $tab_id ); ?>" class="<?php echo esc_attr( $tab_class ); ?>">
                                 <div class="a_row a_clearfix">
                                     <?php
 									$widgets = $tab['items'];
 
 									foreach ( $widgets as $class_name => $widget_info ) :
 										?>
-                                    <div class="a_col_3">                                    	
+                                    <div class="a_col_3">
 
 										<div class="a_item">
 											<?php
@@ -421,7 +421,7 @@ class Aegis {
 
 											<p class="a_icon">
                                                 <i class="<?php echo esc_attr( $icon ); ?>"></i>
-                                            </p>                                                                                        
+                                            </p>
 
                                             <p class="a_title"><?php echo esc_attr( $widget_info->name ); ?></p>
 
@@ -454,14 +454,14 @@ class Aegis {
                         name="a_form_single_widget"
                         method="POST"
                         autocomplete="off"
-                        onsubmit="AegisAjax.saveWidget(event, jQuery(this));" 
-                        action="<?php echo esc_url( $form_action ); ?>">                                  
+                        onsubmit="AegisAjax.saveWidget(event, jQuery(this));"
+                        action="<?php echo esc_url( $form_action ); ?>">
                         <input type="hidden" name="action" value="aegis_save_widget" autocomplete="off">
                         <input type="hidden" name="a_widget_class_name" value="" autocomplete="off">
                         <input type="hidden" name="a_widget_title" value="" autocomplete="off">
-                        <input type="hidden" name="a_widget_id" value="" autocomplete="off">                    
+                        <input type="hidden" name="a_widget_id" value="" autocomplete="off">
                         <input type="hidden" name="a_post_id" value="<?php echo esc_attr( (int) $post->ID ); ?>" autocomplete="off">
-                        <div class="a_widget_form a_tabs"></div>                    
+                        <div class="a_widget_form a_tabs"></div>
                     </form>
 
                     <?php $form_action = wp_nonce_url( admin_url( 'admin-ajax.php' ), 'aegis_save_row_customize_form', 'security' ); ?>
@@ -476,7 +476,7 @@ class Aegis {
                         <input type="hidden" name="action" value="aegis_save_row_customize_form" autocomplete="off">
                         <input type="hidden" name="a_row_id" value="" autocomplete="off">
                         <input type="hidden" name="a_post_id" value="<?php echo esc_attr( (int) $post->ID ); ?>" autocomplete="off">
-                        <div class="a_row_customize_form a_tabs"></div>                 
+                        <div class="a_row_customize_form a_tabs"></div>
                     </form>
 
                     <?php $form_action = wp_nonce_url( admin_url( 'admin-ajax.php' ), 'aegis_save_col_customize_form', 'security' ); ?>
@@ -491,7 +491,7 @@ class Aegis {
                         <input type="hidden" name="action" value="aegis_save_col_customize_form" autocomplete="off">
                         <input type="hidden" name="a_col_id" value="" autocomplete="off">
                         <input type="hidden" name="a_post_id" value="<?php echo esc_attr( (int) $post->ID ); ?>" autocomplete="off">
-                        <div class="a_col_customize_form a_tabs"></div>                 
+                        <div class="a_col_customize_form a_tabs"></div>
                     </form>
 
                 </div>
@@ -883,15 +883,15 @@ class Aegis {
 			?>
 			<div id="<?php echo esc_attr( $widget_id ); ?>" class="a_block a_clearfix">
 			<div class="a_header a_clearfix">
-				<span class="a_action a_hanle a_block_hanle a_pull_left a_tooltip" title="<?php esc_attr_e( 'Drag widget to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>                                              
+				<span class="a_action a_hanle a_block_hanle a_pull_left a_tooltip" title="<?php esc_attr_e( 'Drag widget to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>
 				<span class="a_action a_block_edit a_pull_left a_tooltip" title="<?php esc_attr_e( 'Edit this widget', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
-				<span class="a_action a_close a_block_close a_pull_right a_tooltip" title="<?php esc_attr_e( 'Delete this widget', 'aegis' ); ?>"><i class="ti-trash"></i></span>                            
+				<span class="a_action a_close a_block_close a_pull_right a_tooltip" title="<?php esc_attr_e( 'Delete this widget', 'aegis' ); ?>"><i class="ti-trash"></i></span>
 			</div>
 
 			<div class="a_body a_clearfix">
 				<?php echo wp_kses( $caption, self::get_allowed_tags() ); ?>
 			</div>
-                </div>          
+                </div>
                 <?php
 				$response['html'] = ob_get_clean();
 				else :
@@ -952,10 +952,10 @@ class Aegis {
 						?>
 					<div class="a_col_3">
 						<?php echo esc_attr( $param_args['title'] ); ?>
-                            </div>                  
+                            </div>
                             <?php
 							endif;
-					?>          
+					?>
 					<div class="<?php echo esc_attr( $control_class ); ?>">
 						<?php
 						switch ( $param_args['type'] ) {
@@ -1010,7 +1010,7 @@ class Aegis {
                                     </div>
                                     <?php
 						}
-						?>                  
+						?>
 					</div>
                         </div>
                     </div>
@@ -1050,12 +1050,12 @@ class Aegis {
 	public function get_field_color( $params ) {
 		$default = isset( $params['default'] ) ? $params['default'] : '';
 		?>
-		<input 
-		name="<?php echo esc_attr( $params['name'] ); ?>" 
-                value="<?php echo esc_attr( $params['value'] ); ?>" 
-                type="text" 
-                class="a_ui a_ui_color a_size_20p" 
-                data-default-color="<?php echo esc_attr( $default ); ?>" 
+		<input
+		name="<?php echo esc_attr( $params['name'] ); ?>"
+                value="<?php echo esc_attr( $params['value'] ); ?>"
+                type="text"
+                class="a_ui a_ui_color a_size_20p"
+                data-default-color="<?php echo esc_attr( $default ); ?>"
                 autocomplete="off">
                 <?php
 	}
@@ -1065,7 +1065,7 @@ class Aegis {
 		?>
 		<input
 		<?php checked( $params['value'], 'true' ); ?>
-                name="<?php echo esc_attr( $params['name'] ); ?>"         
+                name="<?php echo esc_attr( $params['name'] ); ?>"
                 value="true"
                 type="checkbox"
                 class="a_ui_checbox"
@@ -1090,17 +1090,17 @@ class Aegis {
 				<label title="" for="<?php echo esc_attr( $checkbox_id ); ?>">
 					<input
 					<?php echo esc_attr( $checked ); ?>
-					id="<?php echo esc_attr( $checkbox_id ); ?>" 
+					id="<?php echo esc_attr( $checkbox_id ); ?>"
 					name="<?php echo esc_attr( $params['name'] ); ?>[]"
 					value="<?php echo esc_attr( $value ); ?>"
 					type="checkbox"
 					class="a_ui_checbox"
 					autocomplete="off">
-					<span><?php echo wp_kses( htmlspecialchars_decode( $title['title'] ), self::get_allowed_tags() ); ?></span>                            
+					<span><?php echo wp_kses( htmlspecialchars_decode( $title['title'] ), self::get_allowed_tags() ); ?></span>
 				</label>
 				<span class="a_desc_handler"><?php esc_attr_e( '[?]', 'aegis' ); ?></span>
 				<span class="a_clearfix a_desc a_hide"><?php echo wp_kses( $title['desc'], self::get_allowed_tags() ); ?></span>
-                    </div>                    
+                    </div>
                     <?php
 				endforeach;
 	}
@@ -1113,13 +1113,13 @@ class Aegis {
 			<span><?php echo wp_kses( $title, self::get_allowed_tags() ); ?></span>
 			<input
 			<?php checked( $params['value'], $value, true ); ?>
-			id="<?php echo esc_attr( $radio_id ); ?>" 
+			id="<?php echo esc_attr( $radio_id ); ?>"
 			name="<?php echo esc_attr( $params['name'] ); ?>"
 			value="<?php echo esc_attr( $value ); ?>"
 			type="radio"
 			class="a_ui_radio"
-			autocomplete="off">     
-                </label>                
+			autocomplete="off">
+                </label>
                 <?php
 				endforeach;
 
@@ -1132,8 +1132,8 @@ class Aegis {
 
 	public function get_field_select( $params ) {
 		?>
-		<select 
-		name="<?php echo esc_attr( $params['name'] ); ?>" 
+		<select
+		name="<?php echo esc_attr( $params['name'] ); ?>"
                 class="a_ui a_ui_select a_size_30p"
                 autocomplete=off>
                 <?php foreach ( $params['options'] as $value => $title ) : ?>
@@ -1147,12 +1147,12 @@ class Aegis {
 
 	public function get_field_image( $params ) {
 		$value = ! empty( $params['value'] ) ? do_shortcode( $params['value'] ) : '';
-		?>      
+		?>
         <div class="a_row a_ui_image">
             <div class="a_col_10">
-                <input class="a_size_100p a_image_url"           
+                <input class="a_size_100p a_image_url"
                 name="<?php echo esc_attr( $params['name'] ); ?>"
-                type="text" 
+                type="text"
                 value="<?php echo esc_url( $value ); ?>">
             </div>
 
@@ -1171,7 +1171,7 @@ class Aegis {
 		$class = isset( $params['class'] ) && ! empty( $params['class'] ) ? $params['class'] : '';
 		$rows = isset( $params['rows'] ) && ! empty( $params['rows'] ) ? (int) $params['rows'] : 3;
 		?>
-        <textarea 
+        <textarea
         name="<?php echo esc_attr( $params['name'] ); ?>"
         class="a_ui a_ui_textarea a_size_100p <?php echo esc_attr( $class ); ?>"
         rows="<?php echo esc_attr( $rows ); ?>"
@@ -1195,7 +1195,7 @@ class Aegis {
                 </div>
 
                 <div class="a_col_10">
-                    <div class="a_row a_clearfix">                            
+                    <div class="a_row a_clearfix">
                         <?php
 						foreach ( $positions as $position ) :
 							$_name = sprintf( '%s[margin][%s]', $params['name'], $position );
@@ -1205,12 +1205,12 @@ class Aegis {
                                 <p class="a_sub_control">
                                     <code><?php echo esc_attr( $position ); ?></code>
                                     <input
-                                        name="<?php echo esc_attr( $_name ); ?>" 
-                                        value="<?php echo esc_attr( $_value ); ?>" 
+                                        name="<?php echo esc_attr( $_name ); ?>"
+                                        value="<?php echo esc_attr( $_value ); ?>"
                                         type="text" class="a_ui a_ui_text" autocomplete="off">
                                 </p>
                             </div>
-                        <?php endforeach; ?>                                     
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -1220,7 +1220,7 @@ class Aegis {
                     <i><?php esc_attr_e( 'Padding', 'aegis' ); ?></i>
                 </div>
                 <div class="a_col_10">
-                    <div class="a_row a_clearfix">                           
+                    <div class="a_row a_clearfix">
                         <?php
 						foreach ( $positions as $position ) :
 							$_name = sprintf( '%s[padding][%s]', $params['name'], $position );
@@ -1230,16 +1230,16 @@ class Aegis {
                                 <p class="a_sub_control">
                                     <code><?php echo esc_attr( $position ); ?></code>
                                     <input
-                                        name="<?php echo esc_attr( $_name ); ?>" 
-                                        value="<?php echo esc_attr( $_value ); ?>" 
+                                        name="<?php echo esc_attr( $_name ); ?>"
+                                        value="<?php echo esc_attr( $_value ); ?>"
                                         type="text" class="a_ui a_ui_text" autocomplete="off">
                                 </p>
                             </div>
-                        <?php endforeach; ?>  
+                        <?php endforeach; ?>
 
                     </div>
                 </div>
-            </div>                
+            </div>
 
         </div>
         <?php
@@ -1387,18 +1387,18 @@ class Aegis {
 
 	public static function get_allowed_tags() {
 		$allowed_tag = wp_kses_allowed_html( 'post' );
-				
+
 		$allowed_tag['div']['data-index']           = array();
 		$allowed_tag['div']['data-tab-id']          = array();
-		
+
 		$allowed_tag['span']['data-tab-id']         = array();
-		
+
 		$allowed_tag['iframe']['src']               = array();
 		$allowed_tag['iframe']['height']            = array();
 		$allowed_tag['iframe']['width']             = array();
 		$allowed_tag['iframe']['frameborder']       = array();
 		$allowed_tag['iframe']['allowfullscreen']   = array();
-		
+
 		$allowed_tag['input']['class']              = array();
 		$allowed_tag['input']['id']                 = array();
 		$allowed_tag['input']['name']               = array();
@@ -1406,18 +1406,18 @@ class Aegis {
 		$allowed_tag['input']['type']               = array();
 		$allowed_tag['input']['checked']            = array();
 		$allowed_tag['input']['data-default-color'] = array();
-		
+
 
 		$allowed_tag['select']['class']             = array();
 		$allowed_tag['select']['id']                = array();
 		$allowed_tag['select']['name']              = array();
 		$allowed_tag['select']['value']             = array();
 		$allowed_tag['select']['type']              = array();
-		
+
 		$allowed_tag['option']['selected']          = array();
-		
+
 		$allowed_tag['style']['type']               = array();
-		
+
 		$microdata_tags = array( 'div', 'section', 'article', 'a', 'span', 'img', 'time', 'figure' );
 
 		foreach ( $microdata_tags as $tag ) {
