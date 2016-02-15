@@ -186,7 +186,7 @@
 
 #a_modal_widgets {
   margin: 0px auto;
-  padding: 10px;
+  padding: 0px 16px 16px 16px;
 }
 #a_modal_widgets .a_item {
   cursor: pointer;
@@ -273,9 +273,6 @@
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   border-radius: 5px;
-  -webkit-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
-  -moz-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
-  box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
 }
 
 .a_grid_item {
@@ -348,9 +345,6 @@
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 3px;
-  -webkit-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
-  -moz-box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
-  box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.5);
 }
 
 .a_tabs .a_nav ul {
