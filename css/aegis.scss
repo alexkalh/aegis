@@ -31,9 +31,9 @@
 }
 
 .ui-widget-header{
-    padding-left: 5px !important;
+    padding-left: 16px !important;
     background-color: #FFF;
-    border-bottom: 3px solid #333;
+    border-bottom: 3px solid $border_2;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -43,6 +43,7 @@
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 1px;
+    font-size: 14px;
 }
 
 #a_modal_grid{
@@ -226,10 +227,9 @@
 .a_tabs{
     .a_nav{
         ul{
-            border-bottom: 1px solid $border_1;
-            li{
-                margin-bottom: 0px !important;
-            }
+          margin-top: 0px;
+          margin-bottom: 15px;
+          border-bottom: none;
         }
     }
 }
@@ -242,27 +242,23 @@
         display: block;
         height: 40px;
         line-height: 40px;
-        margin-bottom: -1px;
+        margin-bottom: 0px;
         padding: 0px 20px;
         cursor: pointer;
         text-align: center;
-        border-top: 1px solid $border_1;
-        border-bottom: 1px solid $border_1;
-        border-right: 1px solid $border_1;
+        border-top: none;
+        border-bottom: none;
         font-weight: 700;
         @include transition_m(background-color, 0.5s);
         @include transition_m(border-color, 0.5s);
     }
 
-    &.a_first{
-        margin-left: 40px;
-        border-left: 1px solid $border_1;
-    }
+    &.a_first{}
 
     &.a_active span,
     span:hover{
-        border-bottom-color: $white;
-        color: $color_1;
+        color: $white;
+        background-color: $border_2;
     }
 }
 
@@ -381,18 +377,28 @@
   top: 50px;
   left: 50px;
 
+  .ui-widget-header{
+    height: 40px;
+    line-height: 40px;
+  }
+
   .ui-dialog-titlebar-close{
     @include border_radius(50%);
-    height: 20px;
-    line-height: 18px;
-    width: 20px;
-    background-color: $white;
-    color: $black;
-    border: 1px solid $border_1;
-    right: 12px;
+    height: 40px;
+    line-height: 40px;
+    width: 40px;
+    background-color: none;
+    border: none;
+    top: 0px;
+    right: 0px;
     padding: 0px;
     & > i{
-        font-size: 9px !important;
+      @include inline_block();
+      height: 14px;
+      line-height: 14px;
+      width: 14px;
+      font-size: 14px !important;
+      color: red;
     }
   }
 }
@@ -462,4 +468,11 @@ textarea.aegis_guide_line{
     padding: 0 0 0 4px;
     font-size: 11px;
     font-family: 'Courier';
+}
+
+.a_wrap.ui-dialog-content{
+  padding-top: 0px;
+}
+.amaran-wrapper.bottom.right{
+  z-index: 99999999;
 }

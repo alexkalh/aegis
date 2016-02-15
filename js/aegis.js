@@ -14,9 +14,6 @@ a_button_upload = void 0;
 a_media = void 0;
 
 jQuery(document).ready(function() {
-  jQuery('.a_tooltip').tooltipster({
-    multiple: true
-  });
   AegisUI.initColorPicker();
   AegisUI.initMediaCenter();
   Aegis.initSortableWidget();
@@ -43,22 +40,18 @@ jQuery(window).load(function() {
 jQuery(document).ajaxSuccess(function($) {
   AegisUI.initColorPicker();
   AegisUI.initMediaCenter();
-  jQuery('.a_tooltip').tooltipster({
-    multiple: true
-  });
 });
 
 Aegis = {
   initSortableRow: function() {
     jQuery('.a_row_wrap').sortable({
-      connectWith: '.a_row_wrap',
       handle: '.a_row_hanle',
       start: function(e, ui) {
         ui.placeholder.height('48px');
         ui.placeholder.width('100px');
       },
       helper: function() {
-        return '<span class="a_block_helper">Row</span>';
+        return '<span class="a_block_helper">' + aegis_json.i18n.row + '</span>';
       }
     }).disableSelection();
   },
@@ -72,7 +65,7 @@ Aegis = {
         ui.placeholder.width('100px');
       },
       helper: function() {
-        return '<span class="a_block_helper">Column</span>';
+        return '<span class="a_block_helper">' + aegis_json.i18n.column + '</span>';
       }
     }).disableSelection();
   },
@@ -85,7 +78,7 @@ Aegis = {
         ui.placeholder.width('100px');
       },
       helper: function() {
-        return '<span class="a_block_helper">Widget</span>';
+        return '<span class="a_block_helper">' + aegis_json.i18n.block + '</span>';
       }
     }).disableSelection();
   },
@@ -142,7 +135,7 @@ Aegis = {
           }
         }, {
           text: 'Save',
-          'class': 'a_button_save button button-secondary',
+          'class': 'a_button_save button button-primary',
           click: function() {
             jQuery('#a_modal_row_customize').submit();
           }
@@ -173,7 +166,7 @@ Aegis = {
           }
         }, {
           text: aegis_json.i18n.save,
-          'class': 'a_button_save button button-secondary',
+          'class': 'a_button_save button button-primary',
           click: function() {
             jQuery('#a_modal_col_customize').submit();
           }
@@ -205,7 +198,7 @@ Aegis = {
           }
         }, {
           text: 'Save',
-          'class': 'a_button_save button button-secondary',
+          'class': 'a_button_save button button-primary',
           click: function() {
             jQuery('#a_modal_single_widget').submit();
           }
@@ -240,9 +233,6 @@ Aegis = {
             column_wrap.html('');
             jQuery.each(new_grid, function(index_2, item_2) {
               column_wrap.append(Aegis.getColumnTemplate());
-              jQuery('.a_tooltip').tooltipster({
-                multiple: true
-              });
             });
             if (temp_blocks.length) {
               temp_blocks.appendTo(column_wrap.find('.a_column_item_outer .a_block_wrap').first());
@@ -290,9 +280,6 @@ Aegis = {
       Aegis.initSortableWidget();
       Aegis.initSortableColumn();
       Aegis.initSortableRow();
-      jQuery('.a_tooltip').tooltipster({
-        multiple: true
-      });
     });
     jQuery('#aegis_metabox').on('click', '.a_row_close', function(event) {
       var answer;
@@ -316,9 +303,6 @@ Aegis = {
       event.preventDefault();
       a_current_sidebar = jQuery(this).parents('.a_column_item').find('.a_block_wrap');
       jQuery('#a_modal_widgets').dialog('open');
-      jQuery('.a_tooltip').tooltipster({
-        multiple: true
-      });
     });
     jQuery('#aegis_metabox').on('click', '.a_col_customize', function(event) {
       var col_id;
@@ -539,12 +523,6 @@ AegisAjax = {
           jQuery('#a_modal_row_customize .a_row_customize_form').html(data);
           jQuery('#a_modal_row_customize input[name=a_row_id]').val(row_id);
           jQuery('#a_modal_row_customize').dialog('open');
-          jQuery('.a_tooltip').tooltipster({
-            multiple: true,
-            contentAsHTML: true,
-            theme: 'tooltipster-punk',
-            position: 'top-right'
-          });
         }
       });
     }
@@ -576,12 +554,6 @@ AegisAjax = {
           jQuery('#a_modal_col_customize .a_col_customize_form').html(data);
           jQuery('#a_modal_col_customize input[name=a_col_id]').val(col_id);
           jQuery('#a_modal_col_customize').dialog('open');
-          jQuery('.a_tooltip').tooltipster({
-            multiple: true,
-            contentAsHTML: true,
-            theme: 'tooltipster-punk',
-            position: 'top-right'
-          });
         }
       });
     }
@@ -618,12 +590,6 @@ AegisAjax = {
           jQuery('#a_modal_single_widget input[name=a_widget_id]').val(widget_id);
           jQuery('#a_modal_single_widget').dialog('option', 'title', widget_title);
           jQuery('#a_modal_single_widget').dialog('open');
-          jQuery('.a_tooltip').tooltipster({
-            multiple: true,
-            contentAsHTML: true,
-            theme: 'tooltipster-punk',
-            position: 'top-right'
-          });
         }
       });
     }

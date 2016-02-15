@@ -9,15 +9,13 @@ a_media           = undefined
 
 
 jQuery(document).ready ->
-  jQuery('.a_tooltip').tooltipster({multiple: true})
-
   AegisUI.initColorPicker()
   AegisUI.initMediaCenter()
 
   Aegis.initSortableWidget()
   Aegis.initSortableColumn()
   Aegis.initSortableRow()
-  
+
   Aegis.initDialogGrid()
   Aegis.initDialogWidgets()
   Aegis.initDialogSingleWidget()
@@ -42,20 +40,18 @@ jQuery(window).load ->
 jQuery(document).ajaxSuccess ($) ->
   AegisUI.initColorPicker()
   AegisUI.initMediaCenter()
-  jQuery('.a_tooltip').tooltipster({multiple: true})
-  return  
+  return
 
 Aegis =
   initSortableRow: ->
     jQuery('.a_row_wrap').sortable(
-      connectWith: '.a_row_wrap'
       handle: '.a_row_hanle'
       start: (e, ui) ->
         ui.placeholder.height '48px'
         ui.placeholder.width '100px'
         return
       helper: ->
-        '<span class="a_block_helper">Row</span>'
+        '<span class="a_block_helper">' + aegis_json.i18n.row + '</span>'
     ).disableSelection()
     return
 
@@ -69,7 +65,7 @@ Aegis =
         ui.placeholder.width '100px'
         return
       helper: ->
-        '<span class="a_block_helper">Column</span>'
+        '<span class="a_block_helper">' + aegis_json.i18n.column + '</span>'
     ).disableSelection()
     return
 
@@ -82,7 +78,7 @@ Aegis =
         ui.placeholder.width '100px'
         return
       helper: ->
-        '<span class="a_block_helper">Widget</span>'
+        '<span class="a_block_helper">' + aegis_json.i18n.block + '</span>'
     ).disableSelection()
     return
 
@@ -97,9 +93,9 @@ Aegis =
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
-        return      
+        return
     return
-  
+
   initDialogWidgets: ->
     jQuery('#a_modal_widgets').dialog
       title: aegis_json.i18n.elements
@@ -111,7 +107,7 @@ Aegis =
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
-        return      
+        return
     return
 
   initDialogRowCustomize: ->
@@ -137,13 +133,13 @@ Aegis =
         }
         {
           text: 'Save'
-          'class': 'a_button_save button button-secondary'
+          'class': 'a_button_save button button-primary'
           click: ->
-            jQuery('#a_modal_row_customize').submit()            
+            jQuery('#a_modal_row_customize').submit()
             return
         }
-      ]    
-    
+      ]
+
     return
 
   initDialogColCustomize: ->
@@ -169,13 +165,13 @@ Aegis =
         }
         {
           text: aegis_json.i18n.save
-          'class': 'a_button_save button button-secondary'
+          'class': 'a_button_save button button-primary'
           click: ->
-            jQuery('#a_modal_col_customize').submit()            
+            jQuery('#a_modal_col_customize').submit()
             return
         }
-      ]    
-    
+      ]
+
     return
 
   initDialogSingleWidget: ->
@@ -189,7 +185,7 @@ Aegis =
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
-        return      
+        return
       buttons:[
         {
           text: 'Save & Exit'
@@ -202,9 +198,9 @@ Aegis =
         }
         {
           text: 'Save'
-          'class': 'a_button_save button button-secondary'
+          'class': 'a_button_save button button-primary'
           click: ->
-            jQuery('#a_modal_single_widget').submit()            
+            jQuery('#a_modal_single_widget').submit()
             return
         }
       ]
@@ -212,9 +208,9 @@ Aegis =
 
   initDialogGridAction: ->
     jQuery("#a_modal_grid").on 'click', '.a_row_mockup', ()->
-      
+
       if(a_current_row != undefined)
-        
+
         old_grid_index = parseInt(a_current_row.attr 'data-index')
         new_grid_index = parseInt(jQuery(this).attr 'data-index')
         a_current_row.attr 'data-index', new_grid_index
@@ -233,7 +229,7 @@ Aegis =
               i++
 
           else if parseInt(old_grid.length) > parseInt(new_grid.length)
-            
+
             # move all widget to first column
             blocks      = column_wrap.find('.a_block')
             temp_blocks = {}
@@ -245,9 +241,8 @@ Aegis =
             column_wrap.html ''
             jQuery.each new_grid, (index_2, item_2) ->
               column_wrap.append Aegis.getColumnTemplate()
-              jQuery('.a_tooltip').tooltipster({multiple: true})
               return
-            
+
             # add widget to first column
             if temp_blocks.length
               temp_blocks.appendTo column_wrap.find('.a_column_item_outer .a_block_wrap').first()
@@ -263,7 +258,7 @@ Aegis =
           Aegis.initSortableWidget()
           Aegis.initSortableColumn()
           Aegis.initSortableRow();
-        
+
       return
     return
 
@@ -271,7 +266,7 @@ Aegis =
     jQuery("#a_modal_widgets").on 'click', '.a_item', (event)->
       jQuery('#a_modal_widgets').dialog 'close'
       widget_class_name = jQuery(this).find('input[name=a_widget_class_name]').val()
-      widget_title      = jQuery(this).find('input[name=a_widget_title]').val()  
+      widget_title      = jQuery(this).find('input[name=a_widget_title]').val()
       widget_id         = Aegis.getRandomId(aegis_json.key.widget + '_');
       AegisAjax.getWidgetForm(widget_id, widget_title, widget_class_name)
       return
@@ -279,7 +274,7 @@ Aegis =
 
   initGridAction: ->
     jQuery('#aegis_metabox').on 'click', '.a_save_all', (event)->
-      event.preventDefault()      
+      event.preventDefault()
       AegisAjax.saveAll()
       return
     return
@@ -287,7 +282,7 @@ Aegis =
   initRowAction: ->
     jQuery("#aegis_metabox").on 'click', '.a_row_style', (event)->
       event.preventDefault()
-      a_current_row = jQuery(this).parents('.a_grid_item')       
+      a_current_row = jQuery(this).parents('.a_grid_item')
       jQuery('#a_modal_grid').dialog 'open'
       return
 
@@ -297,7 +292,6 @@ Aegis =
       Aegis.initSortableWidget()
       Aegis.initSortableColumn()
       Aegis.initSortableRow();
-      jQuery('.a_tooltip').tooltipster({multiple: true})
       return
 
     jQuery('#aegis_metabox').on 'click', '.a_row_close', (event)->
@@ -322,7 +316,6 @@ Aegis =
       event.preventDefault()
       a_current_sidebar = jQuery(this).parents('.a_column_item').find('.a_block_wrap')
       jQuery('#a_modal_widgets').dialog 'open'
-      jQuery('.a_tooltip').tooltipster({multiple: true})
       return
 
     jQuery('#aegis_metabox').on 'click', '.a_col_customize', (event)->
@@ -343,7 +336,7 @@ Aegis =
       return
 
     jQuery('#aegis_metabox').on 'click', '.a_block_edit', (event)->
-      event.preventDefault()      
+      event.preventDefault()
       widget            = jQuery(this).parents('.a_block')
       widget_id         = widget.attr 'id'
       widget_title      = jQuery.trim(widget.find('.a_body').html())
@@ -358,9 +351,9 @@ Aegis =
     template = '<div id="' + Aegis.getRandomId(aegis_json.key.row + '_') + '" class="a_grid_item" data-index="0">'
     template += '<div class="a_header a_clearfix">'
     template += '<span class="a_action a_hanle a_row_hanle a_pull_left a_tooltip" title="' + aegis_json.i18n.drag_row_to_reorder + '"><i class="ti-split-v"></i></span>'
-    template += '<span class="a_action a_row_style a_pull_left a_tooltip" title="' + aegis_json.i18n.split_row_to_multi_columns + '"><i class="ti-layout-column3"></i></span>'         
+    template += '<span class="a_action a_row_style a_pull_left a_tooltip" title="' + aegis_json.i18n.split_row_to_multi_columns + '"><i class="ti-layout-column3"></i></span>'
     template += '<span class="a_action a_row_customize a_pull_left a_tooltip" title="' + aegis_json.i18n.edit_this_row + '"><i class="ti-pencil"></i></span>'
-    template += '<span class="a_action a_close a_row_close a_pull_right a_tooltip" title="' + aegis_json.i18n.delete_this_row + '"><i class="ti-trash"></i></span>'    
+    template += '<span class="a_action a_close a_row_close a_pull_right a_tooltip" title="' + aegis_json.i18n.delete_this_row + '"><i class="ti-trash"></i></span>'
     template += '</div>'
     template += '<div class="a_body a_clearfix">'
     template += '<div class="a_column_wrap a_row a_clearfix">'
@@ -413,7 +406,7 @@ AegisUI =
   initColorPicker: () ->
     color_pickers = jQuery('input.a_ui_color')
     if(color_pickers.length)
-      color_pickers.wpColorPicker()    
+      color_pickers.wpColorPicker()
     return
 
   initMediaCenter: () ->
@@ -421,34 +414,34 @@ AegisUI =
       event.preventDefault()
 
       a_button_upload = jQuery this
-          
+
       if (a_media)
         a_media.open()
-        return      
+        return
 
       a_media = wp.media.frames.a_media = wp.media
         title:  aegis_json.i18n.media_center
         button:
-          text: aegis_json.i18n.use 
+          text: aegis_json.i18n.use
         library:
           type: 'image'
-        multiple: false               
+        multiple: false
 
       a_media.on 'select', () ->
         attachment = a_media.state().get('selection').first().toJSON()
-        a_button_upload.parents('.a_ui_image').find('.a_image_url').val attachment.url        
-        return        
+        a_button_upload.parents('.a_ui_image').find('.a_image_url').val attachment.url
+        return
 
       a_media.open()
 
-      return  
+      return
 
     jQuery('.a_ui_image').on 'click', '.a_image_remove', (event)->
       event.preventDefault()
       jQuery(this).parents('.a_ui_image').find('.a_image_url').val ''
       return
 
-    return  
+    return
 
   openHelp: ()->
     jQuery('body').on 'click', '.a_desc_handler', (event)->
@@ -459,21 +452,21 @@ AegisUI =
       else
         $desc.removeClass('a_active').addClass('a_hide')
       return
-    
+
     return
 
 AegisAjax =
 
   saveAll:->
-    data = 
-      rows: []      
+    data =
+      rows: []
 
     rows = jQuery('.a_grid_item')
-    
+
     if(rows.length)
       rows.each (r_index, r_element) ->
         current_row = jQuery r_element
-        row_data    = 
+        row_data    =
           id: current_row.attr 'id'
           index: current_row.attr 'data-index'
           cols: []
@@ -482,7 +475,7 @@ AegisAjax =
         if(cols.length)
           cols.each (c_index, c_element) ->
             current_col = jQuery c_element
-            col_data    = 
+            col_data    =
               id: current_col.attr 'id'
               index: current_col.attr 'data-index'
               widgets: []
@@ -491,30 +484,30 @@ AegisAjax =
             if(widgets.length)
               widgets.each (w_index, w_element) ->
                 current_widget = jQuery w_element
-                widget_data    = 
+                widget_data    =
                   id: current_widget.attr 'id'
                   name: jQuery.trim current_widget.find('.a_body').html()
                 col_data.widgets.push widget_data
                 return
-            
+
             row_data.cols.push col_data
             return
-        
-        data.rows.push row_data          
+
+        data.rows.push row_data
         return
-    
+
     jQuery.ajax
       url: aegis_json.ajax
       dataType: "html"
       type: 'POST'
       async: true
-      data:          
+      data:
         data: data
         action: 'aegis_save_all'
         security: jQuery('#aegis_save_all_security').val()
         post_id: parseInt(jQuery('#post_ID').val())
-      success: (responseText, textStatus, jqXHR) ->    
-        #NOTY        
+      success: (responseText, textStatus, jqXHR) ->
+        #NOTY
         AegisUI.alert(responseText)
 
     return
@@ -526,7 +519,7 @@ AegisAjax =
         dataType: "html"
         type: 'POST'
         async: true
-        data:                
+        data:
           action: 'aegis_get_row_customize_form'
           security: jQuery('#aegis_get_row_customize_form_security').val()
           post_id: parseInt(jQuery('#post_ID').val())
@@ -535,7 +528,6 @@ AegisAjax =
           jQuery('#a_modal_row_customize .a_row_customize_form').html data
           jQuery('#a_modal_row_customize input[name=a_row_id]').val row_id
           jQuery('#a_modal_row_customize').dialog 'open'
-          jQuery('.a_tooltip').tooltipster({multiple: true, contentAsHTML: true, theme: 'tooltipster-punk', position: 'top-right'})
           return
 
     return
@@ -545,9 +537,9 @@ AegisAjax =
     form.ajaxSubmit
       success: (responseText, statusText, xhr, $form) ->
         if responseText
-          #NOTY          
-          AegisUI.alert(responseText)       
-        return    
+          #NOTY
+          AegisUI.alert(responseText)
+        return
     return
 
   getColCustomizeForm: (col_id)->
@@ -557,7 +549,7 @@ AegisAjax =
         dataType: "html"
         type: 'POST'
         async: true
-        data:                
+        data:
           action: 'aegis_get_col_customize_form'
           security: jQuery('#aegis_get_col_customize_form_security').val()
           post_id: parseInt(jQuery('#post_ID').val())
@@ -566,7 +558,6 @@ AegisAjax =
           jQuery('#a_modal_col_customize .a_col_customize_form').html data
           jQuery('#a_modal_col_customize input[name=a_col_id]').val col_id
           jQuery('#a_modal_col_customize').dialog 'open'
-          jQuery('.a_tooltip').tooltipster({multiple: true, contentAsHTML: true, theme: 'tooltipster-punk', position: 'top-right'})
           return
 
     return
@@ -578,7 +569,7 @@ AegisAjax =
         if responseText
           #NOTY
           AegisUI.alert(responseText)
-        return    
+        return
     return
 
   getWidgetForm: (widget_id, widget_title, widget_class_name) ->
@@ -590,35 +581,34 @@ AegisAjax =
         async: true
         data:
           widget_class_name: widget_class_name
-          widget_title: widget_title   
-          widget_id: widget_id       
+          widget_title: widget_title
+          widget_id: widget_id
           action: 'aegis_get_widget_form'
           security: jQuery('#aegis_get_widget_form_security').val()
-          post_id: parseInt(jQuery('#post_ID').val())          
+          post_id: parseInt(jQuery('#post_ID').val())
         success: (data, textStatus, jqXHR) ->
-          jQuery('#a_modal_single_widget .a_widget_form').html data          
+          jQuery('#a_modal_single_widget .a_widget_form').html data
           jQuery('#a_modal_single_widget input[name=a_widget_class_name]').val widget_class_name
           jQuery('#a_modal_single_widget input[name=a_widget_title]').val widget_title
           jQuery('#a_modal_single_widget input[name=a_widget_id]').val widget_id
           jQuery('#a_modal_single_widget').dialog 'option', 'title', widget_title
           jQuery('#a_modal_single_widget').dialog 'open'
-          jQuery('.a_tooltip').tooltipster({multiple: true, contentAsHTML: true, theme: 'tooltipster-punk', position: 'top-right'})
           return
-      
+
     return
 
   saveWidget: (event, form) ->
     event.preventDefault()
     form.ajaxSubmit
       dataType: 'json'
-      success: (responseText, statusText, xhr, $form) ->        
+      success: (responseText, statusText, xhr, $form) ->
         if (1 == responseText.is_first)
           a_current_sidebar.append(responseText.html)
           Aegis.initSortableWidget()
           Aegis.initSortableColumn()
-          Aegis.initSortableRow()        
+          Aegis.initSortableRow()
         else
-          a_current_widget.find('.a_body').html(responseText.html)          
+          a_current_widget.find('.a_body').html(responseText.html)
           a_current_widget = undefined
         AegisAjax.saveAll()
         return
@@ -631,7 +621,7 @@ AegisAjax =
       dataType: "html"
       type: 'POST'
       async: true
-      data:          
+      data:
         widget_id: widget.attr('id')
         action: 'aegis_remove_widget'
         security: jQuery('#aegis_remove_widget_security').val()
