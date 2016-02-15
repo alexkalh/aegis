@@ -180,6 +180,8 @@ if( !class_exists( 'Aegis' ) ) {
 
 			$allowed_tag['style']['type']               = array();
 
+			$allowed_tag['code'] = array();
+
 			$microdata_tags = array( 'div', 'section', 'article', 'a', 'span', 'img', 'time', 'figure' );
 
 			foreach ( $microdata_tags as $tag ) {
@@ -735,11 +737,11 @@ if( !class_exists( 'Aegis' ) ) {
 						<?php
 						$is_first = true;
 						foreach ( $customize_fields as $tab_slug => $tab ) :
-							$tab_id = "#aegis_tab_col_{$tab_slug}";
+							$tab_id    = "#aegis_tab_col_{$tab_slug}";
 							$tab_class = $is_first ? 'a_tab_item a_first a_active' : 'a_tab_item';
 							?>
 							<li class="<?php echo esc_attr( $tab_class ); ?>">
-								<span data-tab-id="<?php echo esc_attr( $tab_id ); ?>"><?php echo esc_attr( $tab['title'] ); ?></span>
+								<span data-tab-id="<?php echo esc_attr( $tab_id ); ?>"><?php echo esc_html( $tab['title'] ); ?></span>
 							</li>
 							<?php
 							$is_first = false;
@@ -1073,7 +1075,7 @@ if( !class_exists( 'Aegis' ) ) {
 							if ( isset( $param_args['help'] ) && ! empty( $param_args['help'] ) ) {
 								?>
 								<div class="a_ui_help_text">
-									<?php echo wp_kses( $param_args['help'], self::get_allowed_tags() ); ?>
+									<?php echo wp_kses_post( htmlspecialchars_decode( $param_args['help'] )); ?>
 								</div>
 								<?php
 							}
@@ -1120,7 +1122,8 @@ if( !class_exists( 'Aegis' ) ) {
 		}
 
 		public function get_field_checkboxes( $params ) {
-			$is_first = true;
+			$is_first   = true;
+			$loop_index = 1;
 
 			foreach ( $params['options'] as $value => $title ) :
 				$checkbox_id = sprintf( '%s_%s', $params['name'], $value );
@@ -1131,6 +1134,10 @@ if( !class_exists( 'Aegis' ) ) {
 
 				$classes  = $is_first ? 'a_first' : 'a_other';
 				$is_first = false;
+
+				if( isset( $params['is_echo_index'] ) && $params['is_echo_index'] ){
+					$title['title'] = str_pad($loop_index, 2, '0', STR_PAD_LEFT) . '. ' . $title['title'];
+				}
 				?>
 				<div class="a_clearfix a_checkboxes_wrap <?php echo esc_attr( $classes ); ?>">
 					<label title="" for="<?php echo esc_attr( $checkbox_id ); ?>">
@@ -1141,6 +1148,7 @@ if( !class_exists( 'Aegis' ) ) {
 					<span class="a_clearfix a_desc a_hide"><?php echo wp_kses( $title['desc'], self::get_allowed_tags() ); ?></span>
 				</div>
 				<?php
+				$loop_index++;
 			endforeach;
 		}
 
