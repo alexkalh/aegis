@@ -35,11 +35,13 @@ jQuery(document).ready ->
 
 jQuery(window).load ->
   AegisUI.openHelp()
+  AegisUI.initTooltips()
   return
 
 jQuery(document).ajaxSuccess ($) ->
   AegisUI.initColorPicker()
   AegisUI.initMediaCenter()
+  AegisUI.initTooltips()
   return
 
 Aegis =
@@ -78,7 +80,7 @@ Aegis =
         ui.placeholder.width '100px'
         return
       helper: ->
-        '<span class="a_block_helper">' + aegis_json.i18n.block + '</span>'
+        '<span class="a_block_helper">' + aegis_json.i18n.widget + '</span>'
     ).disableSelection()
     return
 
@@ -291,7 +293,8 @@ Aegis =
       jQuery('#aegis_metabox .a_row_wrap').append Aegis.getRowTemplate()
       Aegis.initSortableWidget()
       Aegis.initSortableColumn()
-      Aegis.initSortableRow();
+      Aegis.initSortableRow()
+      AegisUI.initTooltips()
       return
 
     jQuery('#aegis_metabox').on 'click', '.a_row_close', (event)->
@@ -396,6 +399,10 @@ Aegis =
     return
 
 AegisUI =
+  initTooltips: ()->
+    jQuery('.a_tooltip').tooltip()
+    return
+
   alert: (message) ->
     jQuery.amaran
       message: message

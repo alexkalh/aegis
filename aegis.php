@@ -203,6 +203,7 @@ if( !class_exists( 'Aegis' ) ) {
 				wp_enqueue_media();
 				wp_enqueue_script( 'jquery-form' );
 				wp_enqueue_script( 'jquery-ui-sortable' );
+				wp_enqueue_script( 'jquery-ui-tooltip' );
 				wp_enqueue_script( 'wp-color-picker' );
 				wp_enqueue_script( 'jquery-amaran', plugins_url( 'js/jquery.amaran.js', __FILE__ ), array( 'jquery' ), null, true );
 				wp_enqueue_script( 'aegis', plugins_url( 'js/aegis.js', __FILE__ ), array( 'jquery' ), null, true );
@@ -213,7 +214,7 @@ if( !class_exists( 'Aegis' ) ) {
 						'layouts'                          => esc_html__( 'Layouts', 'aegis' ),
 						'row'                              => esc_html__( 'Row', 'aegis' ),
 						'column'                           => esc_html__( 'Column', 'aegis' ),
-						'block'                            => esc_html__( 'Block', 'aegis' ),
+						'widget'                           => esc_html__( 'Widget', 'aegis' ),
 						'elements'                         => esc_html__( 'Elements', 'aegis' ),
 						'row_customize'                    => esc_html__( 'Row customize', 'aegis' ),
 						'col_customize'                    => esc_html__( 'Column customize', 'aegis' ),

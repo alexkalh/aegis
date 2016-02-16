@@ -35,11 +35,13 @@ jQuery(document).ready(function() {
 
 jQuery(window).load(function() {
   AegisUI.openHelp();
+  AegisUI.initTooltips();
 });
 
 jQuery(document).ajaxSuccess(function($) {
   AegisUI.initColorPicker();
   AegisUI.initMediaCenter();
+  AegisUI.initTooltips();
 });
 
 Aegis = {
@@ -78,7 +80,7 @@ Aegis = {
         ui.placeholder.width('100px');
       },
       helper: function() {
-        return '<span class="a_block_helper">' + aegis_json.i18n.block + '</span>';
+        return '<span class="a_block_helper">' + aegis_json.i18n.widget + '</span>';
       }
     }).disableSelection();
   },
@@ -280,6 +282,7 @@ Aegis = {
       Aegis.initSortableWidget();
       Aegis.initSortableColumn();
       Aegis.initSortableRow();
+      AegisUI.initTooltips();
     });
     jQuery('#aegis_metabox').on('click', '.a_row_close', function(event) {
       var answer;
@@ -388,6 +391,9 @@ Aegis = {
 };
 
 AegisUI = {
+  initTooltips: function() {
+    jQuery('.a_tooltip').tooltip();
+  },
   alert: function(message) {
     jQuery.amaran({
       message: message,
