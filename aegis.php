@@ -12,7 +12,7 @@
 * Aegis plugin, Copyright 2014 Colourstheme
 * Aegis is distributed under the terms of the GNU GPL.
 *
-* Requires at least: 4.1
+* Requires at least: 4.4
 * Tested up to: 4.4.2
 * Text Domain: aegis
 * Domain Path: /languages/
