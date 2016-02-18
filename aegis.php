@@ -128,7 +128,7 @@ if( !class_exists( 'Aegis' ) ) {
 
 				preg_match( '/' . $regex_pattern . '/s', $shortcode, $regex_matches_new );
 
-				if ( in_array( $regex_matches_new[2], $allow_shortcodes ) ) :
+				if ( in_array( $regex_matches_new[2], $allow_shortcodes, false ) ) :
 
 					$media[] = array(
 						'shortcode' => $regex_matches_new[0],
@@ -197,7 +197,7 @@ if( !class_exists( 'Aegis' ) ) {
 
 		public function admin_enqueue_scripts( $hook ) {
 
-			if ( in_array( $hook, array( 'post-new.php', 'post.php' ) ) ) {
+			if ( in_array( $hook, array( 'post-new.php', 'post.php' ), false ) ) {
 
 				// Script
 				wp_enqueue_media();
@@ -1129,7 +1129,7 @@ if( !class_exists( 'Aegis' ) ) {
 			foreach ( $params['options'] as $value => $title ) :
 				$checkbox_id = sprintf( '%s_%s', $params['name'], $value );
 				$checked     = '';
-				if ( in_array( $value, $params['value'] ) ) {
+				if ( in_array( $value, $params['value'], false ) ) {
 					$checked = 'checked="checked" ';
 				}
 
