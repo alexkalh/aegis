@@ -92,6 +92,7 @@ Aegis = {
       height: 500,
       modal: true,
       autoOpen: false,
+      closeOnEscape: false,
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
@@ -107,6 +108,7 @@ Aegis = {
       height: 500,
       modal: true,
       autoOpen: false,
+      closeOnEscape: false,
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
@@ -122,6 +124,7 @@ Aegis = {
       height: 500,
       modal: true,
       autoOpen: false,
+      closeOnEscape: false,
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
@@ -153,6 +156,7 @@ Aegis = {
       height: 500,
       modal: true,
       autoOpen: false,
+      closeOnEscape: false,
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
@@ -184,6 +188,7 @@ Aegis = {
       height: 500,
       modal: true,
       autoOpen: false,
+      closeOnEscape: false,
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");

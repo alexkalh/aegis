@@ -92,6 +92,7 @@ Aegis =
       height: 500
       modal: true
       autoOpen: false
+      closeOnEscape: false
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
@@ -106,6 +107,7 @@ Aegis =
       height: 500
       modal: true
       autoOpen: false
+      closeOnEscape: false
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
@@ -120,6 +122,7 @@ Aegis =
       height: 500
       modal: true
       autoOpen: false
+      closeOnEscape: false
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
@@ -152,6 +155,7 @@ Aegis =
       height: 500
       modal: true
       autoOpen: false
+      closeOnEscape: false
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
@@ -184,6 +188,7 @@ Aegis =
       height: 500
       modal: true
       autoOpen: false
+      closeOnEscape: false
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
