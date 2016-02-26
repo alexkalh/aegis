@@ -1200,6 +1200,7 @@ if( !class_exists( 'Aegis' ) ) {
 					<input <?php checked( $params['value'], $value, true ); ?> id="<?php echo esc_attr( $radio_id ); ?>" name="<?php echo esc_attr( $params['name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" type="radio" class="a_ui_radio" autocomplete="off">
 					<img src="<?php echo esc_url( $info['image'] ); ?>" alt="<?php echo esc_attr( $info['alt'] ); ?>">
 				</label>
+				<div class="a_clearfix"></div>
 				<?php
 			endforeach;
 
