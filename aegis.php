@@ -3,7 +3,7 @@
 * Plugin Name: Aegis
 * Plugin URI: http://colourstheme.com/plugins/aegis-page-builder
 * Description: Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder. Your content will accurately adapt to all mobile devices, ensuring your site is mobile-ready.
-* Version: 1.1
+* Version: 1.2
 * Author: Colours Theme
 * Author URI: http://colourstheme.com
 * License: GNU General Public License v3 or later
@@ -41,7 +41,7 @@ if( !class_exists( 'Aegis' ) ) {
 
 			if ( is_admin() ) {
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
-				add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 99 );
+				add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 				add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 				add_action( 'admin_footer', array( $this, 'admin_footer' ) );
 				add_action( 'wp_ajax_aegis_get_widget_form', array( $this, 'get_widget_form' ) );
@@ -198,57 +198,64 @@ if( !class_exists( 'Aegis' ) ) {
 		public function admin_enqueue_scripts( $hook ) {
 
 			if ( in_array( $hook, array( 'post-new.php', 'post.php' ), false ) ) {
+				global $post;
+				$post_types = apply_filters( 'aegis_apply_for_post_types', array( 'page' ) );
 
-				// Script
-				wp_enqueue_media();
-				wp_enqueue_script( 'jquery-form' );
-				wp_enqueue_script( 'jquery-ui-sortable' );
-				wp_enqueue_script( 'jquery-ui-tooltip' );
-				wp_enqueue_script( 'wp-color-picker' );
-				wp_enqueue_script( 'jquery-amaran', plugins_url( 'js/jquery.amaran.js', __FILE__ ), array( 'jquery' ), null, true );
-				wp_enqueue_script( 'aegis', plugins_url( 'js/aegis.js', __FILE__ ), array( 'jquery' ), null, true );
-				wp_localize_script('aegis', 'aegis_json', array(
-					'directory_uri' => AEGIS_DIR_URL,
-					'ajax' => admin_url( 'admin-ajax.php' ),
-					'i18n' => array(
-						'layouts'                          => esc_html__( 'Layouts', 'aegis' ),
-						'row'                              => esc_html__( 'Row', 'aegis' ),
-						'column'                           => esc_html__( 'Column', 'aegis' ),
-						'widget'                           => esc_html__( 'Widget', 'aegis' ),
-						'elements'                         => esc_html__( 'Elements', 'aegis' ),
-						'row_customize'                    => esc_html__( 'Row customize', 'aegis' ),
-						'col_customize'                    => esc_html__( 'Column customize', 'aegis' ),
-						'media_center'                     => esc_html__( 'Media center', 'aegis' ),
-						'use'                              => esc_html__( 'Use', 'aegis' ),
-						'drag_row_to_reorder'              => esc_html__( 'Drag row to reorder', 'aegis' ),
-						'split_row_to_multi_columns'       => esc_html__( 'Split row to multi columns', 'aegis' ),
-						'edit_this_row'                    => esc_html__( 'Edit this row', 'aegis' ),
-						'delete_this_row'                  => esc_html__( 'Delete this row', 'aegis' ),
-						'drag_column_to_reorder'           => esc_html__( 'Drag column to reorder', 'aegis' ),
-						'insert_new_widget_to_this_column' => esc_html__( 'Insert new widget to this column', 'aegis' ),
-						'edit_this_column'                 => esc_html__( 'Edit this column', 'aegis' ),
-						'drag_widget_to_reorder'           => esc_html__( 'Drag widget to reorder', 'aegis' ),
-						'delete_this_widget'               => esc_html__( 'Delete this widget', 'aegis' ),
-						'edit_this_widget'                 => esc_html__( 'Edit this widget', 'aegis' ),
-						'save_and_exit'                    => esc_html__( 'Save and Exit', 'aegis' ),
-						'save'                             => esc_html__( 'Save', 'aegis' ),
-					),
-					'layouts' => $this->get_grid(),
-					'key' => array(
-						'widget' => self::get_meta_key_widget(),
-						'col'    => self::get_meta_key_col(),
-						'row'    => self::get_meta_key_row(),
-					),
-					)
-				);
+				if( in_array( $post->post_type, $post_types, false) ){
 
-				// Style
-				wp_enqueue_style( 'wp-color-picker' );
-				wp_enqueue_style( 'themify-icons', plugins_url( 'css/themify-icons.css', __FILE__ ), array(), null );
-				wp_enqueue_style( 'animate', plugins_url( 'css/animate.css', __FILE__ ), array(), null );
-				wp_enqueue_style( 'jquery-amaran', plugins_url( 'css/jquery.amaran.css', __FILE__ ), array(), null );
-				wp_enqueue_style( 'aegis', plugins_url( 'css/aegis.css', __FILE__ ), array(), null );
+					// Script
+					wp_enqueue_media();
+					wp_enqueue_script( 'jquery-form' );
+					wp_enqueue_script( 'jquery-ui-sortable' );
+					wp_enqueue_script( 'jquery-ui-tooltip' );
+					wp_enqueue_script( 'wp-color-picker' );
+					wp_enqueue_script( 'jquery-amaran', plugins_url( 'js/jquery.amaran.js', __FILE__ ), array( 'jquery' ), null, true );
+					wp_enqueue_script( 'aegis', plugins_url( 'js/aegis.js', __FILE__ ), array( 'jquery' ), null, true );
+					wp_localize_script('aegis', 'aegis_json', array(
+						'directory_uri' => AEGIS_DIR_URL,
+						'ajax' => admin_url( 'admin-ajax.php' ),
+						'i18n' => array(
+							'layouts'                          => esc_html__( 'Layouts', 'aegis' ),
+							'row'                              => esc_html__( 'Row', 'aegis' ),
+							'column'                           => esc_html__( 'Column', 'aegis' ),
+							'widget'                           => esc_html__( 'Widget', 'aegis' ),
+							'elements'                         => esc_html__( 'Elements', 'aegis' ),
+							'row_customize'                    => esc_html__( 'Row customize', 'aegis' ),
+							'col_customize'                    => esc_html__( 'Column customize', 'aegis' ),
+							'media_center'                     => esc_html__( 'Media center', 'aegis' ),
+							'use'                              => esc_html__( 'Use', 'aegis' ),
+							'drag_row_to_reorder'              => esc_html__( 'Drag row to reorder', 'aegis' ),
+							'split_row_to_multi_columns'       => esc_html__( 'Split row to multi columns', 'aegis' ),
+							'edit_this_row'                    => esc_html__( 'Edit this row', 'aegis' ),
+							'delete_this_row'                  => esc_html__( 'Delete this row', 'aegis' ),
+							'drag_column_to_reorder'           => esc_html__( 'Drag column to reorder', 'aegis' ),
+							'insert_new_widget_to_this_column' => esc_html__( 'Insert new widget to this column', 'aegis' ),
+							'edit_this_column'                 => esc_html__( 'Edit this column', 'aegis' ),
+							'drag_widget_to_reorder'           => esc_html__( 'Drag widget to reorder', 'aegis' ),
+							'delete_this_widget'               => esc_html__( 'Delete this widget', 'aegis' ),
+							'edit_this_widget'                 => esc_html__( 'Edit this widget', 'aegis' ),
+							'save_and_exit'                    => esc_html__( 'Save and Exit', 'aegis' ),
+							'save'                             => esc_html__( 'Save', 'aegis' ),
+						),
+						'layouts' => $this->get_grid(),
+						'key' => array(
+							'widget' => self::get_meta_key_widget(),
+							'col'    => self::get_meta_key_col(),
+							'row'    => self::get_meta_key_row(),
+						),
+						)
+					);
+
+					// Style
+					wp_enqueue_style( 'wp-color-picker' );
+					wp_enqueue_style( 'themify-icons', plugins_url( 'css/themify-icons.css', __FILE__ ), array(), null );
+					wp_enqueue_style( 'animate', plugins_url( 'css/animate.css', __FILE__ ), array(), null );
+					wp_enqueue_style( 'jquery-amaran', plugins_url( 'css/jquery.amaran.css', __FILE__ ), array(), null );
+					wp_enqueue_style( 'aegis', plugins_url( 'css/aegis.css', __FILE__ ), array(), null );
+				}
+
 			}
+
 		}
 
 		public function admin_footer() {
@@ -633,10 +640,10 @@ if( !class_exists( 'Aegis' ) ) {
 		public function get_row_customize_form() {
 			check_ajax_referer( 'aegis_get_row_customize_form', 'security' );
 
-			$row_id = isset( $_POST['row_id'] ) ? $_POST['row_id'] : false;
-			$post_id = isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : false;
+			$row_id           = isset( $_POST['row_id'] ) ? $_POST['row_id']         : false;
+			$post_id          = isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : false;
 
-			$customize_key = self::get_meta_key_row();
+			$customize_key    = self                                                 ::get_meta_key_row();
 			$customize_fields = apply_filters( 'aegis_get_row_customize_fields', array() );
 
 			if ( $customize_fields ) :
@@ -672,8 +679,9 @@ if( !class_exists( 'Aegis' ) ) {
 					<div id="<?php echo esc_attr( $tab_id ); ?>" class="<?php echo esc_attr( $tab_class ); ?>">
 						<?php
 						foreach ( $tab['params'] as $param_key => $param_args ) :
-							$param_args['name'] = sprintf( '%s[%s][%s]', $customize_key, $tab_slug, $param_key );
-							$param_args['value'] = isset( $customize_data[ $tab_slug ][ $param_key ] ) ? $customize_data[ $tab_slug ][ $param_key ] : (isset( $param_args['default'] ) ? $param_args['default'] : null);
+							$param_args['name']       = sprintf( '%s[%s][%s]', $customize_key, $tab_slug, $param_key );
+							$param_args['value']      = isset( $customize_data[ $tab_slug ][ $param_key ] ) ? $customize_data[ $tab_slug ][ $param_key ] : (isset( $param_args['default'] ) ? $param_args['default'] : null);
+							$param_args['attributes'] = $this->get_custom_attributes_for_field( $param_args );
 							$this->get_control( $param_args );
 						endforeach;
 						?>
@@ -763,6 +771,7 @@ if( !class_exists( 'Aegis' ) ) {
 						foreach ( $tab['params'] as $param_key => $param_args ) :
 							$param_args['name'] = sprintf( '%s[%s][%s]', $customize_key, $tab_slug, $param_key );
 							$param_args['value'] = isset( $customize_data[ $tab_slug ][ $param_key ] ) ? $customize_data[ $tab_slug ][ $param_key ] : (isset( $param_args['default'] ) ? $param_args['default'] : null);
+							$param_args['attributes'] = $this->get_custom_attributes_for_field( $param_args );
 							$this->get_control( $param_args );
 						endforeach;
 						?>
@@ -875,6 +884,7 @@ if( !class_exists( 'Aegis' ) ) {
 
 									$param_args['name'] = sprintf( '%s[%s][%s]', $customize_key, $tab_slug, $param_key );
 									$param_args['value'] = isset( $customize_data[ $tab_slug ][ $param_key ] ) ? $customize_data[ $tab_slug ][ $param_key ] : (isset( $param_args['default'] ) ? $param_args['default'] : null);
+									$param_args['attributes'] = $this->get_custom_attributes_for_field( $param_args );
 									$this->get_control( $param_args );
 
 								endforeach;
@@ -1031,48 +1041,56 @@ if( !class_exists( 'Aegis' ) ) {
 							<?php
 							switch ( $param_args['type'] ) {
 								case 'text':
-								$this->get_field_text( $param_args );
-								break;
+									$this->get_field_text( $param_args );
+									break;
 
 								case 'select':
-								$this->get_field_select( $param_args );
-								break;
+									$this->get_field_select( $param_args );
+									break;
 
 								case 'number':
-								$this->get_field_number( $param_args );
-								break;
+									$this->get_field_number( $param_args );
+									break;
 
 								case 'checkbox':
-								$this->get_field_checkbox( $param_args );
-								break;
+									$this->get_field_checkbox( $param_args );
+									break;
 
 								case 'checkboxes':
-								if ( ! empty( $param_args['options'] ) ) {
-									$this->get_field_checkboxes( $param_args );
-								}
-								break;
+									if ( ! empty( $param_args['options'] ) ) {
+										$this->get_field_checkboxes( $param_args );
+									}
+									break;
 
 								case 'radio':
-								if ( ! empty( $param_args['options'] ) ) {
-									$this->get_field_radio( $param_args );
-								}
-								break;
+									if ( ! empty( $param_args['options'] ) ) {
+										$this->get_field_radio( $param_args );
+									}
+									break;
 
 								case 'textarea':
-								$this->get_field_textarea( $param_args );
-								break;
+									$this->get_field_textarea( $param_args );
+									break;
 
 								case 'color':
-								$this->get_field_color( $param_args );
-								break;
+									$this->get_field_color( $param_args );
+									break;
 
 								case 'image':
-								$this->get_field_image( $param_args );
-								break;
+									$this->get_field_image( $param_args );
+									break;
 
 								case 'spacing':
-								$this->get_field_spacing( $param_args );
-								break;
+									$this->get_field_spacing( $param_args );
+									break;
+
+								case 'radio-image':
+									$this->get_field_radio_image( $param_args );
+									break;
+
+								default:
+									$this->get_field_text( $param_args );
+									break;
 							}
 							if ( isset( $param_args['help'] ) && ! empty( $param_args['help'] ) ) {
 								?>
@@ -1156,11 +1174,31 @@ if( !class_exists( 'Aegis' ) ) {
 
 		public function get_field_radio( $params ) {
 			foreach ( $params['options'] as $value => $title ) :
-				$radio_id = sprintf( '%s_%s', $params['name'], $value );
+				$radio_id = sprintf( '%s_%s', $this->convert_name_to_id( $params['name'] ), $value );
 				?>
-				<label for="<?php echo esc_attr( $radio_id ); ?>">
-					<span><?php echo wp_kses( $title, self::get_allowed_tags() ); ?></span>
+				<label for="<?php echo esc_attr( $radio_id ); ?>" class="a_label_radio">
 					<input <?php checked( $params['value'], $value, true ); ?> id="<?php echo esc_attr( $radio_id ); ?>" name="<?php echo esc_attr( $params['name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" type="radio" class="a_ui_radio" autocomplete="off">
+					<span><?php echo wp_kses( $title, self::get_allowed_tags() ); ?></span>
+				</label>
+				<?php
+			endforeach;
+
+			if ( isset( $params['desc'] ) && ! empty( $params['desc'] ) ) :
+				?>
+				<p class="a_clearfix a_desc"><?php echo wp_kses( $params['desc'], self::get_allowed_tags() ); ?></p>
+				<?php
+			endif;
+		}
+
+		public function get_field_radio_image( $params ){
+			foreach ( $params['options'] as $value => $info ) :
+				$radio_id         = sprintf( '%s_%s', $this->convert_name_to_id( $params['name'] ), $value );
+				$active_classes   = array( 'a_label_radio_image' );
+				$active_classes[] = ( $params['value'] === $value ) ? 'a_active' : '';
+				?>
+				<label for="<?php echo esc_attr( $radio_id ); ?>" onclick="AegisUI.clickRadioImage( jQuery(this) );" class="<?php echo esc_attr( implode( ' ', $active_classes ) ); ?>">
+					<input <?php checked( $params['value'], $value, true ); ?> id="<?php echo esc_attr( $radio_id ); ?>" name="<?php echo esc_attr( $params['name'] ); ?>" value="<?php echo esc_attr( $value ); ?>" type="radio" class="a_ui_radio" autocomplete="off">
+					<img src="<?php echo esc_url( $info['image'] ); ?>" alt="<?php echo esc_attr( $info['alt'] ); ?>">
 				</label>
 				<?php
 			endforeach;
@@ -1373,6 +1411,24 @@ if( !class_exists( 'Aegis' ) ) {
 			return $output;
 		}
 
+		public function get_custom_attributes_for_field( $params ){
+			$str_attributes = array();
+
+			if( isset( $params['attributes'] ) && !empty( $params['attributes'] ) ){
+				foreach ( $params['attributes'] as $key => $value) {
+					$str_attributes[] = sprintf( '%s="%s"', $key, $value );
+				}
+			}
+
+			return implode( ' ', $str_attributes );
+		}
+
+		public function convert_name_to_id( $name ){
+			$id = str_replace( '][', '_', $name );
+			$id = str_replace( '[', '_', $id );
+			$id = str_replace( ']', '_', $id );
+			return $id;
+		}
 	}
 
 }

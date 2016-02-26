@@ -479,3 +479,29 @@ textarea.aegis_guide_line{
   background-color: #000;
   @include opacity(0.7);
 }
+
+.a_label_radio{
+  margin-right: 40px;
+}
+
+.a_label_radio_image{
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  input{
+    display: none !important;
+  }
+
+  img{
+    display: block;
+    border: 2px solid $border_1;
+  }
+
+
+  &.a_active{
+    img{
+      border-color: $border_2;
+    }
+  }
+
+}

@@ -467,6 +467,13 @@ AegisUI =
 
     return
 
+  clickRadioImage: ($obj)->
+    $radio_images = $obj.parent();
+    if !$obj.hasClass 'a_active'
+      $radio_images.find('.a_label_radio_image').removeClass 'a_active'
+      $obj.addClass 'a_active'    
+    return
+
 AegisAjax =
 
   saveAll:->

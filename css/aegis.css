@@ -619,3 +619,23 @@ textarea.aegis_guide_line {
   -khtml-opacity: 0.7;
   opacity: 0.7;
 }
+
+.a_label_radio {
+  margin-right: 40px;
+}
+
+.a_label_radio_image {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
+.a_label_radio_image input {
+  display: none !important;
+}
+.a_label_radio_image img {
+  display: block;
+  border: 2px solid #eeeeee;
+}
+.a_label_radio_image.a_active img {
+  border-color: #555555;
+}

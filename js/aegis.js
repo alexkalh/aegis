@@ -454,6 +454,14 @@ AegisUI = {
         $desc.removeClass('a_active').addClass('a_hide');
       }
     });
+  },
+  clickRadioImage: function($obj) {
+    var $radio_images;
+    $radio_images = $obj.parent();
+    if (!$obj.hasClass('a_active')) {
+      $radio_images.find('.a_label_radio_image').removeClass('a_active');
+      $obj.addClass('a_active');
+    }
   }
 };
 
