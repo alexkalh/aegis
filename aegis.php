@@ -3,7 +3,7 @@
 * Plugin Name: Aegis
 * Plugin URI: http://colourstheme.com/plugins/aegis-page-builder
 * Description: Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder. Your content will accurately adapt to all mobile devices, ensuring your site is mobile-ready.
-* Version: 1.2
+* Version: 1.3
 * Author: Colours Theme
 * Author URI: http://colourstheme.com
 * License: GNU General Public License v3 or later
@@ -264,7 +264,6 @@ if( !class_exists( 'Aegis' ) ) {
 			wp_nonce_field( 'aegis_get_widget_form', 'aegis_get_widget_form_security', false );
 			wp_nonce_field( 'aegis_remove_widget', 'aegis_remove_widget_security', false );
 			wp_nonce_field( 'aegis_save_all', 'aegis_save_all_security', false );
-
 			$this->pre_load_modals();
 		}
 
@@ -401,6 +400,7 @@ if( !class_exists( 'Aegis' ) ) {
 					if ( in_array( $post->post_type, array( 'post', 'page' ) ) ) {
 						global $wp_widget_factory;
 						?>
+						<div id="aegis_dialog_overlay"></div>
 						<div class="hide_all">
 							<?php
 							$grid = $this->get_grid();

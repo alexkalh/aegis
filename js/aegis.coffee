@@ -90,13 +90,20 @@ Aegis =
       dialogClass: 'a_fixed_dialog'
       width: 900
       height: 500
-      modal: true
+      modal: false
       autoOpen: false
       closeOnEscape: false
+      open: (event, ui)->
+        jQuery('#aegis_dialog_overlay').show()
+        return
+      close: (event, ui)->
+        jQuery('#aegis_dialog_overlay').hide()
+        return
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
         return
+
     return
 
   initDialogWidgets: ->
@@ -105,9 +112,15 @@ Aegis =
       dialogClass: 'a_fixed_dialog'
       width: 900
       height: 500
-      modal: true
+      modal: false
       autoOpen: false
       closeOnEscape: false
+      open: (event, ui)->
+        jQuery('#aegis_dialog_overlay').show()
+        return
+      close: (event, ui)->
+        jQuery('#aegis_dialog_overlay').hide()
+        return
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
@@ -120,9 +133,15 @@ Aegis =
       dialogClass: 'a_fixed_dialog'
       width: 900
       height: 500
-      modal: true
+      modal: false
       autoOpen: false
       closeOnEscape: false
+      open: (event, ui)->
+        jQuery('#aegis_dialog_overlay').show()
+        return
+      close: (event, ui)->
+        jQuery('#aegis_dialog_overlay').hide()
+        return
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
@@ -153,9 +172,15 @@ Aegis =
       dialogClass: 'a_fixed_dialog'
       width: 900
       height: 500
-      modal: true
+      modal: false
       autoOpen: false
       closeOnEscape: false
+      open: (event, ui)->
+        jQuery('#aegis_dialog_overlay').show()
+        return
+      close: (event, ui)->
+        jQuery('#aegis_dialog_overlay').hide()
+        return
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
@@ -186,9 +211,15 @@ Aegis =
       dialogClass: 'a_fixed_dialog'
       width: 900
       height: 500
-      modal: true
+      modal: false
       autoOpen: false
       closeOnEscape: false
+      open: (event, ui)->
+        jQuery('#aegis_dialog_overlay').show()
+        return
+      close: (event, ui)->
+        jQuery('#aegis_dialog_overlay').hide()
+        return      
       create: (event, ui)->
         widget = jQuery(this).dialog("widget")
         jQuery(".ui-dialog-titlebar-close", widget).html('<i class="ti ti-close"></i>').addClass('a_dialog_close')
@@ -471,7 +502,7 @@ AegisUI =
     $radio_images = $obj.parent();
     if !$obj.hasClass 'a_active'
       $radio_images.find('.a_label_radio_image').removeClass 'a_active'
-      $obj.addClass 'a_active'    
+      $obj.addClass 'a_active'
     return
 
 AegisAjax =

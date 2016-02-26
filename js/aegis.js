@@ -90,9 +90,15 @@ Aegis = {
       dialogClass: 'a_fixed_dialog',
       width: 900,
       height: 500,
-      modal: true,
+      modal: false,
       autoOpen: false,
       closeOnEscape: false,
+      open: function(event, ui) {
+        jQuery('#aegis_dialog_overlay').show();
+      },
+      close: function(event, ui) {
+        jQuery('#aegis_dialog_overlay').hide();
+      },
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
@@ -106,9 +112,15 @@ Aegis = {
       dialogClass: 'a_fixed_dialog',
       width: 900,
       height: 500,
-      modal: true,
+      modal: false,
       autoOpen: false,
       closeOnEscape: false,
+      open: function(event, ui) {
+        jQuery('#aegis_dialog_overlay').show();
+      },
+      close: function(event, ui) {
+        jQuery('#aegis_dialog_overlay').hide();
+      },
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
@@ -122,9 +134,15 @@ Aegis = {
       dialogClass: 'a_fixed_dialog',
       width: 900,
       height: 500,
-      modal: true,
+      modal: false,
       autoOpen: false,
       closeOnEscape: false,
+      open: function(event, ui) {
+        jQuery('#aegis_dialog_overlay').show();
+      },
+      close: function(event, ui) {
+        jQuery('#aegis_dialog_overlay').hide();
+      },
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
@@ -154,9 +172,15 @@ Aegis = {
       dialogClass: 'a_fixed_dialog',
       width: 900,
       height: 500,
-      modal: true,
+      modal: false,
       autoOpen: false,
       closeOnEscape: false,
+      open: function(event, ui) {
+        jQuery('#aegis_dialog_overlay').show();
+      },
+      close: function(event, ui) {
+        jQuery('#aegis_dialog_overlay').hide();
+      },
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
@@ -186,9 +210,15 @@ Aegis = {
       dialogClass: 'a_fixed_dialog',
       width: 900,
       height: 500,
-      modal: true,
+      modal: false,
       autoOpen: false,
       closeOnEscape: false,
+      open: function(event, ui) {
+        jQuery('#aegis_dialog_overlay').show();
+      },
+      close: function(event, ui) {
+        jQuery('#aegis_dialog_overlay').hide();
+      },
       create: function(event, ui) {
         var widget;
         widget = jQuery(this).dialog("widget");
