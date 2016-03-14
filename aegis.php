@@ -3,7 +3,7 @@
 * Plugin Name: Aegis
 * Plugin URI: http://colourstheme.com/plugins/aegis-page-builder
 * Description: Build responsive page layouts using the widgets you know and love using this simple drag and drop page builder. Your content will accurately adapt to all mobile devices, ensuring your site is mobile-ready.
-* Version: 1.3
+* Version: 1.4
 * Author: Colours Theme
 * Author URI: http://colourstheme.com
 * License: GNU General Public License v3 or later
@@ -269,7 +269,7 @@ if( !class_exists( 'Aegis' ) ) {
 
 		public function add_meta_boxes() {
 			$post_types = apply_filters( 'aegis_apply_for_post_types', array( 'page' ) );
-			add_meta_box( 'aegis_metabox', esc_html__( 'Aegis', 'aegis' ), array( $this, 'get_metabox_form' ), $post_types );
+			add_meta_box( 'aegis_metabox', esc_html__( 'Aegis', 'aegis' ), array( $this, 'get_metabox_form' ), $post_types, 'advanced', 'high' );
 		}
 
 		public function get_metabox_form( $post ) {
@@ -297,7 +297,7 @@ if( !class_exists( 'Aegis' ) ) {
 										<span class="a_action a_hanle a_row_hanle a_pull_left a_tooltip" title="<?php esc_attr_e( 'Drag row to reorder', 'aegis' ); ?>"><i class="ti-split-v"></i></span>
 										<span class="a_action a_row_style a_pull_left a_tooltip" title="<?php esc_attr_e( 'Split row to multi columns', 'aegis' ); ?>"><i class="ti-layout-column3"></i></span>
 										<?php
-										$row_customize_fields = apply_filters( 'aegis_get_row_customize_fields', array() );
+										$row_customize_fields = apply_filters( 'aegis_get_row_customize_fields', array(), $post->ID );
 										if ( $row_customize_fields ) :
 											?>
 											<span class="a_action a_row_customize a_pull_left a_tooltip" title="<?php esc_attr_e( 'Edit this row', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
@@ -322,7 +322,7 @@ if( !class_exists( 'Aegis' ) ) {
 																<span class="a_action a_column_add_widget a_pull_left a_tooltip" title="<?php esc_attr_e( 'Insert new widget to this column', 'aegis' ); ?>"><i class="ti-package"></i></span>
 
 																<?php
-																$col_customize_fields = apply_filters( 'aegis_get_col_customize_fields', array() );
+																$col_customize_fields = apply_filters( 'aegis_get_col_customize_fields', array(), $post->ID );
 																if ( $col_customize_fields ) :
 																	?>
 																	<span class="a_action a_col_customize a_pull_left a_tooltip" title="<?php esc_attr_e( 'Edit this column', 'aegis' ); ?>"><i class="ti-pencil"></i></span>
@@ -397,7 +397,8 @@ if( !class_exists( 'Aegis' ) ) {
 				$screen = get_current_screen();
 				if ( $screen->base == 'post' ) {
 					global $post;
-					if ( in_array( $post->post_type, array( 'post', 'page' ) ) ) {
+					$post_types = apply_filters( 'aegis_apply_for_post_types', array( 'page' ) );
+					if ( in_array( $post->post_type, $post_types ) ) {
 						global $wp_widget_factory;
 						?>
 						<div id="aegis_dialog_overlay"></div>
@@ -441,7 +442,7 @@ if( !class_exists( 'Aegis' ) ) {
 
 								<?php
 								$widgets = $wp_widget_factory->widgets;
-								$widgets = apply_filters( 'aegis_get_list_of_widgets', $widgets );
+								$widgets = apply_filters( 'aegis_get_list_of_widgets', $widgets, $post );
 
 								$blocks = array();
 
@@ -614,13 +615,16 @@ if( !class_exists( 'Aegis' ) ) {
 				$meta_key = self::get_meta_key_page();
 
 				if ( $data ) {
+
 					update_post_meta( $post_id, $meta_key, $data );
 					do_action( 'aegis_save_all_success', $post_id, $data );
 					$return = esc_html__( 'All data has been saved !', 'aegis' );
+
 				} else {
+
 					delete_post_meta( $post_id, $meta_key );
 					$widget_key = self::get_meta_key_widget();
-					$row_key = self::get_meta_key_row();
+					$row_key    = self::get_meta_key_row();
 
 					global $wpdb;
 					$wpdb->query( $wpdb->prepare( "delete from $wpdb->postmeta where post_id = %d and meta_key like %s", $post_id, "{$widget_key}_%" ) );
@@ -628,6 +632,7 @@ if( !class_exists( 'Aegis' ) ) {
 					$return = esc_html__( 'All data has been cleaned.', 'aegis' );
 
 					wp_reset_query();
+
 				}
 
 				update_post_meta( $post_id, self::get_meta_key_is_cache(), 0 );
@@ -643,8 +648,8 @@ if( !class_exists( 'Aegis' ) ) {
 			$row_id           = isset( $_POST['row_id'] ) ? $_POST['row_id']         : false;
 			$post_id          = isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : false;
 
-			$customize_key    = self                                                 ::get_meta_key_row();
-			$customize_fields = apply_filters( 'aegis_get_row_customize_fields', array() );
+			$customize_key    = self::get_meta_key_row();
+			$customize_fields = apply_filters( 'aegis_get_row_customize_fields', array(), $post_id );
 
 			if ( $customize_fields ) :
 				$customize_data = array();
@@ -700,11 +705,11 @@ if( !class_exists( 'Aegis' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 				$customize_key = self::get_meta_key_row();
-				$customize_fields = apply_filters( 'aegis_get_row_customize_fields', array() );
+				$row_id = isset( $_POST['a_row_id'] ) ? $_POST['a_row_id'] : false;
+				$post_id = isset( $_POST['a_post_id'] ) ? (int) $_POST['a_post_id'] : false;
+				$customize_fields = apply_filters( 'aegis_get_row_customize_fields', array(), $post_id );
 
 				if ( $customize_key ) {
-					$row_id = isset( $_POST['a_row_id'] ) ? $_POST['a_row_id'] : false;
-					$post_id = isset( $_POST['a_post_id'] ) ? (int) $_POST['a_post_id'] : false;
 					$data = isset( $_POST[ $customize_key ] ) ? $_POST[ $customize_key ] : array();
 
 					if ( $data ) {
@@ -734,7 +739,7 @@ if( !class_exists( 'Aegis' ) ) {
 			$post_id = isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : false;
 
 			$customize_key = self::get_meta_key_col();
-			$customize_fields = apply_filters( 'aegis_get_col_customize_fields', array() );
+			$customize_fields = apply_filters( 'aegis_get_col_customize_fields', array(), $post_id );
 
 			if ( $customize_fields ) :
 				$customize_data = array();
@@ -789,13 +794,13 @@ if( !class_exists( 'Aegis' ) ) {
 			$return = '';
 
 			if ( ! empty( $_POST ) ) {
+				$col_id = isset( $_POST['a_col_id'] ) ? $_POST['a_col_id'] : false;
+				$post_id = isset( $_POST['a_post_id'] ) ? (int) $_POST['a_post_id'] : false;
 				$customize_key    = self::get_meta_key_col();
-				$customize_fields = apply_filters( 'aegis_get_col_customize_fields', array() );
+				$customize_fields = apply_filters( 'aegis_get_col_customize_fields', array(), $post_id );
 
 				if ( $customize_key ) {
 
-					$col_id = isset( $_POST['a_col_id'] ) ? $_POST['a_col_id'] : false;
-					$post_id = isset( $_POST['a_post_id'] ) ? (int) $_POST['a_post_id'] : false;
 					$data = isset( $_POST[ $customize_key ] ) ? $_POST[ $customize_key ] : array();
 
 					if ( $data ) {
