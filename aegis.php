@@ -1094,7 +1094,6 @@ if( !class_exists( 'Aegis' ) ) {
 									break;
 
 								default:
-									$this->get_field_text( $param_args );
 									break;
 							}
 							if ( isset( $param_args['help'] ) && ! empty( $param_args['help'] ) ) {
