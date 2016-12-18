@@ -13,7 +13,7 @@
 * Aegis is distributed under the terms of the GNU GPL.
 *
 * Requires at least: 4.4
-* Tested up to: 4.4.2
+* Tested up to: 4.6
 * Text Domain: aegis
 * Domain Path: /languages/
 */
@@ -148,19 +148,19 @@ if( !class_exists( 'Aegis' ) ) {
 		}
 
 		public static function get_allowed_tags() {
-			$allowed_tag = wp_kses_allowed_html( 'post' );
-
+			$allowed_tag                                = wp_kses_allowed_html( 'post' );
+			
 			$allowed_tag['div']['data-index']           = array();
 			$allowed_tag['div']['data-tab-id']          = array();
-
+			
 			$allowed_tag['span']['data-tab-id']         = array();
-
+			
 			$allowed_tag['iframe']['src']               = array();
 			$allowed_tag['iframe']['height']            = array();
 			$allowed_tag['iframe']['width']             = array();
 			$allowed_tag['iframe']['frameborder']       = array();
 			$allowed_tag['iframe']['allowfullscreen']   = array();
-
+			
 			$allowed_tag['input']['class']              = array();
 			$allowed_tag['input']['id']                 = array();
 			$allowed_tag['input']['name']               = array();
@@ -168,26 +168,26 @@ if( !class_exists( 'Aegis' ) ) {
 			$allowed_tag['input']['type']               = array();
 			$allowed_tag['input']['checked']            = array();
 			$allowed_tag['input']['data-default-color'] = array();
-
-
+			
+			
 			$allowed_tag['select']['class']             = array();
 			$allowed_tag['select']['id']                = array();
 			$allowed_tag['select']['name']              = array();
 			$allowed_tag['select']['value']             = array();
 			$allowed_tag['select']['type']              = array();
-
+			
 			$allowed_tag['option']['selected']          = array();
-
+			
 			$allowed_tag['style']['type']               = array();
-
-			$allowed_tag['code'] = array();
-
-			$microdata_tags = array( 'div', 'section', 'article', 'a', 'span', 'img', 'time', 'figure' );
+			
+			$allowed_tag['code']                        = array();
+			
+			$microdata_tags                             = array( 'div', 'section', 'article', 'a', 'span', 'img', 'time', 'figure' );
 
 			foreach ( $microdata_tags as $tag ) {
 				$allowed_tag[ $tag ]['itemscope'] = array();
-				$allowed_tag[ $tag ]['itemtype'] = array();
-				$allowed_tag[ $tag ]['itemprop'] = array();
+				$allowed_tag[ $tag ]['itemtype']  = array();
+				$allowed_tag[ $tag ]['itemprop']  = array();
 			}
 
 			return apply_filters( 'aegis_get_allowed_tags', $allowed_tag );
@@ -255,7 +255,6 @@ if( !class_exists( 'Aegis' ) ) {
 				}
 
 			}
-
 		}
 
 		public function admin_footer() {
@@ -394,8 +393,8 @@ if( !class_exists( 'Aegis' ) ) {
 		}
 
 		public function pre_load_modals() {
-				$screen = get_current_screen();
-				if ( $screen->base == 'post' ) {
+			$screen = get_current_screen();
+			if ( $screen->base == 'post' ) {
 					global $post;
 					$post_types = apply_filters( 'aegis_apply_for_post_types', array( 'page' ) );
 					if ( in_array( $post->post_type, $post_types ) ) {
@@ -1434,6 +1433,7 @@ if( !class_exists( 'Aegis' ) ) {
 			$id = str_replace( ']', '_', $id );
 			return $id;
 		}
+		
 	}
 
 }
