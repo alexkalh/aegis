@@ -40,6 +40,8 @@ if( !class_exists( 'Aegis' ) ) {
 		public function __construct() {
 
 			if ( is_admin() ) {
+				global $wp_version;
+
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
 				add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 				add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
@@ -52,10 +54,23 @@ if( !class_exists( 'Aegis' ) ) {
 				add_action( 'wp_ajax_aegis_save_row_customize_form', array( $this, 'save_row_customize_form' ) );
 				add_action( 'wp_ajax_aegis_get_col_customize_form', array( $this, 'get_col_customize_form' ) );
 				add_action( 'wp_ajax_aegis_save_col_customize_form', array( $this, 'save_col_customize_form' ) );
+
+				if ( version_compare( $wp_version, '4.8', '>=' ) ) {
+					add_filter( 'aegis_get_list_of_widgets', array( $this, 'remove_widgets_require_backbone' ) );
+				}
 			}
 
 			add_shortcode( 'a_site_url', array( $this, 'get_site_url' ) );
 			add_shortcode( 'a_media', array( $this, 'get_responsive_media' ) );
+		}
+
+		public function remove_widgets_require_backbone($widgets) {
+			unset($widgets['WP_Widget_Text']);
+			unset($widgets['WP_Widget_Media_Audio']);
+			unset($widgets['WP_Widget_Media_Video']);
+			unset($widgets['WP_Widget_Media_Image']);
+
+			return $widgets;
 		}
 
 		public static function get_instance() {
