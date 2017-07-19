@@ -1,5 +1,8 @@
 === CHANGELOG ===
 
+v.1.4
+- compatiable with WordPress 4.8
+
 v.1.3
 - fix jQuery UI Dialog "modal" mode.
 

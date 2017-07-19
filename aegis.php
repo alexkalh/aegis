@@ -13,7 +13,7 @@
 * Aegis is distributed under the terms of the GNU GPL.
 *
 * Requires at least: 4.4
-* Tested up to: 4.6
+* Tested up to: 4.8
 * Text Domain: aegis
 * Domain Path: /languages/
 */
