@@ -33,6 +33,10 @@ add_action( 'after_setup_theme', array( 'Aegis', 'get_instance' ) );
 
 if( !class_exists( 'Aegis' ) ) {
 
+	if ( version_compare( $wp_version, '4.8', '>=' ) ) {
+		add_action('widgets_init', function() { require_once AEGIS_DIR_PATH . '/widgets/class-wp-widget-text.php'; } );		
+	}
+
 	class Aegis {
 
 		protected static $instance = null;
@@ -56,7 +60,8 @@ if( !class_exists( 'Aegis' ) ) {
 				add_action( 'wp_ajax_aegis_save_col_customize_form', array( $this, 'save_col_customize_form' ) );
 
 				if ( version_compare( $wp_version, '4.8', '>=' ) ) {
-					add_filter( 'aegis_get_list_of_widgets', array( $this, 'remove_widgets_require_backbone' ) );
+					add_filter( 'aegis_get_list_of_widgets', array( $this, 'remove_widgets_required_by_backbone' ) );
+					add_filter( 'aegis_get_widget_form_widget_class_name', array( $this, 'get_widget_form_widget_class_name' ) );
 				}
 			}
 
@@ -64,8 +69,7 @@ if( !class_exists( 'Aegis' ) ) {
 			add_shortcode( 'a_media', array( $this, 'get_responsive_media' ) );
 		}
 
-		public function remove_widgets_require_backbone($widgets) {
-			unset($widgets['WP_Widget_Text']);
+		public function remove_widgets_required_by_backbone($widgets) {
 			unset($widgets['WP_Widget_Media_Audio']);
 			unset($widgets['WP_Widget_Media_Video']);
 			unset($widgets['WP_Widget_Media_Image']);
@@ -206,6 +210,14 @@ if( !class_exists( 'Aegis' ) ) {
 			}
 
 			return apply_filters( 'aegis_get_allowed_tags', $allowed_tag );
+		}
+
+		public function get_widget_form_widget_class_name($widget_class_name) {
+			if( 'WP_Widget_Text' === $widget_class_name ) {
+				$widget_class_name = 'Aegis_Widget_Text';
+			}
+
+			return $widget_class_name;
 		}
 
 		public function admin_init() {}
@@ -861,7 +873,8 @@ if( !class_exists( 'Aegis' ) ) {
 
 				if ( $widget_class_name ) :
 
-					$widget = new $widget_class_name;
+					$widget_class_name = apply_filters( 'aegis_get_widget_form_widget_class_name', $widget_class_name );				
+					$widget = new $widget_class_name;							
 					$widget->id_base = rand( 0, 9999 );
 					$widget->number = rand( 0, 9999 );
 					$customize_key = self::get_meta_key_widget_customize();
@@ -888,7 +901,7 @@ if( !class_exists( 'Aegis' ) ) {
 					</nav>
 
 					<div id="aegis_tab_widget" class="a_tab_content a_active">
-						<?php $widget->form( $instance ); ?>
+						<?php $widget->form( $instance );	?>
 					</div>
 
 					<?php
